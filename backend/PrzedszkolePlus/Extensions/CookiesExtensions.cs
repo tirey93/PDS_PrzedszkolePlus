@@ -1,5 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-
+﻿
 namespace PrzedszkolePlus.Extensions
 {
     public static class CookiesExtensions

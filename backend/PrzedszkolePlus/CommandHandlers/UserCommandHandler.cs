@@ -1,7 +1,6 @@
 ﻿using Domain;
 using Domain.Exceptions;
 using PrzedszkolePlus.Commands;
-using PrzedszkolePlus.Exceptions;
 using MediatR;
 
 namespace PrzedszkolePlus.CommandHandlers

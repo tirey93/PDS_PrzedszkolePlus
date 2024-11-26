@@ -1,5 +1,4 @@
-﻿using PrzedszkolePlus.Response;
-using MediatR;
+﻿using MediatR;
 namespace PrzedszkolePlus.Queries
 {
     public class CheckUsernameAvailabilityQuery : IRequest<bool>
