@@ -2,22 +2,23 @@
 using Domain.Exceptions;
 using PrzedszkolePlus.Commands;
 using MediatR;
+using Domain.Repositories;
 
 namespace PrzedszkolePlus.CommandHandlers
 {
     public class UserCommandHandler : IRequestHandler<UpdateUserRoleCommand, Unit>,
                                       IRequestHandler<DeleteUserCommand, Unit>
     {
-        private readonly IRepository _repository;
+        private readonly IUserRepository _repository;
 
-        public UserCommandHandler(IRepository repository)
+        public UserCommandHandler(IUserRepository repository)
         {
             _repository = repository;
         }
 
         public async Task<Unit> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)
         {
-            var user = _repository.GetUser(request.UserId) 
+            var user = _repository.Get(request.UserId) 
                 ?? throw new UserNotFoundException(request.UserId);
 
             user.Role = Enum.Parse<Role>(request.NewRole);
@@ -27,7 +28,7 @@ namespace PrzedszkolePlus.CommandHandlers
         }
         public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _repository.GetUser(request.UserId)
+            var user = _repository.Get(request.UserId)
                 ?? throw new UserNotFoundException(request.UserId);
 
             _repository.Delete(user);

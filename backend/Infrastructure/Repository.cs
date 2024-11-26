@@ -1,35 +1,18 @@
 ﻿using Domain;
+using Domain.Interfaces;
 
 namespace Infrastructure
 {
-    public class Repository : IRepository
+    public class Repository<T> : IRepository<T> where T : Entity
     {
-        private readonly AppDbContext _appDbContext;
+        protected readonly AppDbContext _appDbContext;
 
         public Repository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
-        public List<User> GetUsers(Func<User, bool>? predicate = null)
-        {
-            if (predicate == null)
-                return _appDbContext.Users.ToList();
-            return _appDbContext.Users.Where(predicate).ToList();
-        }
-        public User? GetUser(int id)
-        {
-            return _appDbContext.Users.FirstOrDefault(x => x.Id == id);
-        }
-        public void Add<T>(T entity) where T : class
-        {
-            _appDbContext.Add(entity);
-        }
-        public void Delete<T>(T entity) where T : class
-        {
-            _appDbContext.Remove(entity);
-        }
-        public async Task SaveChangesAsync()
+        async Task IRepository<T>.SaveChangesAsync()
         {
             await _appDbContext.SaveChangesAsync();
         }

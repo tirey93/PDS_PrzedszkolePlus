@@ -4,22 +4,23 @@ using PrzedszkolePlus.Commands;
 using PrzedszkolePlus.Response;
 using PrzedszkolePlus.Utils;
 using MediatR;
+using Domain.Repositories;
 
 namespace PrzedszkolePlus.CommandHandlers
 {
     public class AuthenticationCommandHandler
         : IRequestHandler<RegisterCommand, UserResponse>
     {
-        private readonly IRepository _repository;
+        private readonly IUserRepository _repository;
 
-        public AuthenticationCommandHandler(IRepository repository)
+        public AuthenticationCommandHandler(IUserRepository repository)
         {
             _repository = repository;
         }
 
         public async Task<UserResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var userExists = _repository.GetUsers(x => x.Name == request.Username).FirstOrDefault();
+            var userExists = _repository.GetList(x => x.Name == request.Username).FirstOrDefault();
             if (userExists != null)
                 throw new UserAlreadyExistsException(request.Username);
 
