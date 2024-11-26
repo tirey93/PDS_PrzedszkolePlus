@@ -1,0 +1,12 @@
+html .caption {
+  font-size: var(--mantine-font-size-sm);
+}
+
+html .wrapper {
+  padding: var(--mantine-spacing-md);
+}
+
+html .footer {
+  justify-content: flex-end;
+  margin-top: var(--mantine-spacing-md);
+}

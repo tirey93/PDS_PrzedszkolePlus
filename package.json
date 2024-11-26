@@ -1,0 +1,12 @@
+{
+  "name": "pds_przedszkoleplus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "start:frontend": "npm run --prefix frontend start",
+    "start:backend": "dotnet run --project ./backend/PrzedszkolePlus"
+  },
+  "author": "",
+  "license": "ISC"
+}

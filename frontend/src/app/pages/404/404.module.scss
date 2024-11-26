@@ -1,0 +1,30 @@
+html .pageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  width: 100vw;
+  padding: var(--mantine-spacing-md);
+
+  .Illustration404 {
+    width: 30dvmax;
+  }
+
+  .title {
+    margin-top: var(--mantine-spacing-xl);
+  }
+
+  .description {
+    color: var(--mantine-color-dimmed);
+    font-size: var(--mantine-font-size-lg);
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .buttonsWrapper {
+    margin-top: var(--mantine-spacing-xl);
+    display: flex;
+    justify-content: center;
+  }
+}
