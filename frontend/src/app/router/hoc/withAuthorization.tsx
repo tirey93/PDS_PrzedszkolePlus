@@ -1,7 +1,8 @@
-import {FC} from "react";
-import {UserRole} from "@/types";
-import {AppRoute} from "@/app/router";
-import {ProtectedRoute} from "@/app/router/hoc/ProtectedRoute";
+import { FC } from "react";
+
+import { AppRoute } from "@/app/router";
+import { ProtectedRoute } from "@/app/router/hoc/ProtectedRoute";
+import { UserRole } from "@/types";
 
 export default function withAuthorization<T extends object>(Component: FC<T>) {
     return (roles: UserRole[], redirectTo: AppRoute) => {

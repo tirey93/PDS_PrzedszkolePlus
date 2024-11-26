@@ -1,8 +1,9 @@
 import { PropsWithChildren } from "react";
 import { Navigate } from "react-router-dom";
-import { UserRole } from "@/types";
+
 import { AppRoute } from "@/app/router";
-import {useAuthState} from "@/features/auth/hooks/useAuthState";
+import { useAuthState } from "@/features/auth/hooks/useAuthState";
+import { UserRole } from "@/types";
 
 type ProtectedRouteProps = PropsWithChildren<{
     allowedRoles: UserRole[];

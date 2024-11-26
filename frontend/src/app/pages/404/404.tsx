@@ -14,7 +14,10 @@ export const NotFoundPage = () => {
         <Box className={classes.pageContainer}>
             <Illustration404 className={classes.Illustration404} />
             <Title className={classes.title}>Nic tu nie ma</Title>
-            <Text className={classes.description}>Ta strona nie istnieje. Jeśli podany URL jest prawidłowy, to możliwe że strona przestała istnieć jakiś czase temu.</Text>
+            <Text className={classes.description}>
+                Ta strona nie istnieje. Jeśli podany URL jest prawidłowy, to możliwe że strona przestała istnieć jakiś
+                czase temu.
+            </Text>
             <Group className={classes.buttonsWrapper}>
                 <Button variant="default" onClick={() => navigate(AppRoute.ROOT)}>
                     Przejdź do strony głównej

@@ -1,15 +1,13 @@
 import React from "react";
-import {createBrowserRouter, RouteObject} from "react-router-dom";
+import { createBrowserRouter, RouteObject } from "react-router-dom";
 const NotFoundPage = React.lazy(() => import("@/app/pages/404").then((module) => ({ default: module.NotFoundPage })));
 
 import { AppRoute } from "@/app/router/AppRoute";
+import { withSuspense } from "@/app/router/hoc/withSuspense";
 import { AppProvider } from "@/AppProvider";
 import { Root } from "@/Root";
-import { withSuspense } from "@/app/router/hoc/withSuspense";
 
-const APP_PAGES: RouteObject[] = [
-
-];
+const APP_PAGES: RouteObject[] = [];
 
 export const router = createBrowserRouter([
     {

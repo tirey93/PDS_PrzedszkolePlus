@@ -1,7 +1,7 @@
 import { PropsWithChildren, useMemo } from "react";
 
-import {UserRole} from "@/types";
-import {useAuthState} from "@/features/auth/hooks/useAuthState";
+import { useAuthState } from "@/features/auth/hooks/useAuthState";
+import { UserRole } from "@/types";
 
 type RoleGuardProps = PropsWithChildren<{ allowedRoles: UserRole[] }>;
 

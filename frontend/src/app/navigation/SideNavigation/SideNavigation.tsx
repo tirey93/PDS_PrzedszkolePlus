@@ -6,10 +6,6 @@ type SideNavigationProps = {
     onNavigate?: () => unknown;
 };
 
-export const SideNavigation = ({  }: SideNavigationProps) => {
-    return (
-        <Stack component="nav" className={classes.sideNavigationContainer}>
-
-        </Stack>
-    );
+export const SideNavigation = ({}: SideNavigationProps) => {
+    return <Stack component="nav" className={classes.sideNavigationContainer}></Stack>;
 };

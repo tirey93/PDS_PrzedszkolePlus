@@ -11,11 +11,7 @@ import { apiClient } from "@/lib/apiClient";
 import { ThemeProvider } from "@/lib/theme";
 
 export const AppProvider = () => {
-    const modals = useMemo(
-        () => ({
-        }),
-        []
-    );
+    const modals = useMemo(() => ({}), []);
 
     return (
         <QueryClientProvider client={apiClient}>

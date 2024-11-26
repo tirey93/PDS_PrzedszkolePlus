@@ -1,5 +1,6 @@
-import {UserDetails} from "@/types";
-import {create} from "zustand";
+import { create } from "zustand";
+
+import { UserDetails } from "@/types";
 
 type AuthStore = {
     user: UserDetails | null;
