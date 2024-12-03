@@ -1,37 +1,45 @@
 ﻿using Domain;
+using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class Repository : IRepository
+    public abstract class Repository<T> : IRepository<T> where T : Entity
     {
-        private readonly AppDbContext _appDbContext;
+        protected readonly AppDbContext _appDbContext;
+        private readonly DbSet<T> _dbSet;
 
-        public Repository(AppDbContext appDbContext)
+        public Repository(AppDbContext appDbContext, DbSet<T> dbSet)
         {
             _appDbContext = appDbContext;
+            _dbSet = dbSet;
         }
 
-        public List<User> GetUsers(Func<User, bool>? predicate = null)
-        {
-            if (predicate == null)
-                return _appDbContext.Users.ToList();
-            return _appDbContext.Users.Where(predicate).ToList();
-        }
-        public User? GetUser(int id)
-        {
-            return _appDbContext.Users.FirstOrDefault(x => x.Id == id);
-        }
-        public void Add<T>(T entity) where T : class
-        {
-            _appDbContext.Add(entity);
-        }
-        public void Delete<T>(T entity) where T : class
-        {
-            _appDbContext.Remove(entity);
-        }
         public async Task SaveChangesAsync()
         {
             await _appDbContext.SaveChangesAsync();
+        }
+
+        public T Get(int id)
+        {
+            return _dbSet.First(x => x.Id == id);
+        }
+
+        public List<T> GetList(Func<T, bool> predicate = null)
+        {
+            if (predicate == null)
+                return _dbSet.ToList();
+            return _dbSet.Where(predicate).ToList();
+        }
+
+        public void Add(T entity)
+        {
+            _appDbContext.Add(entity);
+        }
+
+        public void Delete(T entity)
+        {
+            _appDbContext.Remove(entity);
         }
     }
 }
