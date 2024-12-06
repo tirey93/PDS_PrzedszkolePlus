@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+ import { useMemo } from "react";
 import { Outlet } from "react-router-dom";
 import { Notifications } from "@mantine/notifications";
 import { QueryClientProvider } from "@tanstack/react-query";
