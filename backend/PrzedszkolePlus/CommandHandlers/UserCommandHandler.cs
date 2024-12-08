@@ -9,30 +9,30 @@ namespace PrzedszkolePlus.CommandHandlers
     public class UserCommandHandler : IRequestHandler<UpdateUserRoleCommand, Unit>,
                                       IRequestHandler<DeleteUserCommand, Unit>
     {
-        private readonly IUserRepository _repository;
+        private readonly IUserRepository _userRepository;
 
-        public UserCommandHandler(IUserRepository repository)
+        public UserCommandHandler(IUserRepository userRepository)
         {
-            _repository = repository;
+            _userRepository = userRepository;
         }
 
         public async Task<Unit> Handle(UpdateUserRoleCommand request, CancellationToken cancellationToken)
         {
-            var user = _repository.Get(request.UserId) 
+            var user = _userRepository.Get(request.UserId) 
                 ?? throw new UserNotFoundException(request.UserId);
 
             user.Role = Enum.Parse<Role>(request.NewRole);
-            await _repository.SaveChangesAsync();
+            await _userRepository.SaveChangesAsync();
 
             return Unit.Value;
         }
         public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _repository.Get(request.UserId)
+            var user = _userRepository.Get(request.UserId)
                 ?? throw new UserNotFoundException(request.UserId);
 
-            _repository.Delete(user);
-            await _repository.SaveChangesAsync();
+            _userRepository.Delete(user);
+            await _userRepository.SaveChangesAsync();
 
             return Unit.Value;
         }

@@ -10,18 +10,18 @@ namespace PrzedszkolePlus.QueryHandlers
                                     IRequestHandler<GetUserQuery, UserResponse>,
                                     IRequestHandler<GetAllUsersQuery, IEnumerable<UserResponse>>
     {
-        private readonly IUserRepository _repository;
+        private readonly IUserRepository _userRepository;
 
-        public UserQueryHandler(IUserRepository repository)
+        public UserQueryHandler(IUserRepository userRepository)
         {
-            _repository = repository;
+            _userRepository = userRepository;
         }
 
         public Task<bool> Handle(CheckUsernameAvailabilityQuery request, CancellationToken cancellationToken)
         {
             var username = request.Username.ToLower();
 
-            var existingUsers = _repository.GetList(u => u.Name.ToLower() == username);
+            var existingUsers = _userRepository.GetList(u => u.Name.ToLower() == username);
             if (existingUsers == null || !existingUsers.Any())
                 return Task.FromResult(true);
 
@@ -30,7 +30,7 @@ namespace PrzedszkolePlus.QueryHandlers
 
         public Task<UserResponse> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var user = _repository.Get(request.UserId)
+            var user = _userRepository.Get(request.UserId)
                 ?? throw new UserNotFoundException(request.UserId);
 
             var result = new UserResponse
@@ -45,7 +45,7 @@ namespace PrzedszkolePlus.QueryHandlers
 
         public Task<IEnumerable<UserResponse>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = _repository.GetList();
+            var users = _userRepository.GetList();
 
             if (users == null)
             {

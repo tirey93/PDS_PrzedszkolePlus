@@ -11,16 +11,16 @@ namespace PrzedszkolePlus.CommandHandlers
     public class AuthenticationCommandHandler
         : IRequestHandler<RegisterCommand, UserResponse>
     {
-        private readonly IUserRepository _repository;
+        private readonly IUserRepository _userRepository;
 
-        public AuthenticationCommandHandler(IUserRepository repository)
+        public AuthenticationCommandHandler(IUserRepository userRepository)
         {
-            _repository = repository;
+            _userRepository = userRepository;
         }
 
         public async Task<UserResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var userExists = _repository.GetList(x => x.Name == request.Username).FirstOrDefault();
+            var userExists = _userRepository.GetList(x => x.Name == request.Username).FirstOrDefault();
             if (userExists != null)
                 throw new UserAlreadyExistsException(request.Username);
 
@@ -32,8 +32,8 @@ namespace PrzedszkolePlus.CommandHandlers
                 HashedPassword = hash,
                 Role = Role.User
             };
-            _repository.Add(user);
-            await _repository.SaveChangesAsync();
+            _userRepository.Add(user);
+            await _userRepository.SaveChangesAsync();
 
             return new UserResponse
             {
