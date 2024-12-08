@@ -1,8 +1,8 @@
-﻿using Domain;
-using Domain.Exceptions;
+﻿using Domain.Exceptions;
 using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Response;
 using MediatR;
+using Domain.Repositories;
 
 namespace PrzedszkolePlus.QueryHandlers
 {
@@ -10,18 +10,18 @@ namespace PrzedszkolePlus.QueryHandlers
                                     IRequestHandler<GetUserQuery, UserResponse>,
                                     IRequestHandler<GetAllUsersQuery, IEnumerable<UserResponse>>
     {
-        private readonly IRepository _repository;
+        private readonly IUserRepository _userRepository;
 
-        public UserQueryHandler(IRepository repository)
+        public UserQueryHandler(IUserRepository userRepository)
         {
-            _repository = repository;
+            _userRepository = userRepository;
         }
 
         public Task<bool> Handle(CheckUsernameAvailabilityQuery request, CancellationToken cancellationToken)
         {
             var username = request.Username.ToLower();
 
-            var existingUsers = _repository.GetUsers(u => u.Name.ToLower() == username);
+            var existingUsers = _userRepository.GetList(u => u.Name.ToLower() == username);
             if (existingUsers == null || !existingUsers.Any())
                 return Task.FromResult(true);
 
@@ -30,7 +30,7 @@ namespace PrzedszkolePlus.QueryHandlers
 
         public Task<UserResponse> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var user = _repository.GetUser(request.UserId)
+            var user = _userRepository.Get(request.UserId)
                 ?? throw new UserNotFoundException(request.UserId);
 
             var result = new UserResponse
@@ -45,7 +45,7 @@ namespace PrzedszkolePlus.QueryHandlers
 
         public Task<IEnumerable<UserResponse>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = _repository.GetUsers();
+            var users = _userRepository.GetList();
 
             if (users == null)
             {

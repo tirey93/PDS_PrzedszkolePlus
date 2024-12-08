@@ -1,25 +1,25 @@
-﻿using Domain;
-using Domain.Exceptions;
+﻿using Domain.Exceptions;
 using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Response;
 using PrzedszkolePlus.Utils;
 using MediatR;
+using Domain.Repositories;
 
 namespace PrzedszkolePlus.QueryHandlers
 {
     public class AuthenticationQueryHandler 
         :IRequestHandler<LoginQuery, UserResponse>
     {
-        private readonly IRepository _repository;
+        private readonly IUserRepository _userRepository;
 
-        public AuthenticationQueryHandler(IRepository repository)
+        public AuthenticationQueryHandler(IUserRepository userRepository)
         {
-            _repository = repository;
+            _userRepository = userRepository;
         }
 
         public Task<UserResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            var user = _repository.GetUsers(x => x.Name == request.Username).FirstOrDefault()
+            var user = _userRepository.GetList(x => x.Name == request.Username).FirstOrDefault()
                 ?? throw new UserNotFoundException(request.Username);
 
             var hash = ShaHelper.QuickHash(request.Password);
