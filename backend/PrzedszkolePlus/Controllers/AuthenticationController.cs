@@ -34,7 +34,9 @@ namespace PrzedszkolePlus.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [AllowAnonymous]
+#if !DEBUG
+        [Authorize(Roles = Roles.Admin)]
+#endif
         public async Task<ActionResult<UserResponse>> Register([FromBody] RegisterRequest dto)
         {
             var command = new RegisterCommand
@@ -47,7 +49,6 @@ namespace PrzedszkolePlus.Controllers
             try
             {
                 var response = await _mediator.Send(command);
-                AppendToCookie(response);
                 return Ok(response);
             }
             catch (UserAlreadyExistsException ex)
