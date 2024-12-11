@@ -88,11 +88,11 @@ namespace Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User with ID {0} is blocked from making reservations..
+        ///   Looks up a localized string similar to User with ID {0} is not active..
         /// </summary>
-        internal static string ExceptionUserHasReservationDisabled {
+        internal static string ExceptionUserIsNotActive {
             get {
-                return ResourceManager.GetString("ExceptionUserHasReservationDisabled", resourceCulture);
+                return ResourceManager.GetString("ExceptionUserIsNotActive", resourceCulture);
             }
         }
         

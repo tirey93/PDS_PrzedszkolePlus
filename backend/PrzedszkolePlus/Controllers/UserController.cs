@@ -202,5 +202,37 @@ namespace PrzedszkolePlus.Controllers
                     string.Format(Resource.ControllerInternalError, ex.Message));
             }
         }
+
+        [HttpPut("{id:int}/IsActive")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+#if !DEBUG
+        [Authorize(Roles = Roles.Admin)]
+#endif
+        public async Task<IActionResult> ChangeIsActiveFlag(int id, bool value)
+        {
+            var request = new UpdateUserIsActiveFlagCommand
+            {
+                UserId = id,
+                NewIsActiveFlagValue = value
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (UserNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
+        }
     }
 }
