@@ -3,7 +3,6 @@ using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Response;
 using MediatR;
 using Domain.Repositories;
-using Domain;
 
 namespace PrzedszkolePlus.QueryHandlers
 {
