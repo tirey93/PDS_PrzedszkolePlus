@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: '@import "./src/_mantine";',
+                    additionalData: '@import "/src/_mantine";',
                 },
             },
         },
