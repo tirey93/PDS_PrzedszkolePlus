@@ -7,7 +7,8 @@ using Domain.Repositories;
 namespace PrzedszkolePlus.CommandHandlers
 {
     public class UserCommandHandler : IRequestHandler<UpdateUserRoleCommand, Unit>,
-                                      IRequestHandler<DeleteUserCommand, Unit>
+                                      IRequestHandler<DeleteUserCommand, Unit>,
+                                      IRequestHandler<UpdateUserIsActiveFlagCommand, Unit>
     {
         private readonly IUserRepository _userRepository;
 
@@ -32,6 +33,16 @@ namespace PrzedszkolePlus.CommandHandlers
                 ?? throw new UserNotFoundException(request.UserId);
 
             _userRepository.Delete(user);
+            await _userRepository.SaveChangesAsync();
+
+            return Unit.Value;
+        }
+        public async Task<Unit> Handle(UpdateUserIsActiveFlagCommand request, CancellationToken cancellationToken)
+        {
+            var user = _userRepository.Get(request.UserId)
+                ?? throw new UserNotFoundException(request.UserId);
+
+            user.IsActive = request.NewIsActiveFlagValue;
             await _userRepository.SaveChangesAsync();
 
             return Unit.Value;

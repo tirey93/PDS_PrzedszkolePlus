@@ -3,6 +3,7 @@ using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Response;
 using MediatR;
 using Domain.Repositories;
+using Domain;
 
 namespace PrzedszkolePlus.QueryHandlers
 {
@@ -39,6 +40,7 @@ namespace PrzedszkolePlus.QueryHandlers
                 Name = user.Name,
                 DisplayName = user.DisplayName,
                 Role = user.Role.ToString(),
+                IsActive = user.IsActive,
             };
             return Task.FromResult(result);
         }
@@ -58,6 +60,7 @@ namespace PrzedszkolePlus.QueryHandlers
                 Name = x.Name,
                 DisplayName = x.DisplayName,
                 Role = x.Role.ToString(),
+                IsActive = x.IsActive,
             });
 
             return Task.FromResult(result);
