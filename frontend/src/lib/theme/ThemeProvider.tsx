@@ -1,14 +1,11 @@
 import { PropsWithChildren } from "react";
-import { MantineProvider } from "@mantine/core";
 
-import { useTheme } from "./hooks/useTheme";
+import { Theme } from "@radix-ui/themes";
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
-    const { theme } = useTheme();
-
     return (
-        <MantineProvider forceColorScheme="dark" theme={theme}>
+        <Theme accentColor="crimson" grayColor="sand" radius="large" scaling="95%">
             {children}
-        </MantineProvider>
+        </Theme>
     );
 };

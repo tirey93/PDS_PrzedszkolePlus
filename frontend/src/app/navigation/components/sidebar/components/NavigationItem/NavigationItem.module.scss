@@ -1,0 +1,13 @@
+.item {
+  font-size: var(--font-size-2);
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-1);
+  text-decoration: none;
+
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-2);
+
+  &.active {
+    background: var(--accent-10);
+  }
+}

@@ -1,13 +1,17 @@
 import { Outlet } from "react-router-dom";
+import { AppProvider } from "@/AppProvider";
 
-import { AppNavigation } from "@/app/navigation";
-import { AppOverlay } from "@/components/AppOverlay";
+import "./styles/normalize.scss";
+import "@radix-ui/themes/styles.css";
+import "./styles/overrides.scss";
+import { Navigation } from "@/app/navigation/Navigation";
 
 export const Root = () => {
     return (
-        <AppNavigation>
-            <AppOverlay />
-            <Outlet />
-        </AppNavigation>
+        <AppProvider>
+            <Navigation>
+                <Outlet />
+            </Navigation>
+        </AppProvider>
     );
 };

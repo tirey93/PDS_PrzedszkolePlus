@@ -1,4 +1,4 @@
-# GymBeam UI
+# Przedszkole+ UI
 
 ### Running the application
 1. Run `npm install`

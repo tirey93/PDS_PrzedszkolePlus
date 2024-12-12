@@ -1,5 +1,9 @@
 export enum AppRoute {
     ROOT = "/",
-    LOGIN = "/login",
-    NOT_FOUND = "/not-found",
+    NEWS = "/news",
+    MESSAGES = "/messages",
+    PARENTS = "/users/parents",
+    CARETAKERS = "/users/teachers",
+    CLASS = "/class",
+    LOGIN = "/LOGIN",
 }
