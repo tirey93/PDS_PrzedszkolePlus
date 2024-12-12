@@ -5,5 +5,5 @@ export enum AppRoute {
     PARENTS = "/users/parents",
     CARETAKERS = "/users/teachers",
     CLASS = "/class",
-    LOGIN = "/LOGIN",
+    SIGN_IN = "/sign-in",
 }

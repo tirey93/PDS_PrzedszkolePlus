@@ -1,19 +1,16 @@
 .container {
-  background: var(--accent-12);
+  background: var(--gray-12);
   display: flex;
   flex-direction: column;
   position: relative;
   transition: transform 0.25s;
 
   @media (max-width: 768px) {
+    z-index: 100;
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
-
-    .collapseButtonWrapper {
-      display: block;
-    }
 
     &:not(.collapsed) {
       position: absolute;
@@ -37,16 +34,17 @@
     transform: translateX(50%);
 
     position: absolute;
-    top: var(--space-5);
+    top: 27px;
     right: 0;
   }
 
   .footer, .header {
-    background: var(--gray-12);
+    background: var(--black-a8);
     padding: var(--space-2) var(--space-5);
   }
 
   .header {
+    padding-block: var(--space-2);
     margin-bottom: var(--space-5);
   }
 

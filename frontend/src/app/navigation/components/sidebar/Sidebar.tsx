@@ -8,7 +8,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery/useMediaQuery";
 import classNames from "classnames";
 import { useState } from "react";
 import { IconButton } from "@radix-ui/themes";
-import { DoubleArrowLeftIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
 const items = [
     { title: "Przedszkole", items: [{ label: "Aktualności", href: AppRoute.NEWS }] },
@@ -38,7 +38,7 @@ export function Sidebar() {
             {!isDesktop && (
                 <div className={classes.collapseButtonWrapper}>
                     <IconButton radius="full" onClick={toggleCollapseState}>
-                        <DoubleArrowLeftIcon />
+                        <ArrowLeftIcon />
                     </IconButton>
                 </div>
             )}
