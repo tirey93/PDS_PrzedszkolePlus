@@ -3,15 +3,16 @@ import { Outlet } from "react-router-dom";
 import { onlyAsUnauthenticated } from "@/features/auth/hoc/withAuthorization";
 
 import classes from "./AuthPage.module.scss";
+import { Box } from "@radix-ui/themes";
 
 const Page = () => {
     return (
         <AppProvider>
-            <div className={classes.container}>
-                <div className={classes.content}>
+            <Box className={classes.container}>
+                <Box className={classes.content}>
                     <Outlet />
-                </div>
-            </div>
+                </Box>
+            </Box>
         </AppProvider>
     );
 };

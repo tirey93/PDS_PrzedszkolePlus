@@ -6,8 +6,8 @@
   transition: transform 0.25s;
 
   @media (max-width: 768px) {
-    z-index: 100;
-    position: absolute;
+    z-index: 1000;
+    position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
@@ -34,7 +34,7 @@
     transform: translateX(50%);
 
     position: absolute;
-    top: 27px;
+    bottom: var(--space-3);
     right: 0;
   }
 

@@ -1,5 +1,5 @@
 import classes from "./SignInForm.module.scss";
-import { Button, Text, TextField } from "@radix-ui/themes";
+import { Box, Button, Text, TextField } from "@radix-ui/themes";
 import { SignInFormInputs, useSignInForm } from "@/features/auth/components/SignInForm/hooks/useSignInForm";
 
 type SignInFormProps = {
@@ -12,19 +12,19 @@ export const SignInForm = ({ onSubmit, isLoading }: SignInFormProps) => {
 
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={classes.input}>
+            <Box className={classes.input}>
                 <Text className={classes.inputLabel}>Login</Text>
                 <TextField.Root {...register("login")} />
                 {formState.errors.login && <Text className={classes.inputError}>{formState.errors.login.message}</Text>}
-            </div>
+            </Box>
 
-            <div className={classes.input}>
+            <Box className={classes.input}>
                 <Text className={classes.inputLabel}>Hasło</Text>
                 <TextField.Root {...register("password")} type="password" />
                 {formState.errors.password && (
                     <Text className={classes.inputError}>{formState.errors.password.message}</Text>
                 )}
-            </div>
+            </Box>
 
             <Button loading={isLoading} className={classes.submitButton}>
                 Zaloguj

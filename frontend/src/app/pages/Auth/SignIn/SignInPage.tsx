@@ -1,5 +1,5 @@
 import classes from "./SignInPage.module.scss";
-import { Card, Heading, Strong, Text } from "@radix-ui/themes";
+import { Box, Card, Heading, Strong, Text } from "@radix-ui/themes";
 import { SignInForm } from "@/features/auth/components/SignInForm/SignInForm";
 import { useSignIn } from "@/features/auth/hooks/useSignIn";
 import { SignInFormInputs } from "@/features/auth/components/SignInForm/hooks/useSignInForm";
@@ -19,7 +19,7 @@ export const SignInPage = () => {
     };
 
     return (
-        <div className={classes.container}>
+        <Box className={classes.container}>
             <Card className={classes.card}>
                 <Heading className={classes.title}>Logowanie</Heading>
                 <Text>
@@ -27,6 +27,6 @@ export const SignInPage = () => {
                 </Text>
                 <SignInForm onSubmit={login} isLoading={isPending} />
             </Card>
-        </div>
+        </Box>
     );
 };

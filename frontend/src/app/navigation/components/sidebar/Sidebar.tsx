@@ -7,8 +7,8 @@ import { Logo } from "@/app/navigation/components/sidebar/components/Logo/Logo";
 import { useMediaQuery } from "@/hooks/useMediaQuery/useMediaQuery";
 import classNames from "classnames";
 import { useState } from "react";
-import { IconButton } from "@radix-ui/themes";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import { Box, IconButton } from "@radix-ui/themes";
+import { ChevronLeft } from "lucide-react";
 
 const items = [
     { title: "Przedszkole", items: [{ label: "Aktualności", href: AppRoute.NEWS }] },
@@ -34,20 +34,20 @@ export function Sidebar() {
     };
 
     return (
-        <div className={classNames(classes.container, { [classes.collapsed]: isCollapsed })}>
+        <Box className={classNames(classes.container, { [classes.collapsed]: isCollapsed })}>
             {!isDesktop && (
-                <div className={classes.collapseButtonWrapper}>
+                <Box className={classes.collapseButtonWrapper}>
                     <IconButton radius="full" onClick={toggleCollapseState}>
-                        <ArrowLeftIcon />
+                        <ChevronLeft />
                     </IconButton>
-                </div>
+                </Box>
             )}
 
-            <div className={classes.header}>
+            <Box className={classes.header}>
                 <Logo />
-            </div>
+            </Box>
 
-            <nav className={classes.navigation}>
+            <Box className={classes.navigation}>
                 {items.map((section) => (
                     <NavigationSection key={section.title} title={section.title}>
                         {section.items.map((item) => (
@@ -60,11 +60,11 @@ export function Sidebar() {
                         ))}
                     </NavigationSection>
                 ))}
-            </nav>
+            </Box>
 
-            <div className={classes.footer}>
+            <Box className={classes.footer}>
                 <Logo />
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 }
