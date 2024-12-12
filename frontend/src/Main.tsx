@@ -2,9 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
-import { router } from "./app/router";
+import "./styles/normalize.scss";
+import "@radix-ui/themes/styles.css";
+import "./styles/overrides.scss";
 
-import "./styles/mantine.styles";
+import { router } from "./app/router";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>

@@ -1,0 +1,11 @@
+.logo {
+  span {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-5);
+    color: var(--accent-1);
+
+    .emphasis {
+      color: var(--accent-9);
+    }
+  }
+}
