@@ -13,7 +13,7 @@ export const SignInPage = () => {
             await signIn({ password, username: login });
             toast.success("Logowanie pomyślne.");
         } catch (e) {
-            // TODO: Different error messages
+            console.log(e);
             toast.error("Logowanie się nie udało.");
         }
     };

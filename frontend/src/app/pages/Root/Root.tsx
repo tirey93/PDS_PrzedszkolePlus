@@ -1,12 +1,10 @@
 import { Outlet } from "react-router-dom";
 import { AppProvider } from "@/AppProvider";
 
-import "./styles/normalize.scss";
-import "@radix-ui/themes/styles.css";
-import "./styles/overrides.scss";
 import { Navigation } from "@/app/navigation/Navigation";
+import { onlyAsAuthenticated } from "@/features/auth/hoc/withAuthorization";
 
-export const Root = () => {
+const Page = () => {
     return (
         <AppProvider>
             <Navigation>
@@ -15,3 +13,5 @@ export const Root = () => {
         </AppProvider>
     );
 };
+
+export const RootPage = onlyAsAuthenticated(Page);

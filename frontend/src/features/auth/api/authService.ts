@@ -1,7 +1,6 @@
-import { requestClient } from "@/lib/request/requestClient";
 import { User, UserRole } from "@/features/auth/types/User";
 
-const SIGN_IN_ENDPOINT = "/Authentication/Login";
+// const SIGN_IN_ENDPOINT = "/Authentication/Login";
 
 type SignInRequestBody = {
     username: string;
@@ -16,8 +15,11 @@ type UserDTO = {
 
 export class AuthService {
     public static async signIn(body: SignInRequestBody): Promise<User> {
-        const { data } = await requestClient.post<UserDTO>(SIGN_IN_ENDPOINT, body);
-        return this.mapDtoToUser(data);
+        // TODO: Restore it
+        // const { data } = await requestClient.post<UserDTO>(SIGN_IN_ENDPOINT, body);
+        // return AuthService.mapDtoToUser(data);
+
+        return AuthService.mapDtoToUser({ displayName: "Jan Kowalski", role: "Caretaker", username: body.username });
     }
 
     private static mapDtoToUser({ displayName, role, username }: UserDTO): User {
