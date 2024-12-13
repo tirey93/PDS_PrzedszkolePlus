@@ -4,15 +4,18 @@ import { Header } from "@/components/Header/Header";
 import { PageContainer } from "@/components/PageContainer/PageContainer";
 import { NewsItem } from "@/features/news/components/NewsItem/NewsItem";
 import { NewsList } from "@/features/news/components/NewsList/NewsList";
+import { AccessGuard } from "@/features/auth/components/AccessGuard/AccessGuard";
 
 export const NewsPage = () => {
     return (
         <PageContainer>
             <Header title="Aktualności">
-                <Button color="jade">
-                    Nowe ogłoszenie
-                    <Plus />
-                </Button>
+                <AccessGuard requiredAccess="Caretaker">
+                    <Button color="jade">
+                        Nowe ogłoszenie
+                        <Plus />
+                    </Button>
+                </AccessGuard>
             </Header>
 
             <NewsList>

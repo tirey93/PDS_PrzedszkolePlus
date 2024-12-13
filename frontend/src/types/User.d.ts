@@ -6,3 +6,9 @@ export type User = {
     login: string;
     role: UserRole;
 };
+
+export type UserDTO = {
+    displayName: string;
+    username: string;
+    role: UserRole;
+};

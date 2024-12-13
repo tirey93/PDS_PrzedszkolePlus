@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { AuthService } from "@/features/auth/api/authService";
 import { useUser } from "@/features/auth/hooks/useUser";
-import { User } from "@/features/auth/types/User";
 import { useNavigate } from "react-router-dom";
 import { AppRoute } from "@/app/router";
+import { User } from "@/types/User";
 
 export const useSignIn = () => {
     const { login } = useUser();

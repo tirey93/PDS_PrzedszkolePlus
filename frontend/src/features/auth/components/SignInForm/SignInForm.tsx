@@ -1,6 +1,12 @@
 import classes from "./SignInForm.module.scss";
-import { Box, Button, Text, TextField } from "@radix-ui/themes";
-import { SignInFormInputs, useSignInForm } from "@/features/auth/components/SignInForm/hooks/useSignInForm";
+import { Button } from "@radix-ui/themes";
+import {
+    SIGN_IN_LOGIN_REQUIREMENT,
+    SIGN_IN_PASSWORD_REQUIREMENT,
+    SignInFormInputs,
+    useSignInForm,
+} from "@/features/auth/components/SignInForm/hooks/useSignInForm";
+import { Input } from "@/components/Input/Input";
 
 type SignInFormProps = {
     onSubmit: (payload: SignInFormInputs) => void;
@@ -12,20 +18,19 @@ export const SignInForm = ({ onSubmit, isLoading }: SignInFormProps) => {
 
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-            <Box className={classes.input}>
-                <Text className={classes.inputLabel}>Login</Text>
-                <TextField.Root {...register("login")} />
-                {formState.errors.login && <Text className={classes.inputError}>{formState.errors.login.message}</Text>}
-            </Box>
-
-            <Box className={classes.input}>
-                <Text className={classes.inputLabel}>Hasło</Text>
-                <TextField.Root {...register("password")} type="password" />
-                {formState.errors.password && (
-                    <Text className={classes.inputError}>{formState.errors.password.message}</Text>
-                )}
-            </Box>
-
+            <Input
+                {...register("login")}
+                label="Login"
+                help={SIGN_IN_LOGIN_REQUIREMENT}
+                error={formState.errors?.login?.message}
+            />
+            <Input
+                {...register("password")}
+                label="Hasło"
+                type="password"
+                help={SIGN_IN_PASSWORD_REQUIREMENT}
+                error={formState.errors?.password?.message}
+            />
             <Button loading={isLoading} className={classes.submitButton}>
                 Zaloguj
             </Button>
