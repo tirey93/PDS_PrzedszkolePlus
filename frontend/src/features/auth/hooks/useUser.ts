@@ -1,5 +1,5 @@
 import { create } from "zustand/react";
-import { User } from "@/features/auth/types/User";
+import { User } from "@/types/User";
 
 type UseUser = {
     user: User | null;

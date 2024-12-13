@@ -1,16 +1,10 @@
-import { User, UserRole } from "@/features/auth/types/User";
+import { User, UserDTO } from "@/types/User";
 
 // const SIGN_IN_ENDPOINT = "/Authentication/Login";
 
 type SignInRequestBody = {
     username: string;
     password: string;
-};
-
-type UserDTO = {
-    displayName: string;
-    username: string;
-    role: UserRole;
 };
 
 export class AuthService {

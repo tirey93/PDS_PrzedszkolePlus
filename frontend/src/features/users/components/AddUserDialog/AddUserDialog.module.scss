@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+
+  h1 {
+    margin-bottom: 0;
+  }
+}
+
+
+.alert {
+  margin-top: var(--space-4);
+}
