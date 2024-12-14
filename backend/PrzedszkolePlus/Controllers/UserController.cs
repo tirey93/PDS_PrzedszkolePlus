@@ -178,7 +178,7 @@ namespace PrzedszkolePlus.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.User)]
 #endif
         public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePasswordRequest dto)
         {
