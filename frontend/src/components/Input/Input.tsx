@@ -1,26 +1,43 @@
 import { forwardRef } from "react";
+
 import classes from "./Input.module.scss";
-import { Text, TextField } from "@radix-ui/themes";
+import { Box, TextArea, Text, TextField } from "@radix-ui/themes";
 import { RequirementsTooltip } from "@/components/RequirementsTooltip/RequirementsTooltip";
 
-type InputProps = {
+interface InputProps {
     label: string;
     help: string;
-    type?: "password" | "email";
+    type?: "password" | "email" | "textarea" | "text";
     error?: string;
-};
+}
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ label, error, help, ...props }: InputProps, ref) => {
-    return (
-        <label className={classes.input}>
-            <Text className={classes.inputLabel}>{label}</Text>
-            <TextField.Root {...props} ref={ref}>
-                <TextField.Slot side="right">
+export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
+    ({ label, error, help, type = "text", ...props }: InputProps, ref) => {
+        return (
+            <label className={classes.input}>
+                <Box className={classes.header}>
+                    <Text className={classes.inputLabel}>{label}</Text>
                     <RequirementsTooltip error={error} content={help} />
-                </TextField.Slot>
-            </TextField.Root>
-        </label>
-    );
-});
+                </Box>
+
+                {type === "textarea" ? (
+                    <TextArea
+                        resize="vertical"
+                        aria-invalid={!!error}
+                        ref={ref as React.Ref<HTMLTextAreaElement>}
+                        {...props}
+                    />
+                ) : (
+                    <TextField.Root
+                        type={type}
+                        aria-invalid={!!error}
+                        ref={ref as React.Ref<HTMLInputElement>}
+                        {...props}
+                    />
+                )}
+            </label>
+        );
+    }
+);
 
 Input.displayName = "Input";

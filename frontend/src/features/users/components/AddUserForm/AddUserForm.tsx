@@ -13,14 +13,15 @@ import { Input } from "@/components/Input/Input";
 
 type AddUserFormProps = {
     onSubmit: (inputs: AddUserFormInputs) => void;
+    onCancel: () => void;
     isLoading?: boolean;
 };
 
-export const AddUserForm = ({ onSubmit, isLoading }: AddUserFormProps) => {
+export const AddUserForm = ({ onSubmit, onCancel, isLoading }: AddUserFormProps) => {
     const { register, handleSubmit, formState } = useAddUserForm();
 
     return (
-        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} onReset={onCancel}>
             <Box className={classes.row}>
                 <Input
                     {...register("firstName")}
@@ -60,9 +61,14 @@ export const AddUserForm = ({ onSubmit, isLoading }: AddUserFormProps) => {
                 />
             </Box>
 
-            <Button color="jade" className={classes.submitButton} loading={isLoading}>
-                Utwórz
-            </Button>
+            <Box className={classes.actions}>
+                <Button variant="soft" color="gray" loading={isLoading} type="reset">
+                    Anuluj
+                </Button>
+                <Button color="jade" loading={isLoading} type="submit">
+                    Utwórz
+                </Button>
+            </Box>
         </form>
     );
 };
