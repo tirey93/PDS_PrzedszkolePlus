@@ -30,8 +30,8 @@ namespace PrzedszkolePlus.CommandHandlers
                 Name = request.Username,
                 DisplayName = request.DisplayName,
                 HashedPassword = hash,
-                Role = Role.User
-            };
+                Role = (Role)Enum.Parse(typeof(Role), request.Role, ignoreCase: true)
+        };
             _userRepository.Add(user);
             await _userRepository.SaveChangesAsync();
 

@@ -26,6 +26,9 @@ namespace PrzedszkolePlus.QueryHandlers
             if (hash.ToLower() != user.HashedPassword.ToLower())
                 throw new PasswordNotMatchException(request.Username);
 
+            if (!user.IsActive)
+                throw new UserIsNotActiveException(user.Id);
+
             return Task.FromResult(new UserResponse
             {
                 Id = user.Id,
