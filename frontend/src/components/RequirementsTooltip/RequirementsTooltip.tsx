@@ -15,7 +15,7 @@ export const RequirementsTooltip = ({ error, content }: RequirementsTooltipProps
 
     return (
         <Tooltip content={content}>
-            <Icon color={mapStateToColor(state)} size={20} />
+            <Icon color={mapStateToColor(state)} size={14} />
         </Tooltip>
     );
 };

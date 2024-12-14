@@ -2,15 +2,20 @@ import classes from "./NewsItem.module.scss";
 import { Badge, Box, Button, Heading, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import classNames from "classnames";
+import { AccessGuard } from "@/features/auth/components/AccessGuard/AccessGuard";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { DeleteNewsDialog } from "@/features/news/components/DeleteNewsDialog/DeleteNewsDialog";
+import { AddNewsDialog } from "@/features/news/components/AddNewsDialog/AddNewsDialog";
 
 type NewsProps = {
     title: string;
+    id: string;
     content: string;
     imageSrc: string;
     createdAt: Date;
 };
 
-export const NewsItem = ({ title, createdAt, content, imageSrc }: NewsProps) => {
+export const NewsItem = ({ title, createdAt, content, imageSrc, id }: NewsProps) => {
     const [isContentTruncated, setIsContentTruncated] = useState(true);
     const [canContentBeTruncated, setCanContentBeTruncated] = useState(true);
 
@@ -42,15 +47,39 @@ export const NewsItem = ({ title, createdAt, content, imageSrc }: NewsProps) => 
                 <Box className={classes.footer}>
                     <Badge color="gray">{createdAt.toLocaleDateString()}</Badge>
                     {(canContentBeTruncated || !isContentTruncated) && (
-                        <Button
-                            onClick={toggleIsContentTruncated}
-                            color={isContentTruncated ? "jade" : "ruby"}
-                            variant="soft"
-                            size="1"
-                        >
-                            {isContentTruncated ? "Pokaż więcej" : "Pokaż mniej"}
+                        <Button onClick={toggleIsContentTruncated} color="blue" variant="soft" size="1">
+                            {isContentTruncated ? (
+                                <>
+                                    Pokaż więcej
+                                    <ChevronDown size={10} />
+                                </>
+                            ) : (
+                                <>
+                                    Pokaż mniej
+                                    <ChevronUp size={10} />
+                                </>
+                            )}
                         </Button>
                     )}
+                    <AccessGuard requiredAccess="Caretaker">
+                        <AddNewsDialog
+                            news={{ title, id }}
+                            trigger={
+                                <Button color="jade" variant="soft" size="1">
+                                    Edytuj
+                                </Button>
+                            }
+                        />
+
+                        <DeleteNewsDialog
+                            news={{ title, id }}
+                            trigger={
+                                <Button color="crimson" variant="soft" size="1">
+                                    Usuń
+                                </Button>
+                            }
+                        />
+                    </AccessGuard>
                 </Box>
             </Box>
         </article>
