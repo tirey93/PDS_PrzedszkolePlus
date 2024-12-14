@@ -29,6 +29,7 @@ namespace PrzedszkolePlus.CommandHandlers
             { 
                 Name = request.Username,
                 DisplayName = request.DisplayName,
+                IsActive = true,
                 HashedPassword = hash,
                 Role = Role.User
             };
@@ -40,6 +41,7 @@ namespace PrzedszkolePlus.CommandHandlers
                 Id = user.Id,
                 Name = user.Name,
                 DisplayName = user.DisplayName,
+                IsActive = user.IsActive,
                 Role = user.Role.ToString(),
             };
         }

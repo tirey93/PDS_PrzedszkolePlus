@@ -32,6 +32,7 @@ namespace PrzedszkolePlus.QueryHandlers
                 Name = user.Name,
                 DisplayName = user.DisplayName,
                 Role = user.Role.ToString(),
+                IsActive = user.IsActive
             });
         }
     }
