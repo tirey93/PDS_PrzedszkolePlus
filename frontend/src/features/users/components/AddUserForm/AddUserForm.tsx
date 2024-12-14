@@ -62,7 +62,7 @@ export const AddUserForm = ({ onSubmit, onCancel, isLoading }: AddUserFormProps)
             </Box>
 
             <Box className={classes.actions}>
-                <Button variant="soft" color="gray" loading={isLoading} type="reset">
+                <Button variant="soft" loading={isLoading} type="reset">
                     Anuluj
                 </Button>
                 <Button color="jade" loading={isLoading} type="submit">

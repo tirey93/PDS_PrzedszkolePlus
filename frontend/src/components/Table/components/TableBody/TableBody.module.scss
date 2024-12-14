@@ -1,0 +1,15 @@
+.body {
+  .cell {
+    padding: var(--space-1) var(--space-2);
+    border: thin solid var(--gray-6);
+    background: var(--gray-1);
+
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-medium);
+    text-align: center;
+
+    &.textCell {
+      text-align: left;
+    }
+  }
+}

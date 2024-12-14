@@ -43,7 +43,7 @@ export const AddNewsForm = ({ onSubmit, isLoading, onCancel }: AddNewsFormProps)
             />
 
             <Box className={classes.actions}>
-                <Button variant="soft" color="gray" type="reset">
+                <Button variant="soft" type="reset">
                     Anuluj
                 </Button>
                 <Button color="jade" loading={isLoading} type="submit">

@@ -1,0 +1,18 @@
+.cell {
+  border: thin solid var(--gray-6);
+  padding: var(--space-1) var(--space-2);
+  background: var(--gray-3);
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+
+    &.sortable {
+      cursor: pointer;
+    }
+  }
+}
