@@ -14,7 +14,10 @@ export function TableBody<T>({ table, onRenderSubRow }: TableBodyProps<T>) {
             {table.getRowModel().rows.map((row) => {
                 return (
                     <>
-                        <tr key={row.id}>
+                        <tr
+                            key={row.id}
+                            className={classNames(classes.row, { [classes.expanded]: row.getIsExpanded() })}
+                        >
                             {row.getVisibleCells().map((cell) => {
                                 return (
                                     <td
@@ -29,7 +32,7 @@ export function TableBody<T>({ table, onRenderSubRow }: TableBodyProps<T>) {
                             })}
                         </tr>
                         {row.getIsExpanded() && onRenderSubRow && (
-                            <tr>
+                            <tr className={classes.subRow}>
                                 <td colSpan={row.getVisibleCells().length} className={classes.cell}>
                                     {onRenderSubRow(row.original)}
                                 </td>
