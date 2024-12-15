@@ -4,25 +4,23 @@ import { DialogFooter } from "@/components/Dialog/DialogFooter/DialogFooter";
 import { DialogBody } from "@/components/Dialog/components/DialogBody/DialogBody";
 import { ReactNode, useState } from "react";
 import { Alert } from "@/components/Alert/Alert";
-import classes from "@/features/news/components/AddNewsDialog/AddNewsDialog.module.scss";
+import classes from "./DisableUserDialog.module.scss";
 import { toast } from "sonner";
-import { useDeleteNews } from "@/features/news/hooks/useDeleteNews";
+import { useDisableUser } from "@/features/users/hooks/useDisableUser";
+import { User } from "@/types/User";
 
-type DeleteNewsDialogProps = {
-    news: {
-        title: string;
-        id: string;
-    };
+type DisableUserDialogProps = {
+    user: User;
     trigger: ReactNode;
 };
 
-export const DeleteNewsDialog = ({ news, trigger }: DeleteNewsDialogProps) => {
+export const DisableUserDialog = ({ user, trigger }: DisableUserDialogProps) => {
     const [open, setOpen] = useState(false);
-    const { mutateAsync: deleteNews, isPending, error } = useDeleteNews();
+    const { mutateAsync: disableUser, isPending, error } = useDisableUser();
 
     const handleDelete = async () => {
-        await deleteNews({ id: news.id });
-        toast.success("Ogłoszenie usunięte.");
+        await disableUser(user);
+        toast.success("Dostęp użytkownika zablokowany.");
         setOpen(false);
     };
 
@@ -31,14 +29,22 @@ export const DeleteNewsDialog = ({ news, trigger }: DeleteNewsDialogProps) => {
             <Dialog.Trigger>{trigger}</Dialog.Trigger>
 
             <Dialog.Content maxWidth="450px">
-                <DialogHeader>Usuń ogłoszenie</DialogHeader>
-                <DialogBody>Czy na pewno chcesz usunąć ogłoszenie {<Strong>{news.title}</Strong>}?</DialogBody>
+                <DialogHeader>Zablokuj dostęp użytkownika</DialogHeader>
+                <DialogBody>
+                    Czy na pewno chcesz wyłączyć dostęp użytkownika{" "}
+                    {
+                        <Strong>
+                            {user.firstName} {user.lastName}
+                        </Strong>
+                    }
+                    ?
+                </DialogBody>
                 <DialogFooter>
                     <Dialog.Close>
                         <Button variant="soft">Anuluj</Button>
                     </Dialog.Close>
                     <Button color="crimson" loading={isPending} onClick={handleDelete}>
-                        Usuń
+                        Wyłącz
                     </Button>
                 </DialogFooter>
                 {error && <Alert className={classes.alert}>{error.message}</Alert>}

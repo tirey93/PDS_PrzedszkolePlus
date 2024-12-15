@@ -1,0 +1,27 @@
+.body {
+  .subRow {
+    background: var(--blue-2);
+  }
+
+  .row {
+    background: var(--gray-1);
+
+    &:hover, &.expanded {
+      background: var(--blue-2);
+      color: var(--blue-11);
+    }
+  }
+
+  .cell {
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid var(--gray-4);
+
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-medium);
+    text-align: center;
+
+    &.textCell {
+      text-align: left;
+    }
+  }
+}
