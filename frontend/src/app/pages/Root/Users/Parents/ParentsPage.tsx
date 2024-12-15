@@ -1,5 +1,4 @@
-import { PageContainer } from "@/components/PageContainer/PageContainer";
-import { Header } from "@/components/Header/Header";
+import { Page } from "@/components/Page/Page";
 import { onlyAsCaretaker } from "@/features/auth/hoc/withAuthorization";
 import { AddUserDialog } from "@/features/users/components/AddUserDialog/AddUserDialog";
 import { Button } from "@radix-ui/themes";
@@ -26,10 +25,10 @@ const defaultData: User[] = [
     },
 ];
 
-const Page = () => {
+const BaseParentsPage = () => {
     return (
-        <PageContainer>
-            <Header title="Rodzice">
+        <Page.Root>
+            <Page.Header title="Rodzice">
                 <AddUserDialog
                     role="Parent"
                     trigger={
@@ -39,11 +38,13 @@ const Page = () => {
                         </Button>
                     }
                 />
-            </Header>
+            </Page.Header>
 
-            <ParentsTable parents={Array.from({ length: 100 }, () => [...defaultData]).flat()} />
-        </PageContainer>
+            <Page.Content>
+                <ParentsTable parents={Array.from({ length: 100 }, () => [...defaultData]).flat()} />
+            </Page.Content>
+        </Page.Root>
     );
 };
 
-export const ParentsPage = onlyAsCaretaker(Page);
+export const ParentsPage = onlyAsCaretaker(BaseParentsPage);

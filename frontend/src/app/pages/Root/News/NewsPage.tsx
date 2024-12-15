@@ -1,16 +1,15 @@
 import { Button } from "@radix-ui/themes";
 import { Plus } from "lucide-react";
-import { Header } from "@/components/Header/Header";
-import { PageContainer } from "@/components/PageContainer/PageContainer";
 import { NewsItem } from "@/features/news/components/NewsItem/NewsItem";
 import { NewsList } from "@/features/news/components/NewsList/NewsList";
 import { AccessGuard } from "@/features/auth/components/AccessGuard/AccessGuard";
 import { AddNewsDialog } from "@/features/news/components/AddNewsDialog/AddNewsDialog";
+import { Page } from "@/components/Page/Page";
 
 export const NewsPage = () => {
     return (
-        <PageContainer>
-            <Header title="Aktualności">
+        <Page.Root>
+            <Page.Header title="Aktualności">
                 <AccessGuard requiredAccess="Caretaker">
                     <AddNewsDialog
                         trigger={
@@ -21,35 +20,37 @@ export const NewsPage = () => {
                         }
                     />
                 </AccessGuard>
-            </Header>
+            </Page.Header>
 
-            <NewsList>
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews2} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews2} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews2} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-                <NewsItem {...mockNews} />
-            </NewsList>
-        </PageContainer>
+            <Page.Content>
+                <NewsList>
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews2} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews2} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews2} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                    <NewsItem {...mockNews} />
+                </NewsList>
+            </Page.Content>
+        </Page.Root>
     );
 };
 

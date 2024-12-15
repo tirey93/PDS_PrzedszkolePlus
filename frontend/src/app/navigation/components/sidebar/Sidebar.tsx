@@ -21,6 +21,7 @@ const items = [
         ],
     },
     { title: "Panel nauczyciela", items: [{ label: "Moja grupa", href: AppRoute.CLASS }] },
+    { title: "Personalne", items: [{ label: "Ustawienia", href: AppRoute.SETTINGS }] },
 ];
 
 export function Sidebar() {

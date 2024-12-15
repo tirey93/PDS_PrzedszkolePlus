@@ -1,10 +1,10 @@
-import classes from "./Header.module.scss";
+import classes from "./PageHeader.module.scss";
 import { Box, Heading } from "@radix-ui/themes";
 import { PropsWithChildren } from "react";
 
-type HeaderProps = PropsWithChildren<{ title: string }>;
+type PageHeaderProps = PropsWithChildren<{ title: string }>;
 
-export const Header = ({ children, title }: HeaderProps) => {
+export const PageHeader = ({ children, title }: PageHeaderProps) => {
     return (
         <Box className={classes.container}>
             <Box className={classes.header}>
