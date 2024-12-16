@@ -19,10 +19,11 @@ type TableProps<T> = {
     data: T[];
     columns: ColumnDef<T, any>[];
     pageSize?: number;
+    withPagination?: boolean;
     onRenderSubRow?: (data: T) => ReactNode;
 };
 
-export function Table<T>({ data, columns, onRenderSubRow, pageSize = 20 }: TableProps<T>) {
+export function Table<T>({ data, columns, onRenderSubRow, withPagination, pageSize = 20 }: TableProps<T>) {
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize,
@@ -35,10 +36,10 @@ export function Table<T>({ data, columns, onRenderSubRow, pageSize = 20 }: Table
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getSortedRowModel: getSortedRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        onPaginationChange: setPagination,
+        getPaginationRowModel: withPagination ? getPaginationRowModel() : undefined,
+        onPaginationChange: withPagination ? setPagination : undefined,
         state: {
-            pagination,
+            pagination: withPagination ? pagination : undefined,
         },
     });
 
@@ -48,7 +49,7 @@ export function Table<T>({ data, columns, onRenderSubRow, pageSize = 20 }: Table
                 <TableHeader table={table} />
                 <TableBody table={table} onRenderSubRow={onRenderSubRow} />
             </table>
-            <TablePagination table={table} />
+            {withPagination && <TablePagination table={table} />}
         </Box>
     );
 }

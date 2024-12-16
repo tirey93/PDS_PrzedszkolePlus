@@ -1,12 +1,6 @@
 .radix-themes {
   --default-font-family: "Montserrat", "sans-serif";
-
-  &:first-of-type {
-  }
-
-  button {
-    cursor: pointer;
-  }
+  --cursor-button: pointer;
 }
 
 #root {

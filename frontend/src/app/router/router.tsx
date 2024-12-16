@@ -23,6 +23,14 @@ const SettingsPage = React.lazy(() =>
     import("@/app/pages/Root/Settings/SettingsPage").then((module) => ({ default: module.SettingsPage }))
 );
 
+const ChildrenPage = React.lazy(() =>
+    import("@/app/pages/Root/Children/ChildrenPage").then((module) => ({ default: module.ChildrenPage }))
+);
+
+const GroupPage = React.lazy(() =>
+    import("@/app/pages/Root/Group/GroupPage").then((module) => ({ default: module.GroupPage }))
+);
+
 const AuthPage = React.lazy(() => import("@/app/pages/Auth/AuthPage").then((module) => ({ default: module.AuthPage })));
 
 const SignInPage = React.lazy(() =>
@@ -72,6 +80,14 @@ export const router = createBrowserRouter([
             {
                 path: AppRoute.MESSAGES,
                 element: WithSuspense(<MessagesPage />),
+            },
+            {
+                path: AppRoute.CHILDREN,
+                element: WithSuspense(<ChildrenPage />),
+            },
+            {
+                path: AppRoute.GROUP,
+                element: WithSuspense(<GroupPage />),
             },
             {
                 path: "*",
