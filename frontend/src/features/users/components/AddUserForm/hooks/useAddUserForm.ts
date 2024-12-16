@@ -1,6 +1,11 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {
+    MIN_PASSWORD_LENGTH,
+    PASSWORD_CONFIRM_REQUIREMENT,
+    PASSWORD_REQUIREMENT,
+} from "@/features/users/constants/password";
 
 export type AddUserFormInputs = {
     login: string;
@@ -10,15 +15,13 @@ export type AddUserFormInputs = {
     firstName: string;
 };
 
-export const PASSWORD_REQUIREMENT = "Hasło musi zawierać co najmniej 12 znaków";
-export const PASSWORD_CONFIRM_REQUIREMENT = "Hasła muszą się zgadzać";
 export const FIRST_NAME_REQUIREMENT = "Minimum 3 znaki, białe znaki są niedozwolone";
 export const LAST_NAME_REQUIREMENT = "Minimum 3 znaki, białe znaki są niedozwolone";
 export const LOGIN_REQUIREMENT = "Minimum 6 znaków, białe znaki są niedozwolone";
 
 export const useAddUserForm = () => {
     const requirements = yup.object({
-        password: yup.string().required(PASSWORD_REQUIREMENT).min(12, PASSWORD_REQUIREMENT),
+        password: yup.string().required(PASSWORD_REQUIREMENT).min(MIN_PASSWORD_LENGTH, PASSWORD_REQUIREMENT),
         confirmPassword: yup
             .string()
             .required(PASSWORD_CONFIRM_REQUIREMENT)

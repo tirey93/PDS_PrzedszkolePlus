@@ -5,11 +5,10 @@ import {
     FIRST_NAME_REQUIREMENT,
     LAST_NAME_REQUIREMENT,
     LOGIN_REQUIREMENT,
-    PASSWORD_CONFIRM_REQUIREMENT,
-    PASSWORD_REQUIREMENT,
     useAddUserForm,
 } from "@/features/users/components/AddUserForm/hooks/useAddUserForm";
 import { Input } from "@/components/Input/Input";
+import { PASSWORD_CONFIRM_REQUIREMENT, PASSWORD_REQUIREMENT } from "@/features/users/constants/password";
 
 type AddUserFormProps = {
     onSubmit: (inputs: AddUserFormInputs) => void;

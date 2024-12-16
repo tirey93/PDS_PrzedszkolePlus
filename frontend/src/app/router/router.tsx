@@ -19,6 +19,10 @@ const MessagesPage = React.lazy(() =>
     import("@/app/pages/Root/Messages/MessagesPage").then((module) => ({ default: module.MessagesPage }))
 );
 
+const SettingsPage = React.lazy(() =>
+    import("@/app/pages/Root/Settings/SettingsPage").then((module) => ({ default: module.SettingsPage }))
+);
+
 const AuthPage = React.lazy(() => import("@/app/pages/Auth/AuthPage").then((module) => ({ default: module.AuthPage })));
 
 const SignInPage = React.lazy(() =>
@@ -52,6 +56,10 @@ export const router = createBrowserRouter([
             {
                 path: AppRoute.NEWS,
                 element: WithSuspense(<NewsPage />),
+            },
+            {
+                path: AppRoute.SETTINGS,
+                element: WithSuspense(<SettingsPage />),
             },
             {
                 path: AppRoute.CARETAKERS,

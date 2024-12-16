@@ -1,11 +1,10 @@
-import { PageContainer } from "@/components/PageContainer/PageContainer";
-import { Header } from "@/components/Header/Header";
 import { onlyAsCaretaker } from "@/features/auth/hoc/withAuthorization";
 import { AddUserDialog } from "@/features/users/components/AddUserDialog/AddUserDialog";
 import { Plus } from "lucide-react";
 import { Button } from "@radix-ui/themes";
 import { CaretakersTable } from "@/features/users/components/CaretakersTable/CaretakersTable";
 import { User } from "@/types/User";
+import { Page } from "@/components/Page/Page";
 
 const defaultData: User[] = [
     {
@@ -26,10 +25,10 @@ const defaultData: User[] = [
     },
 ];
 
-const Page = () => {
+const BaseCaretakersPage = () => {
     return (
-        <PageContainer>
-            <Header title="Opiekunowie">
+        <Page.Root>
+            <Page.Header title="Opiekunowie">
                 <AddUserDialog
                     role="Caretaker"
                     trigger={
@@ -39,11 +38,13 @@ const Page = () => {
                         </Button>
                     }
                 />
-            </Header>
+            </Page.Header>
 
-            <CaretakersTable caretakers={Array.from({ length: 100 }, () => [...defaultData]).flat()} />
-        </PageContainer>
+            <Page.Content>
+                <CaretakersTable caretakers={Array.from({ length: 100 }, () => [...defaultData]).flat()} />
+            </Page.Content>
+        </Page.Root>
     );
 };
 
-export const CaretakersPage = onlyAsCaretaker(Page);
+export const CaretakersPage = onlyAsCaretaker(BaseCaretakersPage);
