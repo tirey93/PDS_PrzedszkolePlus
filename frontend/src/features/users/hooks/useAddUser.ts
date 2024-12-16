@@ -6,7 +6,7 @@ export const useAddUser = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: UsersService.create,
+        mutationFn: UsersService.createOne,
         onSuccess: () => queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY] }),
     });
 };

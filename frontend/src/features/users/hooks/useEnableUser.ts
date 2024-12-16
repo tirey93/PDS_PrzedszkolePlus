@@ -6,7 +6,7 @@ export const useEnableUser = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: UsersService.enable,
+        mutationFn: UsersService.enableOne,
         onSuccess: () => queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY] }),
     });
 };

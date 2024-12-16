@@ -9,20 +9,22 @@ import classNames from "classnames";
 import { useState } from "react";
 import { Box, IconButton } from "@radix-ui/themes";
 import { ChevronLeft } from "lucide-react";
+import { AccessGuard } from "@/features/auth/components/AccessGuard/AccessGuard";
 
 const items = [
-    { title: "Przedszkole", items: [{ label: "Aktualności", href: AppRoute.NEWS }] },
-    { title: "Kontakt", items: [{ label: "Wiadomości", href: AppRoute.MESSAGES }] },
+    { title: "Przedszkole", requiredAccess: "authenticated", items: [{ label: "Aktualności", href: AppRoute.NEWS }] },
+    { title: "Kontakt", requiredAccess: "authenticated", items: [{ label: "Wiadomości", href: AppRoute.MESSAGES }] },
     {
         title: "Użytkownicy",
+        requiredAccess: "Admin",
         items: [
             { label: "Rodzice", href: AppRoute.PARENTS },
             { label: "Opiekunowie", href: AppRoute.CARETAKERS },
         ],
     },
-    { title: "Panel nauczyciela", items: [{ label: "Moja grupa", href: AppRoute.GROUP }] },
-    { title: "Panel rodzica", items: [{ label: "Moje dzieci", href: AppRoute.CHILDREN }] },
-    { title: "Personalne", items: [{ label: "Ustawienia", href: AppRoute.SETTINGS }] },
+    { title: "Panel nauczyciela", requiredAccess: "Admin", items: [{ label: "Moja grupa", href: AppRoute.GROUP }] },
+    { title: "Panel rodzica", requiredAccess: "User", items: [{ label: "Moje dzieci", href: AppRoute.CHILDREN }] },
+    { title: "Personalne", requiredAccess: "authenticated", items: [{ label: "Ustawienia", href: AppRoute.SETTINGS }] },
 ];
 
 export function Sidebar() {
@@ -51,16 +53,18 @@ export function Sidebar() {
 
             <Box className={classes.navigation}>
                 {items.map((section) => (
-                    <NavigationSection key={section.title} title={section.title}>
-                        {section.items.map((item) => (
-                            <NavigationItem
-                                key={item.href}
-                                href={item.href}
-                                label={item.label}
-                                isActive={item.href === pathname}
-                            />
-                        ))}
-                    </NavigationSection>
+                    <AccessGuard key={section.title} requiredAccess={section.requiredAccess}>
+                        <NavigationSection title={section.title}>
+                            {section.items.map((item) => (
+                                <NavigationItem
+                                    key={item.href}
+                                    href={item.href}
+                                    label={item.label}
+                                    isActive={item.href === pathname}
+                                />
+                            ))}
+                        </NavigationSection>
+                    </AccessGuard>
                 ))}
             </Box>
 

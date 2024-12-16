@@ -24,7 +24,7 @@ const columns = [
         header: () => <span>Grupa</span>,
     }),
     columnHelper.accessor((row) => row.caretaker, {
-        id: "caretaker",
+        id: "Admin",
         cell: (info) => `${info.getValue().firstName} ${info.getValue().lastName}`,
         header: () => <span>Opiekun</span>,
     }),

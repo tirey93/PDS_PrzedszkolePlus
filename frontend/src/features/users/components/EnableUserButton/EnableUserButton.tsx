@@ -12,7 +12,7 @@ export const EnableUserButton = ({ userId }: EnableUserButtonProps) => {
 
     const handleEnableUser = useCallback(async () => {
         try {
-            await enableUser({ id: userId });
+            await enableUser(userId);
             toast.success("Dostęp użytkownika został przywrócony.");
         } catch (e) {
             toast.error("Nie udało się przywrócić dostępu użytkownika.");

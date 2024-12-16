@@ -5,32 +5,18 @@ import { Button } from "@radix-ui/themes";
 import { Plus } from "lucide-react";
 import { ParentsTable } from "@/features/users/components/ParentsTable/ParentsTable";
 import { User } from "@/types/User";
-
-const defaultData: User[] = [
-    {
-        isActive: true,
-        id: "2",
-        firstName: "Jan",
-        lastName: "Kowalski",
-        role: "Parent",
-        login: "jan-kowalski-123",
-    },
-    {
-        isActive: true,
-        id: "1",
-        firstName: "Anna",
-        lastName: "Nowak",
-        role: "Parent",
-        login: "anna-nowak-987",
-    },
-];
+import { useGetAllUsers } from "@/features/users/hooks/useGetAllUsers";
 
 const BaseParentsPage = () => {
+    // TODO: Handle loading state, handle error state
+    const { data } = useGetAllUsers();
+    const parents: User[] = data?.filter((u) => u.role === "User") ?? [];
+
     return (
         <Page.Root>
             <Page.Header title="Rodzice">
                 <AddUserDialog
-                    role="Parent"
+                    role="User"
                     trigger={
                         <Button color="jade">
                             Utwórz konto rodzica
@@ -41,7 +27,7 @@ const BaseParentsPage = () => {
             </Page.Header>
 
             <Page.Content>
-                <ParentsTable parents={Array.from({ length: 100 }, () => [...defaultData]).flat()} />
+                <ParentsTable parents={parents} />
             </Page.Content>
         </Page.Root>
     );

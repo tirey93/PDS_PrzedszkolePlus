@@ -17,7 +17,7 @@ const columns = [
         header: () => <span>Nazwisko</span>,
     }),
     columnHelper.accessor((row) => row.parent, {
-        id: "parent",
+        id: "User",
         cell: (info) => `${info.getValue().firstName} ${info.getValue().lastName}`,
         header: () => <span>Rodzic</span>,
     }),

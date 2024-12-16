@@ -1,4 +1,4 @@
-export type UserRole = "Caretaker" | "Parent";
+export type UserRole = "Admin" | "User";
 
 export type User = {
     id: string;
@@ -12,7 +12,7 @@ export type User = {
 export type UserDTO = {
     id: string;
     displayName: string;
-    username: string;
+    name: string;
     role: UserRole;
     isActive: boolean;
 };

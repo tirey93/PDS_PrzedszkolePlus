@@ -3,34 +3,20 @@ import { AddUserDialog } from "@/features/users/components/AddUserDialog/AddUser
 import { Plus } from "lucide-react";
 import { Button } from "@radix-ui/themes";
 import { CaretakersTable } from "@/features/users/components/CaretakersTable/CaretakersTable";
-import { User } from "@/types/User";
 import { Page } from "@/components/Page/Page";
-
-const defaultData: User[] = [
-    {
-        isActive: false,
-        id: "2",
-        firstName: "Jan",
-        lastName: "Kowalski",
-        role: "Caretaker",
-        login: "jan-kowalski-123",
-    },
-    {
-        isActive: true,
-        id: "1",
-        firstName: "Anna",
-        lastName: "Nowak",
-        role: "Caretaker",
-        login: "anna-nowak-987",
-    },
-];
+import { useGetAllUsers } from "@/features/users/hooks/useGetAllUsers";
+import { User } from "@/types/User";
 
 const BaseCaretakersPage = () => {
+    // TODO: Handle loading state, handle error state
+    const { data } = useGetAllUsers();
+    const caretakers: User[] = data?.filter((u) => u.role === "Admin") ?? [];
+
     return (
         <Page.Root>
             <Page.Header title="Opiekunowie">
                 <AddUserDialog
-                    role="Caretaker"
+                    role="Admin"
                     trigger={
                         <Button color="jade">
                             Utwórz konto opiekuna
@@ -41,7 +27,7 @@ const BaseCaretakersPage = () => {
             </Page.Header>
 
             <Page.Content>
-                <CaretakersTable caretakers={Array.from({ length: 100 }, () => [...defaultData]).flat()} />
+                <CaretakersTable caretakers={caretakers} />
             </Page.Content>
         </Page.Root>
     );

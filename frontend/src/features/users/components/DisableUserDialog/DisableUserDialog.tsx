@@ -19,7 +19,7 @@ export const DisableUserDialog = ({ user, trigger }: DisableUserDialogProps) => 
     const { mutateAsync: disableUser, isPending, error } = useDisableUser();
 
     const handleDelete = async () => {
-        await disableUser(user);
+        await disableUser(user.id);
         toast.success("Dostęp użytkownika zablokowany.");
         setOpen(false);
     };
