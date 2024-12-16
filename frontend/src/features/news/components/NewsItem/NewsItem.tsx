@@ -61,7 +61,7 @@ export const NewsItem = ({ title, createdAt, content, imageSrc, id }: NewsProps)
                             )}
                         </Button>
                     )}
-                    <AccessGuard requiredAccess="Caretaker">
+                    <AccessGuard requiredAccess="Admin">
                         <AddNewsDialog
                             news={{ title, id }}
                             trigger={

@@ -15,7 +15,7 @@ const mockChildren: Child[] = [
         parent: {
             id: "1",
             isActive: true,
-            role: "Parent",
+            role: "User",
             firstName: "Anna",
             lastName: "Nowak",
             login: "anna-nowak-123",
@@ -23,7 +23,7 @@ const mockChildren: Child[] = [
         caretaker: {
             id: "2",
             isActive: true,
-            role: "Caretaker",
+            role: "Admin",
             firstName: "Jan",
             lastName: "Kowalski",
             login: "jan-kowalski-987",
@@ -38,7 +38,7 @@ const mockChildren: Child[] = [
         parent: {
             id: "1",
             isActive: true,
-            role: "Parent",
+            role: "User",
             firstName: "Anna",
             lastName: "Nowak",
             login: "anna-nowak-123",
@@ -46,7 +46,7 @@ const mockChildren: Child[] = [
         caretaker: {
             id: "3",
             isActive: true,
-            role: "Caretaker",
+            role: "Admin",
             firstName: "Monika",
             lastName: "Nowacka",
             login: "monika-nowacka-123",

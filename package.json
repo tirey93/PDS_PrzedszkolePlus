@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "start:frontend": "npm run --prefix frontend start",
-    "start:backend": "dotnet run --project ./backend/PrzedszkolePlus"
+    "start:backend": "dotnet run --launch-profile https --project ./backend/PrzedszkolePlus"
   },
   "author": "",
   "license": "ISC"

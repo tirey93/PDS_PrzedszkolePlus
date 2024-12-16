@@ -18,7 +18,7 @@ type AddUserDialogProps = {
 export const AddUserDialog = ({ role, trigger }: AddUserDialogProps) => {
     const [open, setOpen] = useState(false);
     const { mutateAsync: createUser, isPending, error } = useAddUser();
-    const label = role === "Caretaker" ? "Utwórz konto opiekuna" : "Utwórz konto rodzica";
+    const label = role === "Admin" ? "Utwórz konto opiekuna" : "Utwórz konto rodzica";
 
     const handleOnSubmit = async (inputs: AddUserFormInputs) => {
         await createUser(mapAddUserFormInputsToCreateUserRequestBody(inputs, role));

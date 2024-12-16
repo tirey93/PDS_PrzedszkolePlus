@@ -10,7 +10,7 @@ export const NewsPage = () => {
     return (
         <Page.Root>
             <Page.Header title="Aktualności">
-                <AccessGuard requiredAccess="Caretaker">
+                <AccessGuard requiredAccess="Admin">
                     <AddNewsDialog
                         trigger={
                             <Button color="jade">

@@ -4,13 +4,17 @@ import { SignInForm } from "@/features/auth/components/SignInForm/SignInForm";
 import { useSignIn } from "@/features/auth/hooks/useSignIn";
 import { SignInFormInputs } from "@/features/auth/components/SignInForm/hooks/useSignInForm";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { AppRoute } from "@/app/router";
 
 export const SignInPage = () => {
     const { mutateAsync: signIn, isPending } = useSignIn();
+    const navigate = useNavigate();
 
     const login = async ({ password, login }: SignInFormInputs) => {
         try {
             await signIn({ password, username: login });
+            navigate(AppRoute.NEWS);
             toast.success("Logowanie pomyślne.");
         } catch (e) {
             console.log(e);
