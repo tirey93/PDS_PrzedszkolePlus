@@ -44,5 +44,5 @@ const columns = [
 ];
 
 export const CaretakersTable = ({ caretakers }: CaretakersTableProps) => {
-    return <Table data={caretakers} columns={columns} onRenderSubRow={CaretakersTableActions} />;
+    return <Table data={caretakers} columns={columns} onRenderSubRow={CaretakersTableActions} withPagination />;
 };

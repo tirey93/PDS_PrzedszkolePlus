@@ -4,8 +4,9 @@ export enum AppRoute {
     MESSAGES = "/messages",
     PARENTS = "/users/parents",
     CARETAKERS = "/users/teachers",
-    CLASS = "/class",
+    GROUP = "/group",
     SETTINGS = "/settings",
+    CHILDREN = "/children",
 
     AUTH = "/auth",
     SIGN_IN = "/auth/sign-in",

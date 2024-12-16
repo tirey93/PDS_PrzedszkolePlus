@@ -20,7 +20,8 @@ const items = [
             { label: "Opiekunowie", href: AppRoute.CARETAKERS },
         ],
     },
-    { title: "Panel nauczyciela", items: [{ label: "Moja grupa", href: AppRoute.CLASS }] },
+    { title: "Panel nauczyciela", items: [{ label: "Moja grupa", href: AppRoute.GROUP }] },
+    { title: "Panel rodzica", items: [{ label: "Moje dzieci", href: AppRoute.CHILDREN }] },
     { title: "Personalne", items: [{ label: "Ustawienia", href: AppRoute.SETTINGS }] },
 ];
 
