@@ -45,7 +45,7 @@ export const ChangePasswordForm = ({ onSubmit, isLoading }: ChangePasswordFormPr
                 type="password"
             />
             <Box className={classes.actions}>
-                <Button color="gray" variant="soft" type="reset">
+                <Button variant="soft" type="reset">
                     Anuluj
                 </Button>
                 <Button color="jade" variant="soft" type="submit" loading={isLoading}>
