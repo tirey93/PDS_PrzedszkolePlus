@@ -7,6 +7,7 @@ namespace PrzedszkolePlus.Requests
     {
         public string Username { get; set; }
         public string DisplayName { get; set; }
+        public string Role { get; set; }
         public string Password { get; set; }
     }
 
@@ -28,6 +29,14 @@ namespace PrzedszkolePlus.Requests
                 .NotEmpty().WithMessage(Resource.ValidatorPasswordRequired)
                 .MinimumLength(5).WithMessage(Resource.ValidatorPasswordLonger)
                 .MaximumLength(255).WithMessage(Resource.ValidatorPasswordShorter);
+
+            RuleFor(registerRequest => registerRequest.Role)
+                .Must(role => Enum.TryParse<Domain.Role>(role, out _))
+                .WithMessage(context =>
+                {
+                    var rolesList = string.Join(", ", Enum.GetNames(typeof(Domain.Role)));
+                    return string.Format(Resource.ValidatorRoleFromRolesList, rolesList);
+                });
         }
     }
 }

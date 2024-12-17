@@ -44,6 +44,7 @@ namespace PrzedszkolePlus.Controllers
                 DisplayName = dto.DisplayName,
                 Password = dto.Password,
                 Username = dto.Username,
+                Role = dto.Role
             };
 
             try
@@ -98,6 +99,11 @@ namespace PrzedszkolePlus.Controllers
             {
                 return StatusCode((int)HttpStatusCode.BadRequest,
                     string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (UserIsNotActiveException ex)
+            {
+                return StatusCode((int)HttpStatusCode.Forbidden,
+                    string.Format(Resource.ControllerForbidden, ex.Message));
             }
             catch (Exception ex)
             {
