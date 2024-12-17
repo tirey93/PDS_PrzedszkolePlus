@@ -8,7 +8,8 @@ namespace PrzedszkolePlus.QueryHandlers
 {
     public class UserQueryHandler : IRequestHandler<CheckUsernameAvailabilityQuery, bool>,
                                     IRequestHandler<GetUserQuery, UserResponse>,
-                                    IRequestHandler<GetAllUsersQuery, IEnumerable<UserResponse>>
+                                    IRequestHandler<GetAllUsersQuery, IEnumerable<UserResponse>>,
+                                    IRequestHandler<GetUsersByRoleQuery, IEnumerable<UserResponse>>
     {
         private readonly IUserRepository _userRepository;
 
@@ -47,6 +48,27 @@ namespace PrzedszkolePlus.QueryHandlers
         public Task<IEnumerable<UserResponse>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
             var users = _userRepository.GetList();
+
+            if (users == null)
+            {
+                return Task.FromResult(Enumerable.Empty<UserResponse>());
+            }
+
+            var result = users.Select(x => new UserResponse
+            {
+                Id = x.Id,
+                Name = x.Name,
+                DisplayName = x.DisplayName,
+                Role = x.Role.ToString(),
+                IsActive = x.IsActive,
+            });
+
+            return Task.FromResult(result);
+        }
+
+        public Task<IEnumerable<UserResponse>> Handle(GetUsersByRoleQuery request, CancellationToken cancellationToken)
+        {
+            var users = _userRepository.GetList(u => u.Role.ToString().ToLower() == request.UserRole.ToLower());
 
             if (users == null)
             {
