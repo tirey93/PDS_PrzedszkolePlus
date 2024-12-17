@@ -86,11 +86,11 @@ namespace PrzedszkolePlus.Controllers
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public async Task<ActionResult<UserResponse>> GetByRole(string role)
+        public async Task<ActionResult<UserResponse>> GetByRole([FromQuery] GetUsersByRoleRequest dto)
         {
             var query = new GetUsersByRoleQuery
             {
-                UserRole = role
+                UserRole = dto.UserRole
             };
             try
             {
