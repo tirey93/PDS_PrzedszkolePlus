@@ -3,12 +3,14 @@ using Domain.Exceptions;
 using PrzedszkolePlus.Commands;
 using MediatR;
 using Domain.Repositories;
+using PrzedszkolePlus.Utils;
 
 namespace PrzedszkolePlus.CommandHandlers
 {
     public class UserCommandHandler : IRequestHandler<UpdateUserRoleCommand, Unit>,
                                       IRequestHandler<DeleteUserCommand, Unit>,
-                                      IRequestHandler<UpdateUserIsActiveFlagCommand, Unit>
+                                      IRequestHandler<UpdateUserIsActiveFlagCommand, Unit>,
+                                      IRequestHandler<ChangeUserPasswordCommand, Unit>
     {
         private readonly IUserRepository _userRepository;
 
@@ -43,6 +45,22 @@ namespace PrzedszkolePlus.CommandHandlers
                 ?? throw new UserNotFoundException(request.UserId);
 
             user.IsActive = request.NewIsActiveFlagValue;
+            await _userRepository.SaveChangesAsync();
+
+            return Unit.Value;
+        }
+        public async Task<Unit> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
+        {
+            var user = _userRepository.Get(request.UserId)
+                ?? throw new UserNotFoundException(request.UserId);
+
+            var oldPasswordHash = ShaHelper.QuickHash(request.OldPassword);
+            if (oldPasswordHash.ToLower() != user.HashedPassword.ToLower())
+                throw new PasswordNotMatchException(user.Name);
+
+            var newPasswordHash = ShaHelper.QuickHash(request.NewPassword);
+
+            user.HashedPassword = newPasswordHash;
             await _userRepository.SaveChangesAsync();
 
             return Unit.Value;

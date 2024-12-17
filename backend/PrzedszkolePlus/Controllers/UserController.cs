@@ -172,6 +172,46 @@ namespace PrzedszkolePlus.Controllers
             }
         }
 
+        [HttpPut("{id:int}/Password")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+#if !DEBUG
+        [Authorize(Roles = Roles.User)]
+#endif
+        public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePasswordRequest dto)
+        {
+
+            var request = new ChangeUserPasswordCommand
+            {
+                UserId = id,
+                OldPassword = dto.OldPassword,
+                NewPassword = dto.NewPassword
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (UserNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (PasswordNotMatchException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
+        }
+
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
