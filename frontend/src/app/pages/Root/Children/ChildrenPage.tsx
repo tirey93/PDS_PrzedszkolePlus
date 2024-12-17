@@ -5,6 +5,7 @@ import { Box } from "@radix-ui/themes";
 import classes from "./ChildrenPage.module.scss";
 import { OwnChildrenTable } from "@/features/children/components/OwnChildrenTable/OwnChildrenTable";
 import { Child } from "@/features/children/types/Child";
+import { MenuTable } from "@/features/menu/api/components/MenuTable/MenuTable";
 
 const mockChildren: Child[] = [
     {
@@ -28,7 +29,7 @@ const mockChildren: Child[] = [
             lastName: "Kowalski",
             login: "jan-kowalski-987",
         },
-        group: "Pszczółki",
+        groupId: "Pszczółki",
     },
     {
         id: "2",
@@ -51,7 +52,18 @@ const mockChildren: Child[] = [
             lastName: "Nowacka",
             login: "monika-nowacka-123",
         },
-        group: "Skrzaty",
+        groupId: "Skrzaty",
+    },
+];
+
+const mockMenu = [
+    {
+        id: "1",
+        groupId: "1",
+        date: new Date(),
+        breakfast: "Owsianka",
+        dinner: "Gofry",
+        lunch: "Rosół",
     },
 ];
 
@@ -79,6 +91,7 @@ const BaseChildrenPage = () => {
                 </Box>
 
                 <OwnChildrenTable childrenList={mockChildren} />
+                <MenuTable menu={mockMenu} />
             </Page.Content>
         </Page.Root>
     );

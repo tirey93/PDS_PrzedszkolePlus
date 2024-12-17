@@ -7,9 +7,10 @@ import { TableFilter } from "@/components/Table/components/TableFilter/TableFilt
 
 type HeaderProps<T> = {
     table: Table<T>;
+    withFilters?: boolean;
 };
 
-export function TableHeader<T>({ table }: HeaderProps<T>) {
+export function TableHeader<T>({ table, withFilters }: HeaderProps<T>) {
     return (
         <thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -27,7 +28,9 @@ export function TableHeader<T>({ table }: HeaderProps<T>) {
                                     {header.column.getIsSorted() === "asc" && <ChevronUp size={16} />}
                                     {header.column.getIsSorted() === "desc" && <ChevronDown size={16} />}
                                 </Box>
-                                {header.column.getCanFilter() && <TableFilter column={header.column} table={table} />}
+                                {header.column.getCanFilter() && withFilters && (
+                                    <TableFilter column={header.column} table={table} />
+                                )}
                             </th>
                         );
                     })}

@@ -38,5 +38,5 @@ type GroupChildrenTableProps = {
 };
 
 export const GroupChildrenTable = ({ childrenList }: GroupChildrenTableProps) => {
-    return <Table data={childrenList} columns={columns} />;
+    return <Table data={childrenList} columns={columns} withFilters />;
 };

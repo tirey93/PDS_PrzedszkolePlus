@@ -44,5 +44,5 @@ const columns = [
 ];
 
 export const ParentsTable = ({ parents }: ParentsTableProps) => {
-    return <Table data={parents} columns={columns} onRenderSubRow={ParentsTableActions} withPagination />;
+    return <Table data={parents} columns={columns} onRenderSubRow={ParentsTableActions} withPagination withFilters />;
 };

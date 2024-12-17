@@ -6,6 +6,6 @@ export type Child = {
     lastName: string;
     parent: User;
     caretaker: User;
-    group: string;
+    groupId: string;
     birthDate: Date;
 };

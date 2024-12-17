@@ -1,8 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "@/components/Table/components/Table";
-import { Button } from "@radix-ui/themes";
 import { Child } from "@/features/children/types/Child";
-import { OwnChildrenTableSubRow } from "@/features/children/components/OwnChildrenTable/components/OwnChildrenTableSubRow/OwnChildrenTableSubRow";
 import { ParentAttendanceCheck } from "@/features/children/components/ParentAttendanceCheck/ParentAttendanceCheck";
 
 const columnHelper = createColumnHelper<Child>();
@@ -18,7 +16,7 @@ const columns = [
         cell: (info) => info.getValue(),
         header: () => <span>Nazwisko</span>,
     }),
-    columnHelper.accessor((row) => row.group, {
+    columnHelper.accessor((row) => row.groupId, {
         id: "group",
         cell: (info) => info.getValue(),
         header: () => <span>Grupa</span>,
@@ -33,15 +31,6 @@ const columns = [
         cell: ({ row }) => <ParentAttendanceCheck state="unspecified" childId={row.original.id} />,
         header: () => <span>Obecność</span>,
     }),
-    columnHelper.display({
-        id: "menu",
-        cell: ({ row }) => (
-            <Button variant="soft" size="1" onClick={row.getToggleExpandedHandler()}>
-                {row.getIsExpanded() ? "Schowaj menu" : "Pokaż menu"}
-            </Button>
-        ),
-        header: () => <span>Posiłki</span>,
-    }),
 ];
 
 type OwnChildrenTableProps = {
@@ -49,5 +38,5 @@ type OwnChildrenTableProps = {
 };
 
 export const OwnChildrenTable = ({ childrenList }: OwnChildrenTableProps) => {
-    return <Table data={childrenList} columns={columns} onRenderSubRow={OwnChildrenTableSubRow} />;
+    return <Table data={childrenList} columns={columns} />;
 };
