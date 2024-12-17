@@ -1,5 +1,6 @@
 .container {
   background: var(--gray-12);
+  width: 250px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -39,7 +40,7 @@
   }
 
   .footer, .header {
-    background: var(--black-a8);
+    background: var(--black-a5);
     padding: var(--space-2) var(--space-5);
   }
 
@@ -50,7 +51,17 @@
 
   .footer {
     margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    align-items: center;
+
+    .logoutButton {
+      width: 100%;
+    }
   }
+
+
 
   .navigation {
     display: flex;
