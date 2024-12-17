@@ -6,6 +6,18 @@ import classes from "./GroupPage.module.scss";
 import { onlyAsCaretaker } from "@/features/auth/hoc/withAuthorization";
 import { GroupChildrenTable } from "@/features/children/components/GroupChildrenTable/GroupChildrenTable";
 import { Child } from "@/features/children/types/Child";
+import { MenuTable } from "@/features/menu/api/components/MenuTable/MenuTable";
+
+const mockMenu = [
+    {
+        id: "1",
+        groupId: "1",
+        date: new Date(),
+        breakfast: "Owsianka",
+        dinner: "Gofry",
+        lunch: "Rosół",
+    },
+];
 
 const mockChildren: Child[] = [
     {
@@ -29,7 +41,7 @@ const mockChildren: Child[] = [
             lastName: "Kowalski",
             login: "jan-kowalski-987",
         },
-        group: "Pszczółki",
+        groupId: "Pszczółki",
     },
     {
         id: "2",
@@ -52,7 +64,7 @@ const mockChildren: Child[] = [
             lastName: "Nowacka",
             login: "monika-nowacka-123",
         },
-        group: "Skrzaty",
+        groupId: "Skrzaty",
     },
 ];
 
@@ -88,6 +100,9 @@ const BaseGroupPage = () => {
                 </Box>
 
                 <GroupChildrenTable childrenList={mockChildren} />
+
+                <Heading as="h2">Posiłki</Heading>
+                <MenuTable menu={mockMenu} />
             </Page.Content>
         </Page.Root>
     );

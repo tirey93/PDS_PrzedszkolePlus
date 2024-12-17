@@ -19,11 +19,12 @@ type TableProps<T> = {
     data: T[];
     columns: ColumnDef<T, any>[];
     pageSize?: number;
-    withPagination?: boolean;
     onRenderSubRow?: (data: T) => ReactNode;
+    withPagination?: boolean;
+    withFilters?: boolean;
 };
 
-export function Table<T>({ data, columns, onRenderSubRow, withPagination, pageSize = 20 }: TableProps<T>) {
+export function Table<T>({ data, columns, onRenderSubRow, withPagination, withFilters, pageSize = 20 }: TableProps<T>) {
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize,
@@ -34,8 +35,8 @@ export function Table<T>({ data, columns, onRenderSubRow, withPagination, pageSi
         columns,
         getRowCanExpand: () => !!onRenderSubRow,
         getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
         getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: withFilters ? getFilteredRowModel() : undefined,
         getPaginationRowModel: withPagination ? getPaginationRowModel() : undefined,
         onPaginationChange: withPagination ? setPagination : undefined,
         state: {
@@ -46,7 +47,7 @@ export function Table<T>({ data, columns, onRenderSubRow, withPagination, pageSi
     return (
         <Box>
             <table className={classes.table}>
-                <TableHeader table={table} />
+                <TableHeader table={table} withFilters={withFilters} />
                 <TableBody table={table} onRenderSubRow={onRenderSubRow} />
             </table>
             {withPagination && <TablePagination table={table} />}

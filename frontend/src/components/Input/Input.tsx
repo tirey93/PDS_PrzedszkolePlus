@@ -6,7 +6,7 @@ import { RequirementsTooltip } from "@/components/RequirementsTooltip/Requiremen
 
 interface InputProps {
     label: string;
-    help: string;
+    help?: string;
     type?: "password" | "email" | "textarea" | "text";
     error?: string;
 }
@@ -22,7 +22,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
             <label className={classes.input} onFocus={onFocus} onBlur={onBlur}>
                 <Box className={classes.header}>
                     <Text className={classes.inputLabel}>{label}</Text>
-                    <RequirementsTooltip error={error} content={help} forceOpen={!!error && isFocused} />
+                    {help && <RequirementsTooltip error={error} content={help} forceOpen={!!error && isFocused} />}
                 </Box>
 
                 {type === "textarea" ? (
