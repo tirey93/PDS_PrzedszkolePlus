@@ -1,6 +1,6 @@
 import { Page } from "@/components/Page/Page";
 import { Stat } from "@/components/Stat/Stat";
-import { Box } from "@radix-ui/themes";
+import { Box, Heading } from "@radix-ui/themes";
 
 import classes from "./ChildrenPage.module.scss";
 import { OwnChildrenTable } from "@/features/children/components/OwnChildrenTable/OwnChildrenTable";
@@ -73,25 +73,35 @@ const BaseChildrenPage = () => {
             <Page.Header title="Moje dzieci" />
 
             <Page.Content>
-                <Box className={classes.statsContainer}>
-                    <Stat
-                        name="Frekwencja"
-                        description="Względem średniej z poprzedniego miesiąca"
-                        value={85}
-                        diff={-10}
-                        type="percentage"
-                    />
-                    <Stat
-                        name="Nieobecności"
-                        description="Względem poprzedniego dnia szkolnego"
-                        value={3}
-                        diff={-25}
-                        type="numerical"
-                    />
+                <Box className={classes.section}>
+                    <Heading as="h2">Statystyki</Heading>
+                    <Box className={classes.statsContainer}>
+                        <Stat
+                            name="Frekwencja"
+                            description="Względem średniej z poprzedniego miesiąca"
+                            value={85}
+                            diff={-10}
+                            type="percentage"
+                        />
+                        <Stat
+                            name="Nieobecności"
+                            description="Względem poprzedniego dnia szkolnego"
+                            value={3}
+                            diff={-25}
+                            type="numerical"
+                        />
+                    </Box>
                 </Box>
 
-                <OwnChildrenTable childrenList={mockChildren} />
-                <MenuTable menu={mockMenu} />
+                <Box className={classes.section}>
+                    <Heading as="h2">Dzieci</Heading>
+                    <OwnChildrenTable childrenList={mockChildren} />
+                </Box>
+
+                <Box className={classes.section}>
+                    <Heading as="h2">Posiłki</Heading>
+                    <MenuTable menu={mockMenu} />
+                </Box>
             </Page.Content>
         </Page.Root>
     );

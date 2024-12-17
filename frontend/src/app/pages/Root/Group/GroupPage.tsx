@@ -74,35 +74,42 @@ const BaseGroupPage = () => {
             <Page.Header title="Moja grupa" />
 
             <Page.Content>
-                <Heading as="h2">Dzieci</Heading>
-                <Box className={classes.statsContainer}>
-                    <Stat
-                        name="Łączna liczba dzieci"
-                        description="Względem średniej z poprzedniego miesiąca"
-                        value={20}
-                        diff={10}
-                        type="numerical"
-                    />
-                    <Stat
-                        name="Frekwencja"
-                        description="Względem średniej z poprzedniego miesiąca"
-                        value={85}
-                        diff={-10}
-                        type="percentage"
-                    />
-                    <Stat
-                        name="Nieobecności"
-                        description="Względem poprzedniego dnia szkolnego"
-                        value={3}
-                        diff={-25}
-                        type="numerical"
-                    />
+                <Box className={classes.section}>
+                    <Heading as="h2">Statystyki</Heading>
+                    <Box className={classes.statsContainer}>
+                        <Stat
+                            name="Łączna liczba dzieci"
+                            description="Względem średniej z poprzedniego miesiąca"
+                            value={20}
+                            diff={10}
+                            type="numerical"
+                        />
+                        <Stat
+                            name="Frekwencja"
+                            description="Względem średniej z poprzedniego miesiąca"
+                            value={85}
+                            diff={-10}
+                            type="percentage"
+                        />
+                        <Stat
+                            name="Nieobecności"
+                            description="Względem poprzedniego dnia szkolnego"
+                            value={3}
+                            diff={-25}
+                            type="numerical"
+                        />
+                    </Box>
                 </Box>
 
-                <GroupChildrenTable childrenList={mockChildren} />
+                <Box className={classes.section}>
+                    <Heading as="h2">Dzieci</Heading>
+                    <GroupChildrenTable childrenList={mockChildren} />
+                </Box>
 
-                <Heading as="h2">Posiłki</Heading>
-                <MenuTable menu={mockMenu} />
+                <Box className={classes.section}>
+                    <Heading as="h2">Posiłki</Heading>
+                    <MenuTable menu={mockMenu} />
+                </Box>
             </Page.Content>
         </Page.Root>
     );
