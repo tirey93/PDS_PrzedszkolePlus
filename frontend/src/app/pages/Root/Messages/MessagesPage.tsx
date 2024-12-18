@@ -3,6 +3,8 @@ import { Plus } from "lucide-react";
 import { Page } from "@/components/Page/Page";
 import { ThreadsTable } from "@/features/threads/components/ThreadsTable/ThreadsTable";
 import { Thread } from "@/features/threads/types/Thread";
+import { AddThreadDialog } from "@/features/threads/components/AddThreadDialog/AddThreadDialog";
+import { useGetAllUsers } from "@/features/users/hooks/useGetAllUsers";
 
 const mockThreads: Thread[] = [
     {
@@ -22,7 +24,8 @@ const mockThreads: Thread[] = [
                 id: "1",
                 createdAt: new Date(),
                 threadId: "1",
-                content: "Dzień dobry, czy jest możliwość przepisania mojego dziecka do innej grupy? Pozdrawiam",
+                content:
+                    "Dzień dobry, czy jest możliwość przepisania mojego dziecka do innej grupy? Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam Pozdrawiam ",
                 seen: true,
                 sender: {
                     id: "1",
@@ -113,13 +116,20 @@ const mockThreads: Thread[] = [
 ];
 
 export const MessagesPage = () => {
+    const { data } = useGetAllUsers();
+
     return (
         <Page.Root>
             <Page.Header title="Wiadomości">
-                <Button color="jade">
-                    Nowy wątek
-                    <Plus />
-                </Button>
+                <AddThreadDialog
+                    users={data ?? []}
+                    trigger={
+                        <Button color="jade">
+                            Nowy wątek
+                            <Plus />
+                        </Button>
+                    }
+                />
             </Page.Header>
 
             <Page.Content>

@@ -1,6 +1,7 @@
 .body {
   .subRow {
     border-bottom: 2px solid var(--gray-5);
+    background: var(--gray-2);
   }
 
   .row {
@@ -22,6 +23,8 @@
 
     &.textCell {
       text-align: left;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }

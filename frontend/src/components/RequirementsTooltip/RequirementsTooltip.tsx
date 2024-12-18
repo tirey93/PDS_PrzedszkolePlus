@@ -7,7 +7,7 @@ type TooltipState = "info" | "error";
 type RequirementsTooltipProps = {
     error?: string;
     content: ReactNode;
-    forceOpen: boolean;
+    forceOpen?: boolean;
 };
 
 export const RequirementsTooltip = ({ error, content, forceOpen }: RequirementsTooltipProps) => {

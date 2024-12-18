@@ -6,7 +6,7 @@ import classes from "./GroupPage.module.scss";
 import { onlyAsCaretaker } from "@/features/auth/hoc/withAuthorization";
 import { GroupChildrenTable } from "@/features/children/components/GroupChildrenTable/GroupChildrenTable";
 import { Child } from "@/features/children/types/Child";
-import { MenuTable } from "@/features/menu/api/components/MenuTable/MenuTable";
+import { MenuTable } from "@/features/menu/components/MenuTable/MenuTable";
 
 const mockMenu = [
     {

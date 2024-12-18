@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Menu } from "@/features/menu/api/types/Menu";
+import { Menu } from "@/features/menu/types/Menu";
 
 export type AddMenuFormInputs = {
     breakfast?: string;

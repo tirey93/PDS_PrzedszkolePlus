@@ -3,8 +3,8 @@ import classes from "./AddMenuForm.module.scss";
 
 import { Input } from "@/components/Input/Input";
 
-import { AddMenuFormInputs, useAddMenuForm } from "@/features/menu/api/components/AddMenuForm/hooks/useAddMenuForm";
-import { Menu } from "@/features/menu/api/types/Menu";
+import { AddMenuFormInputs, useAddMenuForm } from "@/features/menu/components/AddMenuForm/hooks/useAddMenuForm";
+import { Menu } from "@/features/menu/types/Menu";
 
 type AddMenuFormProps = {
     onSubmit: (inputs: AddMenuFormInputs) => void;
