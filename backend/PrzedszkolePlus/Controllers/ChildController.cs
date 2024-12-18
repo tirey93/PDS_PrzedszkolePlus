@@ -84,11 +84,20 @@ namespace PrzedszkolePlus.Controllers
             };
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{child_id:int}/parent/{parent_id:int}")]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public IActionResult Put(int id, ChildRequest dto)
+        public IActionResult PutParent(int child_id, int parent_id)
+        {
+            return NoContent();
+        }
+
+        [HttpPut("{child_id:int}/group/{group_id:int}")]
+#if !DEBUG
+        [Authorize(Roles = Roles.Admin)]
+#endif
+        public IActionResult PutGroup(int child_id, int group_id)
         {
             return NoContent();
         }
