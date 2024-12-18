@@ -4,7 +4,7 @@ import { User, UserDTO, UserRole } from "@/types/User";
 const GET_ALL_USERS_ENDPOINT = "/User";
 const CREATE_USER_ENDPOINT = "/Authentication/Register";
 const DISABLE_OR_ENABLE_USER_ENDPOINT = "/User/{id}/IsActive";
-const CHANGE_PASSWORD_ENDPOINT = "/Users/Password";
+const CHANGE_PASSWORD_ENDPOINT = "/User/{id}/Password";
 
 type CreateUserRequestBody = {
     username: string;
@@ -13,8 +13,8 @@ type CreateUserRequestBody = {
     displayName: string;
 };
 
-type ChangePasswordRequestBody = {
-    currentPassword: string;
+export type ChangePasswordRequestBody = {
+    oldPassword: string;
     newPassword: string;
 };
 
@@ -28,8 +28,8 @@ export class UsersService {
         await requestClient.post(CREATE_USER_ENDPOINT, body);
     }
 
-    public static async changePassword(body: ChangePasswordRequestBody): Promise<void> {
-        await requestClient.post(CHANGE_PASSWORD_ENDPOINT, body);
+    public static async changePassword(body: ChangePasswordRequestBody, userId: string): Promise<void> {
+        await requestClient.put(CHANGE_PASSWORD_ENDPOINT.replace("{id}", userId), body);
     }
 
     public static async disableOne(userId: string): Promise<void> {

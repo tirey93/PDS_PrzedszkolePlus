@@ -24,10 +24,10 @@ export const ChangePasswordForm = ({ onSubmit, isLoading }: ChangePasswordFormPr
     return (
         <form className={classes.form} onSubmit={handleSubmit(internalOnSubmit)}>
             <Input
-                {...register("currentPassword")}
+                {...register("oldPassword")}
                 label="Stare hasło"
                 help={CURRENT_PASSWORD_REQUIREMENT}
-                error={formState.errors?.currentPassword?.message}
+                error={formState.errors?.oldPassword?.message}
                 type="password"
             />
             <Input
