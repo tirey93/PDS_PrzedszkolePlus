@@ -7,7 +7,7 @@ import { Send } from "lucide-react";
 
 export const MessagesList = (thread: Thread) => {
     return (
-        <Box>
+        <>
             <Box className={classes.messagesList}>
                 {thread.messages.map((message) => (
                     <MessageItem key={message.id} message={message} />
@@ -19,7 +19,7 @@ export const MessagesList = (thread: Thread) => {
                     Wyślij <Send size={20} />
                 </Button>
             </Box>
-        </Box>
+        </>
     );
 };
 
@@ -37,7 +37,7 @@ const MessageItem = ({ message }: MessageItemProps) => {
                     ? "Ty napisałeś/aś:"
                     : `${message.createdAt.toLocaleString()}, ${message.sender.firstName} ${message.sender.lastName} napisał/a:`}
             </Text>
-            <Text>{message.content}</Text>
+            <Text className={classes.content}>{message.content}</Text>
         </Box>
     );
 };

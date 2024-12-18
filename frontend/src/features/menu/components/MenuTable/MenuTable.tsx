@@ -1,8 +1,8 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "@/components/Table/components/Table";
 import { Button } from "@radix-ui/themes";
-import { Menu } from "@/features/menu/api/types/Menu";
-import { AddMenuDialog } from "@/features/menu/api/components/AddMenuDialog/AddMenuDialog";
+import { Menu } from "@/features/menu/types/Menu";
+import { AddMenuDialog } from "@/features/menu/components/AddMenuDialog/AddMenuDialog";
 import { useUser } from "@/features/auth/hooks/useUser";
 
 type MenuTableProps = {

@@ -1,5 +1,5 @@
 import { requestClient } from "@/lib/request/requestClient";
-import { Menu } from "@/features/menu/api/types/Menu";
+import { Menu } from "@/features/menu/types/Menu";
 
 const CREATE_MENU_ENDPOINT = "/Menu";
 const EDIT_MENU_ENDPOINT = "/Menu/:id";

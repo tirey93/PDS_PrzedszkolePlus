@@ -4,10 +4,10 @@ import { ReactNode, useState } from "react";
 import { Alert } from "@/components/Alert/Alert";
 import classes from "./AddMenuDialog.module.scss";
 import { toast } from "sonner";
-import { useSaveMenu } from "@/features/menu/api/hooks/useSaveMenu";
-import { AddMenuFormInputs } from "@/features/menu/api/components/AddMenuForm/hooks/useAddMenuForm";
-import { Menu } from "@/features/menu/api/types/Menu";
-import { AddMenuForm } from "@/features/menu/api/components/AddMenuForm/AddMenuForm";
+import { useSaveMenu } from "@/features/menu/hooks/useSaveMenu";
+import { AddMenuFormInputs } from "@/features/menu/components/AddMenuForm/hooks/useAddMenuForm";
+import { Menu } from "@/features/menu/types/Menu";
+import { AddMenuForm } from "@/features/menu/components/AddMenuForm/AddMenuForm";
 
 type AddMenuDialogProps = {
     menu?: Menu;

@@ -5,7 +5,7 @@ import { Box, Heading } from "@radix-ui/themes";
 import classes from "./ChildrenPage.module.scss";
 import { OwnChildrenTable } from "@/features/children/components/OwnChildrenTable/OwnChildrenTable";
 import { Child } from "@/features/children/types/Child";
-import { MenuTable } from "@/features/menu/api/components/MenuTable/MenuTable";
+import { MenuTable } from "@/features/menu/components/MenuTable/MenuTable";
 
 const mockChildren: Child[] = [
     {
