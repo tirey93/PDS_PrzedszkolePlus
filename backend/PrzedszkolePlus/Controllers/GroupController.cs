@@ -37,7 +37,7 @@ namespace PrzedszkolePlus.Controllers
             };
         }
 
-        [HttpPut("{id}/name")]
+        [HttpPut("{id}/Name")]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
