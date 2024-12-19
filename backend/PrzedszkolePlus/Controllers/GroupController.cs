@@ -36,5 +36,14 @@ namespace PrzedszkolePlus.Controllers
                 CreatedAt = DateOnly.FromDateTime(DateTime.Now.AddDays(-2))
             };
         }
+
+        [HttpPut("{id}/name")]
+#if !DEBUG
+        [Authorize(Roles = Roles.Admin)]
+#endif
+        public IActionResult UpdateGroupName(int id, [FromBody] UpdateGroupNameRequest dto)
+        {
+            return NoContent();
+        }
     }
 }
