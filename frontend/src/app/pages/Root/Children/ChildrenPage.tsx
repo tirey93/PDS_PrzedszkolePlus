@@ -6,6 +6,9 @@ import classes from "./ChildrenPage.module.scss";
 import { OwnChildrenTable } from "@/features/children/components/OwnChildrenTable/OwnChildrenTable";
 import { Child } from "@/features/children/types/Child";
 import { MenuTable } from "@/features/menu/components/MenuTable/MenuTable";
+import { DateRange } from "@/components/DateRange/DateRange";
+import dayjs from "dayjs";
+import { useDateRange } from "@/hooks/useDateRange/useDateRange";
 
 const mockChildren: Child[] = [
     {
@@ -68,6 +71,27 @@ const mockMenu = [
 ];
 
 const BaseChildrenPage = () => {
+    const {
+        increment: incrementAttendanceDateRange,
+        decrement: decrementAttendanceDateRange,
+        start: attendanceDateRangeStart,
+        reset: resetAttendanceDateRange,
+    } = useDateRange({
+        start: dayjs(new Date()).startOf("day").toDate(),
+        length: 1,
+    });
+
+    const {
+        increment: incrementMealsDateRange,
+        decrement: decrementMealsDateRange,
+        start: mealsDateRangeStart,
+        end: mealsDateRangeEnd,
+        reset: resetMealsDateRange,
+    } = useDateRange({
+        start: dayjs(new Date()).startOf("week").toDate(),
+        length: 7,
+    });
+
     return (
         <Page.Root>
             <Page.Header title="Moje dzieci" />
@@ -96,11 +120,28 @@ const BaseChildrenPage = () => {
                 <Box className={classes.section}>
                     <Heading as="h2">Dzieci</Heading>
                     <OwnChildrenTable childrenList={mockChildren} />
+                    <Box className={classes.sectionFooter}>
+                        <DateRange
+                            start={attendanceDateRangeStart}
+                            onNext={incrementAttendanceDateRange}
+                            onPrevious={decrementAttendanceDateRange}
+                            onReset={resetAttendanceDateRange}
+                        />
+                    </Box>
                 </Box>
 
                 <Box className={classes.section}>
                     <Heading as="h2">Posiłki</Heading>
                     <MenuTable menu={mockMenu} />
+                    <Box className={classes.sectionFooter}>
+                        <DateRange
+                            start={mealsDateRangeStart}
+                            end={mealsDateRangeEnd}
+                            onNext={incrementMealsDateRange}
+                            onPrevious={decrementMealsDateRange}
+                            onReset={resetMealsDateRange}
+                        />
+                    </Box>
                 </Box>
             </Page.Content>
         </Page.Root>

@@ -1,6 +1,7 @@
 import { Box, Button, IconButton, Strong, Text } from "@radix-ui/themes";
 import classes from "./ChildrenList.module.scss";
 import { Plus } from "lucide-react";
+import { AddChildDialog } from "@/features/children/components/AddChildDialog/AddChildDialog";
 
 export const ChildrenList = () => {
     return (
@@ -9,9 +10,13 @@ export const ChildrenList = () => {
                 <Text>
                     <Strong>Dzieci</Strong>
                 </Text>
-                <IconButton size="1" color="jade" variant="ghost">
-                    <Plus size={16} />
-                </IconButton>
+                <AddChildDialog
+                    trigger={
+                        <IconButton size="1" color="jade" variant="ghost">
+                            <Plus size={16} />
+                        </IconButton>
+                    }
+                />
             </Box>
             <table className={classes.table}>
                 <thead>
@@ -31,9 +36,13 @@ export const ChildrenList = () => {
                         <td>Pszczółki</td>
                         <td>Anna Nowak</td>
                         <td className={classes.actions}>
-                            <Button size="1" variant="ghost" color="blue">
-                                Edycja
-                            </Button>
+                            <AddChildDialog
+                                trigger={
+                                    <Button size="1" variant="ghost" color="blue">
+                                        Edycja
+                                    </Button>
+                                }
+                            />
                         </td>
                     </tr>
                     <tr>
@@ -43,9 +52,13 @@ export const ChildrenList = () => {
                         <td>Skrzaty</td>
                         <td>Jan Kowalski</td>
                         <td className={classes.actions}>
-                            <Button size="1" variant="ghost" color="blue">
-                                Edycja
-                            </Button>
+                            <AddChildDialog
+                                trigger={
+                                    <Button size="1" variant="ghost" color="blue">
+                                        Edycja
+                                    </Button>
+                                }
+                            />
                         </td>
                     </tr>
                 </tbody>
