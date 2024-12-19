@@ -38,7 +38,7 @@ namespace PrzedszkolePlus.Controllers
                     DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1000)),
                     ParentId = 1,
                     GroupId = 1,
-                    CreatedAt = DateOnly.FromDateTime(DateTime.Now)
+                    CreatedAt = DateTime.Now
                 },
                 new ChildResponse
                 {
@@ -48,7 +48,7 @@ namespace PrzedszkolePlus.Controllers
                     DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1500)),
                     ParentId = 2,
                     GroupId = 1,
-                    CreatedAt = DateOnly.FromDateTime(DateTime.Now.AddDays(-2))
+                    CreatedAt = DateTime.Now.AddDays(-2)
                 }
             };
         }
@@ -69,7 +69,7 @@ namespace PrzedszkolePlus.Controllers
                     DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1000)),
                     ParentId = 1,
                     GroupId = group_id,
-                    CreatedAt = DateOnly.FromDateTime(DateTime.Now)
+                    CreatedAt = DateTime.Now
                 },
                 new ChildResponse
                 {
@@ -79,7 +79,7 @@ namespace PrzedszkolePlus.Controllers
                     DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1500)),
                     ParentId = 2,
                     GroupId = group_id,
-                    CreatedAt = DateOnly.FromDateTime(DateTime.Now.AddDays(-2))
+                    CreatedAt = DateTime.Now.AddDays(-2)
                 }
             };
         }
