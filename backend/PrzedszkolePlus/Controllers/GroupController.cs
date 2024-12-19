@@ -33,7 +33,7 @@ namespace PrzedszkolePlus.Controllers
                 Id = 1,
                 Name = "Pszczółki",
                 CaregiverId = 1,
-                CreatedAt = DateOnly.FromDateTime(DateTime.Now.AddDays(-2))
+                CreatedAt = DateTime.Now.AddDays(-2)
             };
         }
 
