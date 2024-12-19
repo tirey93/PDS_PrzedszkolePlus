@@ -2,6 +2,9 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "@/components/Table/components/Table";
 import { Child } from "@/features/children/types/Child";
 import { CaretakerAttendanceCheck } from "@/features/children/components/CaretakerAttendanceCheck/CaretakerAttendanceCheck";
+import { IconButton } from "@radix-ui/themes";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { GroupChildrenTableActions } from "@/features/children/components/GroupChildrenTable/components/GroupChildrenTableActions/GroupChildrenTableActions";
 
 const columnHelper = createColumnHelper<Child>();
 
@@ -31,6 +34,14 @@ const columns = [
         cell: () => <CaretakerAttendanceCheck state="present" onChange={(state) => console.log(state)} />,
         header: () => <span>Obecność</span>,
     }),
+    columnHelper.display({
+        id: "actions",
+        cell: ({ row }) => (
+            <IconButton onClick={row.getToggleExpandedHandler()} variant="soft" size="1" color="blue">
+                {row.getIsExpanded() ? <ChevronUp /> : <ChevronDown />}
+            </IconButton>
+        ),
+    }),
 ];
 
 type GroupChildrenTableProps = {
@@ -38,5 +49,5 @@ type GroupChildrenTableProps = {
 };
 
 export const GroupChildrenTable = ({ childrenList }: GroupChildrenTableProps) => {
-    return <Table data={childrenList} columns={columns} withFilters />;
+    return <Table data={childrenList} columns={columns} onRenderSubRow={GroupChildrenTableActions} withFilters />;
 };
