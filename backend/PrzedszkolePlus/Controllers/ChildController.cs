@@ -53,6 +53,37 @@ namespace PrzedszkolePlus.Controllers
             };
         }
 
+        [HttpGet("ByParent/{id}")]
+#if !DEBUG
+        [Authorize(Roles = Roles.Admin)]
+#endif
+        public ActionResult<IEnumerable<ChildResponse>> GetByParent(int id)
+        {
+            return new List<ChildResponse>
+            {
+                new ChildResponse
+                {
+                    Id = 1,
+                    FirstName = "Marta",
+                    LastName = "Ślimak",
+                    DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1000)),
+                    ParentId = id,
+                    GroupId = 1,
+                    CreatedAt = DateTime.Now
+                },
+                new ChildResponse
+                {
+                    Id = 2,
+                    FirstName = "Kacper",
+                    LastName = "Kowalski",
+                    DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1500)),
+                    ParentId = id,
+                    GroupId = 1,
+                    CreatedAt = DateTime.Now.AddDays(-2)
+                }
+            };
+        }
+
         [HttpGet("ByGroup/{group_id:int}")]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
