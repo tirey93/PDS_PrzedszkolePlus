@@ -20,7 +20,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                     <Text className={classes.inputLabel}>{label}</Text>
                     <RequirementsTooltip error={error} content={help} />
                 </Box>
-                <BaseSelect.Trigger ref={ref} {...rest} />
+
+                <BaseSelect.Trigger ref={ref} {...rest} className={classes.trigger} />
 
                 <BaseSelect.Content position="popper">
                     {options.map(({ value, label }) => (
