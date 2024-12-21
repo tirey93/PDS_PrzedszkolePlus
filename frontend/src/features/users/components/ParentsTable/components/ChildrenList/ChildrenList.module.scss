@@ -18,9 +18,12 @@
 
     td, th {
       padding-right: var(--space-3);
+      padding-bottom: var(--space-1);
 
       &.actions {
         padding-left: var(--space-2);
+        display: flex;
+        gap: var(--space-2);
       }
     }
   }

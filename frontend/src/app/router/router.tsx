@@ -7,8 +7,8 @@ const NewsPage = React.lazy(() =>
     import("@/app/pages/Root/News/NewsPage").then((module) => ({ default: module.NewsPage }))
 );
 
-const CaretakersPage = React.lazy(() =>
-    import("@/app/pages/Root/Users/Caretakers/CaretakersPage").then((module) => ({ default: module.CaretakersPage }))
+const CaregiversPage = React.lazy(() =>
+    import("@/app/pages/Root/Users/Caregivers/CaregiversPage").then((module) => ({ default: module.CaregiversPage }))
 );
 
 const ParentsPage = React.lazy(() =>
@@ -70,8 +70,8 @@ export const router = createBrowserRouter([
                 element: WithSuspense(<SettingsPage />),
             },
             {
-                path: AppRoute.CARETAKERS,
-                element: WithSuspense(<CaretakersPage />),
+                path: AppRoute.CAREGIVERS,
+                element: WithSuspense(<CaregiversPage />),
             },
             {
                 path: AppRoute.PARENTS,

@@ -22,9 +22,18 @@ type TableProps<T> = {
     onRenderSubRow?: (data: T) => ReactNode;
     withPagination?: boolean;
     withFilters?: boolean;
+    isLoading?: boolean;
 };
 
-export function Table<T>({ data, columns, onRenderSubRow, withPagination, withFilters, pageSize = 20 }: TableProps<T>) {
+export function Table<T>({
+    data,
+    columns,
+    onRenderSubRow,
+    withPagination,
+    withFilters,
+    isLoading,
+    pageSize = 20,
+}: TableProps<T>) {
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize,
@@ -48,7 +57,7 @@ export function Table<T>({ data, columns, onRenderSubRow, withPagination, withFi
         <Box>
             <table className={classes.table}>
                 <TableHeader table={table} withFilters={withFilters} />
-                <TableBody table={table} onRenderSubRow={onRenderSubRow} />
+                <TableBody table={table} onRenderSubRow={onRenderSubRow} isLoading={isLoading} />
             </table>
             {withPagination && <TablePagination table={table} />}
         </Box>

@@ -8,14 +8,21 @@ type SaveChildOptions = {
     lastName: string;
     groupId: string;
     parentId: string;
-    birthDate: string;
+    dateOfBirth: string;
 };
 
 const saveChild = async (child: SaveChildOptions): Promise<void> => {
     if (child.id) {
-        return ChildrenService.updateOne(child, child.id);
+        return ChildrenService.updateOne(
+            { ...child, groupId: parseInt(child.groupId), parentId: parseInt(child.parentId) },
+            child.id
+        );
     } else {
-        return ChildrenService.createOne(child);
+        return ChildrenService.createOne({
+            ...child,
+            groupId: parseInt(child.groupId),
+            parentId: parseInt(child.parentId),
+        });
     }
 };
 

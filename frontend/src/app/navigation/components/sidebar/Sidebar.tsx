@@ -22,7 +22,7 @@ const items = [
         requiredAccess: "Admin",
         items: [
             { label: "Rodzice", href: AppRoute.PARENTS },
-            { label: "Opiekunowie", href: AppRoute.CARETAKERS },
+            { label: "Opiekunowie", href: AppRoute.CAREGIVERS },
         ],
     },
     { title: "Panel nauczyciela", requiredAccess: "Admin", items: [{ label: "Moja grupa", href: AppRoute.GROUP }] },

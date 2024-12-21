@@ -1,6 +1,6 @@
 import { Box, IconButton } from "@radix-ui/themes";
 import { CircleCheck, CircleHelp, CircleX } from "lucide-react";
-import classes from "./CaretakerAttendanceCheck.module.scss";
+import classes from "./CaregiversAttendanceCheck.module.scss";
 import { AttendanceState } from "@/features/children/types/Attendance";
 
 type AttendanceCheckProps = {
@@ -8,7 +8,7 @@ type AttendanceCheckProps = {
     onChange: (state: AttendanceState) => void;
 };
 
-export const CaretakerAttendanceCheck = ({ state, onChange }: AttendanceCheckProps) => {
+export const CaregiverAttendanceCheck = ({ state, onChange }: AttendanceCheckProps) => {
     return (
         <Box className={classes.container}>
             <IconButton

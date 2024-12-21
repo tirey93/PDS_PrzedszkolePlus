@@ -4,60 +4,11 @@ import { Box, Heading } from "@radix-ui/themes";
 
 import classes from "./ChildrenPage.module.scss";
 import { OwnChildrenTable } from "@/features/children/components/OwnChildrenTable/OwnChildrenTable";
-import { Child } from "@/features/children/types/Child";
 import { MenuTable } from "@/features/menu/components/MenuTable/MenuTable";
 import { DateRange } from "@/components/DateRange/DateRange";
 import dayjs from "dayjs";
 import { useDateRange } from "@/hooks/useDateRange/useDateRange";
-
-const mockChildren: Child[] = [
-    {
-        id: "1",
-        birthDate: new Date(),
-        firstName: "Dawid",
-        lastName: "Nowak",
-        parent: {
-            id: "1",
-            isActive: true,
-            role: "User",
-            firstName: "Anna",
-            lastName: "Nowak",
-            login: "anna-nowak-123",
-        },
-        caretaker: {
-            id: "2",
-            isActive: true,
-            role: "Admin",
-            firstName: "Jan",
-            lastName: "Kowalski",
-            login: "jan-kowalski-987",
-        },
-        groupId: "Pszczółki",
-    },
-    {
-        id: "2",
-        birthDate: new Date(),
-        firstName: "Maja",
-        lastName: "Nowak",
-        parent: {
-            id: "1",
-            isActive: true,
-            role: "User",
-            firstName: "Anna",
-            lastName: "Nowak",
-            login: "anna-nowak-123",
-        },
-        caretaker: {
-            id: "3",
-            isActive: true,
-            role: "Admin",
-            firstName: "Monika",
-            lastName: "Nowacka",
-            login: "monika-nowacka-123",
-        },
-        groupId: "Skrzaty",
-    },
-];
+import { useGetOwnChildren } from "@/features/children/hooks/useGetOwnChildren";
 
 const mockMenu = [
     {
@@ -71,6 +22,8 @@ const mockMenu = [
 ];
 
 const BaseChildrenPage = () => {
+    const { data: children, isLoading } = useGetOwnChildren();
+
     const {
         increment: incrementAttendanceDateRange,
         decrement: decrementAttendanceDateRange,
@@ -119,7 +72,7 @@ const BaseChildrenPage = () => {
 
                 <Box className={classes.section}>
                     <Heading as="h2">Dzieci</Heading>
-                    <OwnChildrenTable childrenList={mockChildren} />
+                    <OwnChildrenTable childrenList={children ?? []} isLoading={isLoading} />
                     <Box className={classes.sectionFooter}>
                         <DateRange
                             start={attendanceDateRangeStart}

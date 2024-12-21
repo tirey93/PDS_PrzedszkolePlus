@@ -3,12 +3,8 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "@/components/Table/components/Table";
 import { IconButton } from "@radix-ui/themes";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { CaretakersTableActions } from "@/features/users/components/CaretakersTable/components/CaretakersTableActions/CaretakersTableActions";
+import { CaregiversTableActions } from "@/features/users/components/CaretakersTable/components/CaregiversTableActions/CaregiversTableActions";
 import { AccountStatusTag } from "@/features/users/components/AccountStatusTag/AccountStatusTag";
-
-type CaretakersTableProps = {
-    caretakers: User[];
-};
 
 const columnHelper = createColumnHelper<User>();
 
@@ -43,8 +39,20 @@ const columns = [
     }),
 ];
 
-export const CaretakersTable = ({ caretakers }: CaretakersTableProps) => {
+type CaregiversTableProps = {
+    caregivers: User[];
+    isLoading?: boolean;
+};
+
+export const CaregiversTable = ({ caregivers, isLoading }: CaregiversTableProps) => {
     return (
-        <Table data={caretakers} columns={columns} onRenderSubRow={CaretakersTableActions} withPagination withFilters />
+        <Table
+            data={caregivers}
+            columns={columns}
+            onRenderSubRow={CaregiversTableActions}
+            withPagination
+            withFilters
+            isLoading={isLoading}
+        />
     );
 };

@@ -1,18 +1,18 @@
 import { Box, Button } from "@radix-ui/themes";
-import { Child } from "@/features/children/types/Child";
+import { BaseChild } from "@/features/children/types/Child";
 import classes from "./GroupChildrenTableActions.module.scss";
 import { RemoveChildDialog } from "@/features/children/components/RemoveChildDialog/RemoveChildDialog";
-import { AddChildDialog } from "@/features/children/components/AddChildDialog/AddChildDialog";
+import { AssignChildToGroupDialog } from "@/features/children/components/AssignChildToGroupDialog/AssignChildToGroupDialog";
 
-export const GroupChildrenTableActions = (child: Child) => {
+export const GroupChildrenTableActions = (child: BaseChild) => {
     return (
         <Box className={classes.container}>
             <Box className={classes.actions}>
-                <AddChildDialog
+                <AssignChildToGroupDialog
                     child={child}
                     trigger={
-                        <Button variant="soft" color="jade" size="1">
-                            Edytuj
+                        <Button variant="soft" size="1">
+                            Przypisz do innej grupy
                         </Button>
                     }
                 />

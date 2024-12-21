@@ -116,7 +116,7 @@ const mockThreads: Thread[] = [
 ];
 
 export const MessagesPage = () => {
-    const { data } = useGetAllUsers();
+    const { data, isLoading } = useGetAllUsers();
 
     return (
         <Page.Root>
@@ -133,7 +133,7 @@ export const MessagesPage = () => {
             </Page.Header>
 
             <Page.Content>
-                <ThreadsTable threads={mockThreads} />
+                <ThreadsTable threads={mockThreads} isLoading={isLoading} />
             </Page.Content>
         </Page.Root>
     );

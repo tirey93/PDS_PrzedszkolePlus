@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "@/components/Table/components/Table";
 import { Child } from "@/features/children/types/Child";
-import { CaretakerAttendanceCheck } from "@/features/children/components/CaretakerAttendanceCheck/CaretakerAttendanceCheck";
+import { CaregiverAttendanceCheck } from "@/features/children/components/CaregiverAttendanceCheck/CaregiverAttendanceCheck";
 import { IconButton } from "@radix-ui/themes";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { GroupChildrenTableActions } from "@/features/children/components/GroupChildrenTable/components/GroupChildrenTableActions/GroupChildrenTableActions";
@@ -21,17 +21,17 @@ const columns = [
     }),
     columnHelper.accessor((row) => row.parent, {
         id: "User",
-        cell: (info) => `${info.getValue().firstName} ${info.getValue().lastName}`,
+        cell: (info) => (info.getValue() ? `${info.getValue()!.firstName} ${info.getValue()!.lastName}` : "-"),
         header: () => <span>Rodzic</span>,
     }),
-    columnHelper.accessor((row) => row.birthDate, {
+    columnHelper.accessor((row) => row.dateOfBirth, {
         id: "birthDate",
         cell: (info) => info.getValue().toLocaleDateString(),
         header: () => <span>Data urodzenia</span>,
     }),
     columnHelper.display({
         id: "attendance",
-        cell: () => <CaretakerAttendanceCheck state="present" onChange={(state) => console.log(state)} />,
+        cell: () => <CaregiverAttendanceCheck state="present" onChange={(state) => console.log(state)} />,
         header: () => <span>Obecność</span>,
     }),
     columnHelper.display({
@@ -46,8 +46,17 @@ const columns = [
 
 type GroupChildrenTableProps = {
     childrenList: Child[];
+    isLoading?: boolean;
 };
 
-export const GroupChildrenTable = ({ childrenList }: GroupChildrenTableProps) => {
-    return <Table data={childrenList} columns={columns} onRenderSubRow={GroupChildrenTableActions} withFilters />;
+export const GroupChildrenTable = ({ childrenList, isLoading }: GroupChildrenTableProps) => {
+    return (
+        <Table
+            data={childrenList}
+            columns={columns}
+            onRenderSubRow={GroupChildrenTableActions}
+            withFilters
+            isLoading={isLoading}
+        />
+    );
 };

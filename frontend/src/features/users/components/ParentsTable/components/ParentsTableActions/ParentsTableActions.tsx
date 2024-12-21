@@ -9,9 +9,6 @@ export const ParentsTableActions = (user: User) => {
     return (
         <Box className={classes.container}>
             <Box className={classes.actions}>
-                <Button variant="soft" size="1">
-                    Napisz wiadomość
-                </Button>
                 {user.isActive ? (
                     <DisableUserDialog
                         user={user}
@@ -25,7 +22,7 @@ export const ParentsTableActions = (user: User) => {
                     <EnableUserButton userId={user.id} />
                 )}
             </Box>
-            <ChildrenList />
+            <ChildrenList parentId={user.id} />
         </Box>
     );
 };
