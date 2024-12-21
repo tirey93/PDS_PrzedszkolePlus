@@ -7,7 +7,7 @@ import { RequirementsTooltip } from "@/components/RequirementsTooltip/Requiremen
 interface InputProps {
     label: string;
     help?: string;
-    type?: "password" | "email" | "textarea" | "text";
+    type?: "password" | "email" | "textarea" | "text" | "date";
     error?: string;
 }
 

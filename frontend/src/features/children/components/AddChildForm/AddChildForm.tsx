@@ -29,19 +29,21 @@ export const AddChildForm = ({ onSubmit, isLoading, onCancel, initialValue, grou
 
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} onReset={onCancel}>
-            <Input
-                {...register("firstName")}
-                label="Imię"
-                error={formState.errors?.firstName?.message}
-                help={CHILD_FIRST_NAME_HELP}
-            />
+            <Box className={classes.row}>
+                <Input
+                    {...register("firstName")}
+                    label="Imię"
+                    error={formState.errors?.firstName?.message}
+                    help={CHILD_FIRST_NAME_HELP}
+                />
 
-            <Input
-                {...register("lastName")}
-                label="Nazwisko"
-                error={formState.errors?.lastName?.message}
-                help={CHILD_LAST_NAME_HELP}
-            />
+                <Input
+                    {...register("lastName")}
+                    label="Nazwisko"
+                    error={formState.errors?.lastName?.message}
+                    help={CHILD_LAST_NAME_HELP}
+                />
+            </Box>
 
             <Select
                 {...register("parentId")}
@@ -65,6 +67,7 @@ export const AddChildForm = ({ onSubmit, isLoading, onCancel, initialValue, grou
             <Input
                 {...register("dateOfBirth")}
                 label="Data urodzenia"
+                type="date"
                 error={formState.errors?.dateOfBirth?.message}
                 help={CHILD_BIRTHDATE_HELP}
             />
