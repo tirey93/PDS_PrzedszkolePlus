@@ -6,10 +6,6 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { ParentsTableActions } from "@/features/users/components/ParentsTable/components/ParentsTableActions/ParentsTableActions";
 import { AccountStatusTag } from "@/features/users/components/AccountStatusTag/AccountStatusTag";
 
-type ParentsTableProps = {
-    parents: User[];
-};
-
 const columnHelper = createColumnHelper<User>();
 
 const columns = [
@@ -43,6 +39,20 @@ const columns = [
     }),
 ];
 
-export const ParentsTable = ({ parents }: ParentsTableProps) => {
-    return <Table data={parents} columns={columns} onRenderSubRow={ParentsTableActions} withPagination withFilters />;
+type ParentsTableProps = {
+    parents: User[];
+    isLoading?: boolean;
+};
+
+export const ParentsTable = ({ parents, isLoading }: ParentsTableProps) => {
+    return (
+        <Table
+            data={parents}
+            columns={columns}
+            onRenderSubRow={ParentsTableActions}
+            withPagination
+            withFilters
+            isLoading={isLoading}
+        />
+    );
 };

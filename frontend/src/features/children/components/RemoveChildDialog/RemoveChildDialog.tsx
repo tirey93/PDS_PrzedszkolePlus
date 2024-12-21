@@ -6,11 +6,11 @@ import { ReactNode, useState } from "react";
 import { Alert } from "@/components/Alert/Alert";
 import classes from "./RemoveChildDialog.module.scss";
 import { toast } from "sonner";
-import { Child } from "@/features/children/types/Child";
+import { BaseChild } from "@/features/children/types/Child";
 import { useRemoveChild } from "@/features/children/hooks/useRemoveChild";
 
 type RemoveChildDialogProps = {
-    child: Child;
+    child: BaseChild;
     trigger: ReactNode;
 };
 

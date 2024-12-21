@@ -22,7 +22,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
                 </Box>
                 <BaseSelect.Trigger ref={ref} {...rest} />
 
-                <BaseSelect.Content>
+                <BaseSelect.Content position="popper">
                     {options.map(({ value, label }) => (
                         <BaseSelect.Item key={value} value={value}>
                             {label}

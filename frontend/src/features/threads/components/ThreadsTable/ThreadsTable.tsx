@@ -7,10 +7,6 @@ import { IconButton } from "@radix-ui/themes";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { MessagesList } from "@/features/threads/components/ThreadsTable/components/MessagesList/MessagesList";
 
-type ThreadsTableProps = {
-    threads: Thread[];
-};
-
 const columnHelper = createColumnHelper<Thread>();
 
 const columns = [
@@ -51,6 +47,20 @@ const columns = [
     }),
 ];
 
-export const ThreadsTable = ({ threads }: ThreadsTableProps) => {
-    return <Table data={threads} columns={columns} onRenderSubRow={MessagesList} withFilters withPagination />;
+type ThreadsTableProps = {
+    threads: Thread[];
+    isLoading?: boolean;
+};
+
+export const ThreadsTable = ({ threads, isLoading }: ThreadsTableProps) => {
+    return (
+        <Table
+            data={threads}
+            columns={columns}
+            onRenderSubRow={MessagesList}
+            withFilters
+            withPagination
+            isLoading={isLoading}
+        />
+    );
 };

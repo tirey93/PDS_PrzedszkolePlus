@@ -1,14 +1,14 @@
 import { Box, Button } from "@radix-ui/themes";
-import classes from "./CaretakersTableActions.module.scss";
+import classes from "./CaregiversTableActions.module.scss";
 import { DisableUserDialog } from "@/features/users/components/DisableUserDialog/DisableUserDialog";
 import { User } from "@/types/User";
 import { EnableUserButton } from "@/features/users/components/EnableUserButton/EnableUserButton";
 
-export const CaretakersTableActions = (user: User) => {
+export const CaregiversTableActions = (user: User) => {
     return (
         <Box className={classes.container}>
             <Button variant="soft" size="1">
-                Napisz wiadomość
+                Przypisz grupę
             </Button>
             {user.isActive ? (
                 <DisableUserDialog

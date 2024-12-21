@@ -21,9 +21,9 @@ const columns = [
         cell: (info) => info.getValue(),
         header: () => <span>Grupa</span>,
     }),
-    columnHelper.accessor((row) => row.caretaker, {
+    columnHelper.accessor((row) => row.caregiver, {
         id: "Admin",
-        cell: (info) => `${info.getValue().firstName} ${info.getValue().lastName}`,
+        cell: (info) => (info.getValue() ? `${info.getValue()!.firstName} ${info.getValue()!.lastName}` : "-"),
         header: () => <span>Opiekun</span>,
     }),
     columnHelper.display({
@@ -35,8 +35,9 @@ const columns = [
 
 type OwnChildrenTableProps = {
     childrenList: Child[];
+    isLoading?: boolean;
 };
 
-export const OwnChildrenTable = ({ childrenList }: OwnChildrenTableProps) => {
-    return <Table data={childrenList} columns={columns} />;
+export const OwnChildrenTable = ({ childrenList, isLoading }: OwnChildrenTableProps) => {
+    return <Table data={childrenList} columns={columns} isLoading={isLoading} />;
 };

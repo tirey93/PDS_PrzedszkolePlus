@@ -28,6 +28,6 @@ export function onlyAsParent<T extends object>(Component: FC<T>) {
     return withAuthorization<T>(Component)("User", AppRoute.NEWS);
 }
 
-export function onlyAsCaretaker<T extends object>(Component: FC<T>) {
+export function onlyAsCaregiver<T extends object>(Component: FC<T>) {
     return withAuthorization<T>(Component)("Admin", AppRoute.NEWS);
 }

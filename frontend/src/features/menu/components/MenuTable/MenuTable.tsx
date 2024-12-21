@@ -5,10 +5,6 @@ import { Menu } from "@/features/menu/types/Menu";
 import { AddMenuDialog } from "@/features/menu/components/AddMenuDialog/AddMenuDialog";
 import { useUser } from "@/features/auth/hooks/useUser";
 
-type MenuTableProps = {
-    menu: Menu[];
-};
-
 const columnHelper = createColumnHelper<Menu>();
 
 const columns = [
@@ -56,7 +52,18 @@ const adminOnlyColumns = [
     }),
 ];
 
-export const MenuTable = ({ menu }: MenuTableProps) => {
+type MenuTableProps = {
+    menu: Menu[];
+    isLoading?: boolean;
+};
+
+export const MenuTable = ({ menu, isLoading }: MenuTableProps) => {
     const { user } = useUser();
-    return <Table data={menu} columns={[...columns, ...(user?.role === "Admin" ? adminOnlyColumns : [])]} />;
+    return (
+        <Table
+            data={menu}
+            isLoading={isLoading}
+            columns={[...columns, ...(user?.role === "Admin" ? adminOnlyColumns : [])]}
+        />
+    );
 };

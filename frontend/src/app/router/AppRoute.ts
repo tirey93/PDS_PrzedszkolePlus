@@ -3,7 +3,7 @@ export enum AppRoute {
     NEWS = "/news",
     MESSAGES = "/messages",
     PARENTS = "/users/parents",
-    CARETAKERS = "/users/teachers",
+    CAREGIVERS = "/users/teachers",
     GROUP = "/group",
     SETTINGS = "/settings",
     CHILDREN = "/children",

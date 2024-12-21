@@ -5,6 +5,7 @@ const GET_ALL_USERS_ENDPOINT = "/User";
 const CREATE_USER_ENDPOINT = "/Authentication/Register";
 const DISABLE_OR_ENABLE_USER_ENDPOINT = "/User/{id}/IsActive";
 const CHANGE_PASSWORD_ENDPOINT = "/User/{id}/Password";
+const GET_USERS_BY_ROLE_ENDPOINT = "/User/ByRole";
 
 type CreateUserRequestBody = {
     username: string;
@@ -21,6 +22,13 @@ export type ChangePasswordRequestBody = {
 export class UsersService {
     public static async getAll(): Promise<User[]> {
         const { data } = await requestClient.get<UserDTO[]>(GET_ALL_USERS_ENDPOINT);
+        return data.map(UsersService.mapDtoToUser);
+    }
+
+    public static async getByRole(role: UserRole): Promise<User[]> {
+        const { data } = await requestClient.get<UserDTO[]>(
+            GET_USERS_BY_ROLE_ENDPOINT.concat("?UserRole=").concat(role)
+        );
         return data.map(UsersService.mapDtoToUser);
     }
 
@@ -46,6 +54,6 @@ export class UsersService {
 
     private static mapDtoToUser({ displayName, role, name, id, isActive }: UserDTO): User {
         const [firstName, lastName] = displayName.split(" ");
-        return { firstName, lastName, role, login: name, id, isActive };
+        return { firstName, lastName, role, login: name, id: id.toString(), isActive };
     }
 }

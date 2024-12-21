@@ -1,16 +1,13 @@
-import { onlyAsCaretaker } from "@/features/auth/hoc/withAuthorization";
+import { onlyAsCaregiver } from "@/features/auth/hoc/withAuthorization";
 import { AddUserDialog } from "@/features/users/components/AddUserDialog/AddUserDialog";
 import { Plus } from "lucide-react";
 import { Button } from "@radix-ui/themes";
-import { CaretakersTable } from "@/features/users/components/CaretakersTable/CaretakersTable";
+import { CaregiversTable } from "@/features/users/components/CaretakersTable/CaregiversTable";
 import { Page } from "@/components/Page/Page";
-import { useGetAllUsers } from "@/features/users/hooks/useGetAllUsers";
-import { User } from "@/types/User";
+import { useGetUsersByRole } from "@/features/users/hooks/useGetUsersByRole";
 
-const BaseCaretakersPage = () => {
-    // TODO: Handle loading state, handle error state
-    const { data } = useGetAllUsers();
-    const caretakers: User[] = data?.filter((u) => u.role === "Admin") ?? [];
+const BaseCaregiversPage = () => {
+    const { data, isLoading } = useGetUsersByRole("Admin");
 
     return (
         <Page.Root>
@@ -27,10 +24,10 @@ const BaseCaretakersPage = () => {
             </Page.Header>
 
             <Page.Content>
-                <CaretakersTable caretakers={caretakers} />
+                <CaregiversTable caregivers={data ?? []} isLoading={isLoading} />
             </Page.Content>
         </Page.Root>
     );
 };
 
-export const CaretakersPage = onlyAsCaretaker(BaseCaretakersPage);
+export const CaregiversPage = onlyAsCaregiver(BaseCaregiversPage);

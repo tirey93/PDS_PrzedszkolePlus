@@ -1,16 +1,13 @@
 import { Page } from "@/components/Page/Page";
-import { onlyAsCaretaker } from "@/features/auth/hoc/withAuthorization";
+import { onlyAsCaregiver } from "@/features/auth/hoc/withAuthorization";
 import { AddUserDialog } from "@/features/users/components/AddUserDialog/AddUserDialog";
 import { Button } from "@radix-ui/themes";
 import { Plus } from "lucide-react";
 import { ParentsTable } from "@/features/users/components/ParentsTable/ParentsTable";
-import { User } from "@/types/User";
-import { useGetAllUsers } from "@/features/users/hooks/useGetAllUsers";
+import { useGetUsersByRole } from "@/features/users/hooks/useGetUsersByRole";
 
 const BaseParentsPage = () => {
-    // TODO: Handle loading state, handle error state
-    const { data } = useGetAllUsers();
-    const parents: User[] = data?.filter((u) => u.role === "User") ?? [];
+    const { data, isLoading } = useGetUsersByRole("User");
 
     return (
         <Page.Root>
@@ -27,10 +24,10 @@ const BaseParentsPage = () => {
             </Page.Header>
 
             <Page.Content>
-                <ParentsTable parents={parents} />
+                <ParentsTable parents={data ?? []} isLoading={isLoading} />
             </Page.Content>
         </Page.Root>
     );
 };
 
-export const ParentsPage = onlyAsCaretaker(BaseParentsPage);
+export const ParentsPage = onlyAsCaregiver(BaseParentsPage);
