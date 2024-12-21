@@ -9,7 +9,9 @@ namespace Infrastructure.Extensions
         public static void AddInfrastructure(this IServiceCollection services, string filename)
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlite(filename));
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>()
+                    .AddScoped<IChildRepository, ChildRepository>()
+                    .AddScoped<IGroupRepository, GroupRepository>();
         }
     }
 }
