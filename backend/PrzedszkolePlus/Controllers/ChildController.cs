@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Exceptions;
+using Microsoft.AspNetCore.Mvc;
+using PrzedszkolePlus.Properties;
 using PrzedszkolePlus.Requests;
 using PrzedszkolePlus.Response;
+using PrzedszkolePlus.Commands;
+using System.Net;
+using MediatR;
 
 namespace PrzedszkolePlus.Controllers
 {
@@ -8,18 +13,50 @@ namespace PrzedszkolePlus.Controllers
     [Route("[controller]")]
     public class ChildController : ControllerBase
     {
-        public ChildController()
+        private readonly IMediator _mediator;
+        public ChildController(IMediator mediator)
         {
-
+            _mediator = mediator;
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public IActionResult Post([FromBody] ChildRequest dto)
+        public async Task<ActionResult> Post([FromBody] ChildRequest dto)
         {
-            return NoContent();
+            var request = new CreateChildCommand
+            {
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                DateOfBirth = dto.DateOfBirth,
+                ParentId = dto.ParentId,
+                GroupId = dto.GroupId
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (UserNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (GroupNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpGet("ByLoggedUser")]
