@@ -21,7 +21,6 @@ namespace PrzedszkolePlus.CommandHandlers
 
         public async Task<Unit> Handle(CreateChildCommand request, CancellationToken cancellationToken)
         {
-
             var parent = _userRepository.Get(request.ParentId)
                     ?? throw new UserNotFoundException(request.ParentId);
 
