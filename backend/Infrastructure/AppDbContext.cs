@@ -8,6 +8,7 @@ namespace Infrastructure
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Child> Children { get; set; }
+        public DbSet<Group> Groups { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
