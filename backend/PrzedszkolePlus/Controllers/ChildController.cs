@@ -6,6 +6,8 @@ using PrzedszkolePlus.Response;
 using PrzedszkolePlus.Commands;
 using System.Net;
 using MediatR;
+using PrzedszkolePlus.Queries;
+using PrzedszkolePlus.Exceptions;
 
 namespace PrzedszkolePlus.Controllers
 {
@@ -60,34 +62,30 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpGet("ByLoggedUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public ActionResult<IEnumerable<ChildResponse>> Get()
+        public async Task<ActionResult<IEnumerable<ChildResponse>>> ByLoggedUser()
         {
-            return new List<ChildResponse>
+            try
             {
-                new ChildResponse
-                {
-                    Id = 1,
-                    FirstName = "Kamil",
-                    LastName = "Ślimak",
-                    DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1000)),
-                    ParentId = 1,
-                    GroupId = 1,
-                    CreatedAt = DateTime.Now
-                },
-                new ChildResponse
-                {
-                    Id = 2,
-                    FirstName = "Adam",
-                    LastName = "Kowalski",
-                    DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1500)),
-                    ParentId = 2,
-                    GroupId = 1,
-                    CreatedAt = DateTime.Now.AddDays(-2)
-                }
-            };
+                var query = new GetChildrenByLoggedUserQuery();
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (InvalidCookieException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpGet("ByParent/{id}")]
