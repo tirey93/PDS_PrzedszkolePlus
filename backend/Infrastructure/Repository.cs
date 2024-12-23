@@ -20,9 +20,9 @@ namespace Infrastructure
             await _appDbContext.SaveChangesAsync();
         }
 
-        public T Get(int id)
+        public T? Get(int id)
         {
-            return _dbSet.First(x => x.Id == id);
+            return _dbSet.FirstOrDefault(x => x.Id == id);
         }
 
         public List<T> GetList(Func<T, bool> predicate = null)
