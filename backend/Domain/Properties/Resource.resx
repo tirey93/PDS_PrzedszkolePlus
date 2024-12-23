@@ -120,6 +120,9 @@
   <data name="ExceptionActivityNotFound" xml:space="preserve">
     <value>Activity with ID {0} not found.</value>
   </data>
+  <data name="ExceptionChildNotFound" xml:space="preserve">
+    <value>Child with ID {0} not found.</value>
+  </data>
   <data name="ExceptionGroupNotFound" xml:space="preserve">
     <value>Group with ID {0} not found.</value>
   </data>

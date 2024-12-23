@@ -153,12 +153,41 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpPut("{child_id:int}/parent/{parent_id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public IActionResult PutParent(int child_id, int parent_id)
+        public async Task<IActionResult> PutParent(int child_id, int parent_id)
         {
-            return NoContent();
+
+            var request = new UpdateChildParentCommand
+            {
+                ChildId = child_id,
+                NewParentId = parent_id
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (UserNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (ChildNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpPut("{child_id:int}/group/{group_id:int}")]
