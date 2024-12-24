@@ -7,7 +7,8 @@ using Domain.Repositories;
 namespace PrzedszkolePlus.CommandHandlers
 {
     public class ChildCommandHandler : IRequestHandler<CreateChildCommand, Unit>,
-                                       IRequestHandler<UpdateChildParentCommand, Unit>
+                                       IRequestHandler<UpdateChildParentCommand, Unit>,
+                                       IRequestHandler<DeleteChildCommand, Unit>
     { 
         private readonly IChildRepository _childRepository;
         private readonly IUserRepository _userRepository;
@@ -54,6 +55,17 @@ namespace PrzedszkolePlus.CommandHandlers
 
             child.Parent = newParent;
             await _userRepository.SaveChangesAsync();
+
+            return Unit.Value;
+        }
+        
+        public async Task<Unit> Handle(DeleteChildCommand request, CancellationToken cancellationToken)
+        {
+            var child = _childRepository.Get(request.ChildId)
+                ?? throw new ChildNotFoundException(request.ChildId);
+
+            _childRepository.Delete(child);
+            await _childRepository.SaveChangesAsync();
 
             return Unit.Value;
         }
