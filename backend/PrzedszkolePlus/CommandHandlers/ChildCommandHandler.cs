@@ -6,7 +6,8 @@ using Domain.Repositories;
 
 namespace PrzedszkolePlus.CommandHandlers
 {
-    public class ChildCommandHandler : IRequestHandler<CreateChildCommand, Unit>
+    public class ChildCommandHandler : IRequestHandler<CreateChildCommand, Unit>,
+                                       IRequestHandler<UpdateChildParentCommand, Unit>
     { 
         private readonly IChildRepository _childRepository;
         private readonly IUserRepository _userRepository;
@@ -39,6 +40,20 @@ namespace PrzedszkolePlus.CommandHandlers
 
             _childRepository.Add(child);
             await _childRepository.SaveChangesAsync();
+
+            return Unit.Value;
+        }
+
+        public async Task<Unit> Handle(UpdateChildParentCommand request, CancellationToken cancellationToken)
+        {
+            var child = _childRepository.Get(request.ChildId)
+                ?? throw new ChildNotFoundException(request.ChildId);
+
+            var newParent = _userRepository.Get(request.NewParentId)
+                    ?? throw new UserNotFoundException(request.NewParentId);
+
+            child.Parent = newParent;
+            await _userRepository.SaveChangesAsync();
 
             return Unit.Value;
         }
