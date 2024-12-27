@@ -36,7 +36,7 @@ namespace PrzedszkolePlus.Controllers
                     Title = "Tytuł 1",
                     Content = "Content 1",
                     FilePath = "https://images6.alphacoders.com/337/337780.jpg",
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now.AddDays(-1),
                 },
                 new AnnouncementResponse
                 {
@@ -44,7 +44,7 @@ namespace PrzedszkolePlus.Controllers
                     Title = "Tytuł 2",
                     Content = "Content 2",
                     FilePath = "https://images6.alphacoders.com/337/337780.jpg",
-                    CreatedAt = DateTime.Now.AddDays(-1),
+                    CreatedAt = DateTime.Now,
                 }
             };
         }
