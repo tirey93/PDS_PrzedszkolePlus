@@ -54,7 +54,7 @@ namespace PrzedszkolePlus.Controllers
 
         [HttpGet("ByGroup/{group_id:int}")]
 #if !DEBUG
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.User)]
 #endif
         public ActionResult<IEnumerable<MealResponse>> GetByGroup(int group_id, DateOnly from, DateOnly to)
         {
