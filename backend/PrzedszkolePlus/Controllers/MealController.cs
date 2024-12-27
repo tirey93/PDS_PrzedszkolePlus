@@ -43,7 +43,7 @@ namespace PrzedszkolePlus.Controllers
                 new MealResponse
                 {
                     Id = 2,
-                    GroupId = 2,
+                    GroupId = 1,
                     Date = to,
                     Breakfast = "Omlet",
                     Lunch = "Rosół",
