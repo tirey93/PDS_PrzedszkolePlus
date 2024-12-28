@@ -1,6 +1,6 @@
 import { Page } from "@/components/Page/Page";
 import { Stat } from "@/components/Stat/Stat";
-import { Box, Button, Heading } from "@radix-ui/themes";
+import { Box, Button, Card, Heading, Text } from "@radix-ui/themes";
 
 import classes from "./GroupPage.module.scss";
 import { onlyAsCaregiver } from "@/features/auth/hoc/withAuthorization";
@@ -18,6 +18,11 @@ import { AddMenuDialog } from "@/features/menu/components/AddMenuDialog/AddMenuD
 import { useGetAttendanceForGroup } from "@/features/children/hooks/useGetAttendanceForGroup";
 import { formatISODate } from "@/utils/dateFormat";
 import { Attendance } from "@/features/children/types/Attendance";
+import { CreateGroupForm } from "@/features/groups/components/CreateGroupForm/CreateGroupForm";
+import { useCreateGroup } from "@/features/groups/hooks/useCreateGroup";
+import { CreateGroupFormInputs } from "@/features/groups/components/CreateGroupForm/hooks/useCreateGroupForm";
+import { useUser } from "@/features/auth/hooks/useUser";
+import { toast } from "sonner";
 
 export const getAttendanceStats = (entries: Attendance[]) => {
     const now = dayjs();
@@ -88,6 +93,40 @@ const BaseGroupPage = () => {
     });
 
     const weeklyAttendanceStats = weeklyAttendance ? getAttendanceStats(weeklyAttendance) : null;
+
+    const { mutateAsync, isPending } = useCreateGroup();
+    const { user } = useUser();
+
+    const createGroup = async (inputs: CreateGroupFormInputs) => {
+        if (!user) {
+            return;
+        }
+
+        try {
+            await mutateAsync({ name: inputs.name, caregiverId: user.id });
+            toast.success("Grupa została utworzona.");
+        } catch (e) {
+            toast.error("Nie udało się utworzyć grupy.");
+        }
+    };
+
+    if (!group) {
+        return (
+            <Page.Root>
+                <Page.Header title="Moja grupa" />
+                <Page.Content>
+                    <Card className={classes.noGroupBanner}>
+                        <Heading as="h2">Utwórz grupę</Heading>
+                        <Text>
+                            Wygląda na to, że nie masz żadnej grupy. Możesz ją teraz utworzyć, wystarczy że podasz jej
+                            nazwę.
+                        </Text>
+                        <CreateGroupForm onSubmit={createGroup} isLoading={isPending} />
+                    </Card>
+                </Page.Content>
+            </Page.Root>
+        );
+    }
 
     return (
         <Page.Root>
