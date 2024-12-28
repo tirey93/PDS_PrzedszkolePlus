@@ -79,6 +79,15 @@ namespace Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group with name {0} already exists..
+        /// </summary>
+        internal static string ExceptionGroupAlreadyExists {
+            get {
+                return ResourceManager.GetString("ExceptionGroupAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group with ID {0} not found..
         /// </summary>
         internal static string ExceptionGroupNotFound {
@@ -111,6 +120,15 @@ namespace Domain.Properties {
         internal static string ExceptionUserIsNotActive {
             get {
                 return ResourceManager.GetString("ExceptionUserIsNotActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with ID {0} is not caregiver..
+        /// </summary>
+        internal static string ExceptionUserIsNotCaregiver {
+            get {
+                return ResourceManager.GetString("ExceptionUserIsNotCaregiver", resourceCulture);
             }
         }
         

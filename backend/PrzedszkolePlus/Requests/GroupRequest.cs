@@ -3,6 +3,6 @@
     public class GroupRequest
     {
         public string Name { get; set; }
-        public string CaregiverId { get; set; }
+        public int CaregiverId { get; set; }
     }
 }
