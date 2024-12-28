@@ -122,7 +122,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Attendance", b =>
                 {
-                    b.HasOne("Domain.User", "Child")
+                    b.HasOne("Domain.Child", "Child")
                         .WithMany()
                         .HasForeignKey("ChildId");
 

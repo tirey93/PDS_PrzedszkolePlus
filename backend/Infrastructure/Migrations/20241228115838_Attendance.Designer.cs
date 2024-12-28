@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241227224851_Attendance")]
+    [Migration("20241228115838_Attendance")]
     partial class Attendance
     {
         /// <inheritdoc />
@@ -125,7 +125,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Attendance", b =>
                 {
-                    b.HasOne("Domain.User", "Child")
+                    b.HasOne("Domain.Child", "Child")
                         .WithMany()
                         .HasForeignKey("ChildId");
 

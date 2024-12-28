@@ -25,9 +25,9 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Attendances", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attendances_Users_ChildId",
+                        name: "FK_Attendances_Children_ChildId",
                         column: x => x.ChildId,
-                        principalTable: "Users",
+                        principalTable: "Children",
                         principalColumn: "Id");
                 });
 
