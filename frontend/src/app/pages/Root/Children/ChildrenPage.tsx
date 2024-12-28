@@ -11,6 +11,7 @@ import { useDateRange } from "@/hooks/useDateRange/useDateRange";
 import { useGetOwnChildren } from "@/features/children/hooks/useGetOwnChildren";
 import { useGetMenuByChildren } from "@/features/menu/hooks/useGetMenuByChildren";
 import { onlyAsParent } from "@/features/auth/hoc/withAuthorization";
+import { useGetAttendanceForOwnChildren } from "@/features/children/hooks/useGetAttendanceForOwnChildren";
 
 const BaseChildrenPage = () => {
     const { data: children, isLoading } = useGetOwnChildren();
@@ -42,6 +43,11 @@ const BaseChildrenPage = () => {
         to: mealsDateRangeEnd,
     });
 
+    const { data: attendance, isLoading: isAttendanceLoading } = useGetAttendanceForOwnChildren({
+        from: attendanceDateRangeStart,
+        to: attendanceDateRangeStart,
+    });
+
     return (
         <Page.Root>
             <Page.Header title="Moje dzieci" />
@@ -69,7 +75,12 @@ const BaseChildrenPage = () => {
 
                 <Box className={classes.section}>
                     <Heading as="h2">Dzieci</Heading>
-                    <OwnChildrenTable childrenList={children ?? []} isLoading={isLoading} />
+                    <OwnChildrenTable
+                        date={attendanceDateRangeStart}
+                        childrenList={children ?? []}
+                        attendance={attendance ?? []}
+                        isLoading={isLoading || isAttendanceLoading}
+                    />
                     <Box className={classes.sectionFooter}>
                         <DateRange
                             start={attendanceDateRangeStart}

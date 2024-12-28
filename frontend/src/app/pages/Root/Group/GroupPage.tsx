@@ -15,6 +15,7 @@ import { useGetChildrenByGroup } from "@/features/children/hooks/useGetChildrenB
 import { useGetOwnGroup } from "@/features/groups/hooks/useGetOwnGroup";
 import { useGetMenuByGroup } from "@/features/menu/hooks/useGetMenuByGroup";
 import { AddMenuDialog } from "@/features/menu/components/AddMenuDialog/AddMenuDialog";
+import { useGetAttendanceForGroup } from "@/features/children/hooks/useGetAttendanceForGroup";
 
 const BaseGroupPage = () => {
     const { data: group } = useGetOwnGroup();
@@ -45,6 +46,12 @@ const BaseGroupPage = () => {
         groupId: group?.id,
         from: mealsDateRangeStart,
         to: mealsDateRangeEnd,
+    });
+
+    const { data: attendance, isLoading: isAttendanceLoading } = useGetAttendanceForGroup({
+        groupId: group?.id,
+        from: attendanceDateRangeStart,
+        to: attendanceDateRangeStart,
     });
 
     return (
@@ -90,7 +97,12 @@ const BaseGroupPage = () => {
                             }
                         />
                     </Box>
-                    <GroupChildrenTable childrenList={children ?? []} isLoading={isLoading} />
+                    <GroupChildrenTable
+                        childrenList={children ?? []}
+                        attendance={attendance ?? []}
+                        isLoading={isLoading || isAttendanceLoading}
+                        date={attendanceDateRangeStart}
+                    />
                     <Box className={classes.sectionFooter}>
                         <DateRange
                             start={attendanceDateRangeStart}

@@ -1,12 +1,14 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "@/components/Table/components/Table";
-import { Child } from "@/features/children/types/Child";
+import { Child, ChildWithAttendance } from "@/features/children/types/Child";
 import { CaregiverAttendanceCheck } from "@/features/children/components/CaregiverAttendanceCheck/CaregiverAttendanceCheck";
 import { IconButton } from "@radix-ui/themes";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { GroupChildrenTableActions } from "@/features/children/components/GroupChildrenTable/components/GroupChildrenTableActions/GroupChildrenTableActions";
+import { Attendance } from "@/features/children/types/Attendance";
+import { combineChildrenWithAttendance } from "@/features/children/utils/combineChildrenWithAttendance";
 
-const columnHelper = createColumnHelper<Child>();
+const columnHelper = createColumnHelper<ChildWithAttendance>();
 
 const columns = [
     columnHelper.accessor((row) => row.firstName, {
@@ -31,7 +33,13 @@ const columns = [
     }),
     columnHelper.display({
         id: "attendance",
-        cell: () => <CaregiverAttendanceCheck state="present" onChange={(state) => console.log(state)} />,
+        cell: ({ row }) => (
+            <CaregiverAttendanceCheck
+                state={row.original.attendance?.state ?? "unspecified"}
+                date={row.original.attendance?.date}
+                childId={row.original.id}
+            />
+        ),
         header: () => <span>Obecność</span>,
     }),
     columnHelper.display({
@@ -46,13 +54,15 @@ const columns = [
 
 type GroupChildrenTableProps = {
     childrenList: Child[];
+    attendance: Attendance[];
+    date: string;
     isLoading?: boolean;
 };
 
-export const GroupChildrenTable = ({ childrenList, isLoading }: GroupChildrenTableProps) => {
+export const GroupChildrenTable = ({ childrenList, attendance, isLoading, date }: GroupChildrenTableProps) => {
     return (
         <Table
-            data={childrenList}
+            data={combineChildrenWithAttendance(childrenList, attendance, date)}
             columns={columns}
             onRenderSubRow={GroupChildrenTableActions}
             withFilters

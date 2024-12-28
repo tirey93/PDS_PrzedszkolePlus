@@ -1,5 +1,6 @@
 import { User } from "@/types/User";
 import { Group } from "@/features/groups/types/Group";
+import { Attendance } from "@/features/children/types/Attendance";
 
 export type BaseChild = {
     id: string;
@@ -16,3 +17,5 @@ export type Child = BaseChild & {
     caregiver?: User;
     group?: Group;
 };
+
+export type ChildWithAttendance = Child & { attendance: Pick<Attendance, "date"> & Partial<Pick<Attendance, "state">> };
