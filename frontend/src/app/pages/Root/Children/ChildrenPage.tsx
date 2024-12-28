@@ -9,20 +9,22 @@ import { DateRange } from "@/components/DateRange/DateRange";
 import dayjs from "dayjs";
 import { useDateRange } from "@/hooks/useDateRange/useDateRange";
 import { useGetOwnChildren } from "@/features/children/hooks/useGetOwnChildren";
-
-const mockMenu = [
-    {
-        id: "1",
-        groupId: "1",
-        date: new Date(),
-        breakfast: "Owsianka",
-        dinner: "Gofry",
-        lunch: "Rosół",
-    },
-];
+import { useGetMenuByChildren } from "@/features/menu/hooks/useGetMenuByChildren";
+import { onlyAsParent } from "@/features/auth/hoc/withAuthorization";
+import { useGetAttendanceForOwnChildren } from "@/features/children/hooks/useGetAttendanceForOwnChildren";
+import { useMemo } from "react";
+import { Group } from "@/features/groups/types/Group";
+import { formatISODate } from "@/utils/dateFormat";
+import { getAttendanceStats } from "@/features/children/utils/getAttendanceStats";
 
 const BaseChildrenPage = () => {
+    const now = dayjs();
     const { data: children, isLoading } = useGetOwnChildren();
+
+    const groups = useMemo(
+        (): Group[] => children?.map((child) => child.group).filter((group) => !!group) ?? [],
+        [children]
+    );
 
     const {
         increment: incrementAttendanceDateRange,
@@ -45,6 +47,24 @@ const BaseChildrenPage = () => {
         length: 7,
     });
 
+    const { data: menu, isLoading: areMealsLoading } = useGetMenuByChildren({
+        children,
+        from: mealsDateRangeStart,
+        to: mealsDateRangeEnd,
+    });
+
+    const { data: dailyAttendance, isLoading: isAttendanceLoading } = useGetAttendanceForOwnChildren({
+        from: attendanceDateRangeStart,
+        to: attendanceDateRangeStart,
+    });
+
+    const { data: monthlyAttendance } = useGetAttendanceForOwnChildren({
+        from: formatISODate(dayjs(now).subtract(30, "days")),
+        to: formatISODate(now),
+    });
+
+    const monthlyAttendanceStats = monthlyAttendance ? getAttendanceStats(monthlyAttendance) : null;
+
     return (
         <Page.Root>
             <Page.Header title="Moje dzieci" />
@@ -54,25 +74,23 @@ const BaseChildrenPage = () => {
                     <Heading as="h2">Statystyki</Heading>
                     <Box className={classes.statsContainer}>
                         <Stat
-                            name="Frekwencja"
-                            description="Względem średniej z poprzedniego miesiąca"
-                            value={85}
-                            diff={-10}
+                            name="Dzisiejsza frekwencja"
+                            description="Względem średniej z ostatnich 30 dni"
+                            value={monthlyAttendanceStats?.averageAttendanceToday}
+                            diff={monthlyAttendanceStats?.trend}
                             type="percentage"
-                        />
-                        <Stat
-                            name="Nieobecności"
-                            description="Względem poprzedniego dnia szkolnego"
-                            value={3}
-                            diff={-25}
-                            type="numerical"
                         />
                     </Box>
                 </Box>
 
                 <Box className={classes.section}>
                     <Heading as="h2">Dzieci</Heading>
-                    <OwnChildrenTable childrenList={children ?? []} isLoading={isLoading} />
+                    <OwnChildrenTable
+                        date={attendanceDateRangeStart}
+                        childrenList={children ?? []}
+                        attendance={dailyAttendance ?? []}
+                        isLoading={isLoading || isAttendanceLoading}
+                    />
                     <Box className={classes.sectionFooter}>
                         <DateRange
                             start={attendanceDateRangeStart}
@@ -85,7 +103,7 @@ const BaseChildrenPage = () => {
 
                 <Box className={classes.section}>
                     <Heading as="h2">Posiłki</Heading>
-                    <MenuTable menu={mockMenu} />
+                    <MenuTable menu={menu ?? []} groups={groups} isLoading={areMealsLoading || isLoading} />
                     <Box className={classes.sectionFooter}>
                         <DateRange
                             start={mealsDateRangeStart}
@@ -101,5 +119,4 @@ const BaseChildrenPage = () => {
     );
 };
 
-// export const ChildrenPage = onlyAsParent(BaseChildrenPage);
-export const ChildrenPage = BaseChildrenPage;
+export const ChildrenPage = onlyAsParent(BaseChildrenPage);

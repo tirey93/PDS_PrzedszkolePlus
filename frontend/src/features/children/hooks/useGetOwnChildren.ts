@@ -7,7 +7,7 @@ export const useGetOwnChildren = () => {
     const decorate = useDecorateChildWithMetadata();
 
     return useQuery({
-        queryKey: [CHILDREN_QUERY_KEY],
+        queryKey: [CHILDREN_QUERY_KEY, "Own"],
         queryFn: ChildrenService.getOwn,
         select: (children) => children.map(decorate),
     });

@@ -6,7 +6,7 @@ import { ReactNode, useState } from "react";
 import { Alert } from "@/components/Alert/Alert";
 import classes from "./ReportAbsenceDialog.module.scss";
 import { toast } from "sonner";
-import { useReportAbsence } from "@/features/children/hooks/useReportAbsence";
+import { useReportAttendance } from "@/features/children/hooks/useReportAttendance";
 
 type ReportAbsenceDialogProps = {
     childId: string;
@@ -16,10 +16,10 @@ type ReportAbsenceDialogProps = {
 
 export const ReportAbsenceDialog = ({ childId, date, trigger }: ReportAbsenceDialogProps) => {
     const [open, setOpen] = useState(false);
-    const { mutateAsync: reportAbsence, isPending, error } = useReportAbsence();
+    const { mutateAsync: reportAbsence, isPending, error } = useReportAttendance();
 
     const handleDelete = async () => {
-        await reportAbsence({ childId, date: date.toISOString() });
+        await reportAbsence({ childId, date: date.toISOString(), status: false });
         toast.success("Zgłoszono nieobecność dziecka.");
         setOpen(false);
     };

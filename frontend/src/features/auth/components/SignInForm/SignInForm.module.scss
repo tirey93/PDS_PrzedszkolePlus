@@ -7,17 +7,4 @@
   .submitButton {
     margin-top: var(--space-2);
   }
-
-  .input {
-    font-size: var(--font-size-2);
-
-    .inputLabel {
-      font-weight: var(--font-weight-bold);
-      color: var(--gray-12);
-    }
-
-    .inputError {
-      color: var(--red-11);
-    }
-  }
 }

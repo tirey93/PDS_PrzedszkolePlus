@@ -4,12 +4,11 @@ import classes from "./AddMenuForm.module.scss";
 import { Input } from "@/components/Input/Input";
 
 import { AddMenuFormInputs, useAddMenuForm } from "@/features/menu/components/AddMenuForm/hooks/useAddMenuForm";
-import { Menu } from "@/features/menu/types/Menu";
 
 type AddMenuFormProps = {
     onSubmit: (inputs: AddMenuFormInputs) => void;
     onCancel: () => void;
-    initialValue?: Menu;
+    initialValue?: AddMenuFormInputs;
     isLoading?: boolean;
 };
 
@@ -18,6 +17,7 @@ export const AddMenuForm = ({ onSubmit, isLoading, onCancel, initialValue }: Add
 
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} onReset={onCancel}>
+            <Input {...register("date")} label="Dzień" error={formState.errors?.date?.message} type="date" />
             <Input {...register("breakfast")} label="Śniadanie" error={formState.errors?.breakfast?.message} />
             <Input {...register("lunch")} label="Lunch" error={formState.errors?.lunch?.message} />
             <Input {...register("dinner")} label="Podwieczorek" error={formState.errors?.dinner?.message} />
