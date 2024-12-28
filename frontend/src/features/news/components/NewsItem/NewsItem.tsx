@@ -11,11 +11,11 @@ type NewsProps = {
     title: string;
     id: string;
     content: string;
-    imageSrc: string;
+    url: string;
     createdAt: Date;
 };
 
-export const NewsItem = ({ title, createdAt, content, imageSrc, id }: NewsProps) => {
+export const NewsItem = ({ title, createdAt, content, url, id }: NewsProps) => {
     const [isContentTruncated, setIsContentTruncated] = useState(true);
     const [canContentBeTruncated, setCanContentBeTruncated] = useState(true);
 
@@ -33,7 +33,7 @@ export const NewsItem = ({ title, createdAt, content, imageSrc, id }: NewsProps)
 
     return (
         <article className={classes.container}>
-            <img className={classes.image} src={imageSrc} alt={title} />
+            <img className={classes.image} src={url} alt={title} />
             <Box>
                 <Heading as="h2" className={classes.title}>
                     {title}
@@ -63,7 +63,7 @@ export const NewsItem = ({ title, createdAt, content, imageSrc, id }: NewsProps)
                     )}
                     <AccessGuard requiredAccess="Admin">
                         <AddNewsDialog
-                            news={{ title, id }}
+                            news={{ title, id, content, url, createdAt }}
                             trigger={
                                 <Button color="jade" variant="soft" size="1">
                                     Edytuj

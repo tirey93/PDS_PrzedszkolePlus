@@ -8,12 +8,10 @@ import { Alert } from "@/components/Alert/Alert";
 import classes from "./AddNewsDialog.module.scss";
 import { AddNewsFormInputs } from "@/features/news/components/AddNewsForm/hooks/useAddNewsForm";
 import { toast } from "sonner";
+import { News } from "@/features/news/types/News";
 
 type AddNewsDialogProps = {
-    news?: {
-        title: string;
-        id: string;
-    };
+    news?: News;
     trigger: ReactNode;
 };
 
@@ -38,7 +36,12 @@ export const AddNewsDialog = ({ trigger, news }: AddNewsDialogProps) => {
             <Dialog.Content maxWidth="450px">
                 <DialogHeader>{news ? "Edytuj ogłoszenie" : "Dodaj ogłoszenie"}</DialogHeader>
                 <DialogBody>Ogłoszenie będą mogli zobaczyć wszyscy zalogowani użytkownicy.</DialogBody>
-                <AddNewsForm onSubmit={handleFormSubmit} onCancel={handleFormCancel} isLoading={isPending} />
+                <AddNewsForm
+                    onSubmit={handleFormSubmit}
+                    onCancel={handleFormCancel}
+                    isLoading={isPending}
+                    initialValues={news}
+                />
                 {error && <Alert className={classes.alert}>{error.message}</Alert>}
             </Dialog.Content>
         </Dialog.Root>

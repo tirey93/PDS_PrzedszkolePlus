@@ -7,9 +7,6 @@ import { EnableUserButton } from "@/features/users/components/EnableUserButton/E
 export const CaregiversTableActions = (user: User) => {
     return (
         <Box className={classes.container}>
-            <Button variant="soft" size="1">
-                Przypisz grupę
-            </Button>
             {user.isActive ? (
                 <DisableUserDialog
                     user={user}

@@ -7,7 +7,7 @@ const REMOVE_CHILD_REQUEST_URL = "/Child/{id}/";
 const GET_OWN_CHILDREN_REQUEST_URL = "/Child/ByLoggedUser";
 const GET_CHILDREN_BY_GROUP_ID_REQUEST_URL = "/Child/ByGroup/{id}";
 const GET_CHILDREN_BY_PARENT_ID_REQUEST_URL = "/Child/ByParent/{id}";
-const ASSIGN_CHILD_TO_GROUP_REQUEST_URL = "/Child/{childId}/group/${groupId}";
+const ASSIGN_CHILD_TO_GROUP_REQUEST_URL = "/Child/{childId}/group/{groupId}";
 
 type CreateChildRequestBody = {
     firstName: string;

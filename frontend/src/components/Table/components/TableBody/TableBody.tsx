@@ -14,11 +14,11 @@ export function TableBody<T>({ table, onRenderSubRow, isLoading }: TableBodyProp
     return (
         <tbody className={classes.body}>
             {isLoading &&
-                [...Array(5)].map((_, index) => (
+                [...Array(2)].map((_, index) => (
                     <LoadingTableRow columnsCount={table.getAllColumns().length} key={index} />
                 ))}
 
-            {!table.getRowModel().rows.length && (
+            {!isLoading && !table.getRowModel().rows.length && (
                 <tr className={classes.row}>
                     <td className={classes.cell} colSpan={table.getAllColumns().length}>
                         Brak danych
@@ -26,32 +26,36 @@ export function TableBody<T>({ table, onRenderSubRow, isLoading }: TableBodyProp
                 </tr>
             )}
 
-            {table.getRowModel().rows.map((row) => (
-                <>
-                    <tr key={row.id} className={classNames(classes.row, { [classes.expanded]: row.getIsExpanded() })}>
-                        {row.getVisibleCells().map((cell) => {
-                            return (
-                                <td
-                                    className={classNames(classes.cell, {
-                                        [classes.textCell]: typeof cell.getValue() === "string",
-                                    })}
-                                    key={cell.id}
-                                >
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </td>
-                            );
-                        })}
-                    </tr>
-
-                    {row.getIsExpanded() && onRenderSubRow && (
-                        <tr className={classes.subRow}>
-                            <td colSpan={row.getVisibleCells().length} className={classes.cell}>
-                                {onRenderSubRow(row.original)}
-                            </td>
+            {!isLoading &&
+                table.getRowModel().rows.map((row) => (
+                    <>
+                        <tr
+                            key={row.id}
+                            className={classNames(classes.row, { [classes.expanded]: row.getIsExpanded() })}
+                        >
+                            {row.getVisibleCells().map((cell) => {
+                                return (
+                                    <td
+                                        className={classNames(classes.cell, {
+                                            [classes.textCell]: typeof cell.getValue() === "string",
+                                        })}
+                                        key={cell.id}
+                                    >
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </td>
+                                );
+                            })}
                         </tr>
-                    )}
-                </>
-            ))}
+
+                        {row.getIsExpanded() && onRenderSubRow && (
+                            <tr className={classes.subRow} key={row.id}>
+                                <td colSpan={row.getVisibleCells().length} className={classes.cell}>
+                                    {onRenderSubRow(row.original)}
+                                </td>
+                            </tr>
+                        )}
+                    </>
+                ))}
         </tbody>
     );
 }

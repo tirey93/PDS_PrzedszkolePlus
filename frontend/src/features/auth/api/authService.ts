@@ -27,6 +27,6 @@ export class AuthService {
 
     private static mapDtoToUser({ displayName, role, name, id, isActive }: UserDTO): User {
         const [firstName, lastName] = displayName.split(" ");
-        return { firstName, lastName, role, login: name, id, isActive };
+        return { firstName, lastName, role, login: name, id: id.toString(), isActive };
     }
 }
