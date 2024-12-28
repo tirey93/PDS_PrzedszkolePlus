@@ -11,7 +11,8 @@ namespace Infrastructure.Extensions
             services.AddDbContext<AppDbContext>(options => options.UseSqlite(filename));
             services.AddScoped<IUserRepository, UserRepository>()
                     .AddScoped<IChildRepository, ChildRepository>()
-                    .AddScoped<IGroupRepository, GroupRepository>();
+                    .AddScoped<IGroupRepository, GroupRepository>()
+                    .AddScoped<IAttendanceRepository, AttendanceRepository>();
         }
     }
 }

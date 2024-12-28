@@ -10,17 +10,19 @@ using Domain.Exceptions;
 namespace PrzedszkolePlus.QueryHandlers
 {
     public class ChildQueryHandler : IRequestHandler<GetChildrenByLoggedUserQuery, IEnumerable<ChildResponse>>,
-                                     IRequestHandler<GetChildrenByParentQuery, IEnumerable<ChildResponse>>
+                                     IRequestHandler<GetChildrenByParentQuery, IEnumerable<ChildResponse>>,
+                                     IRequestHandler<GetChildrenByGroupQuery, IEnumerable<ChildResponse>>
     {
         private readonly IChildRepository _childRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IGroupRepository _groupRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ChildQueryHandler(IChildRepository childRepository, IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
+        public ChildQueryHandler(IChildRepository childRepository, IUserRepository userRepository, IGroupRepository groupRepository, IHttpContextAccessor httpContextAccessor)
         {
             _childRepository = childRepository;
             _userRepository = userRepository;
-            _httpContextAccessor = httpContextAccessor;
+            _groupRepository = groupRepository;
         }
 
         public Task<IEnumerable<ChildResponse>> Handle(GetChildrenByLoggedUserQuery request, CancellationToken cancellationToken)
@@ -55,6 +57,32 @@ namespace PrzedszkolePlus.QueryHandlers
                 ?? throw new UserNotFoundException(request.ParentId);
 
             var children = _childRepository.GetList(x => x.Parent.Id == request.ParentId);
+
+            if (children == null || !children.Any())
+            {
+                return Task.FromResult(Enumerable.Empty<ChildResponse>());
+            }
+
+            var result = children.Select(x => new ChildResponse
+            {
+                Id = x.Id,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                DateOfBirth = x.DateOfBirth,
+                ParentId = x.Parent.Id,
+                GroupId = x.Group.Id,
+                CreatedAt = x.CreatedAt
+            });
+
+            return Task.FromResult(result);
+        }
+
+        public Task<IEnumerable<ChildResponse>> Handle(GetChildrenByGroupQuery request, CancellationToken cancellationToken)
+        {
+            var group = _groupRepository.Get(request.GroupId)
+                ?? throw new GroupNotFoundException(request.GroupId);
+
+            var children = _childRepository.GetList(x => x.Group.Id == request.GroupId);
 
             if (children == null || !children.Any())
             {
