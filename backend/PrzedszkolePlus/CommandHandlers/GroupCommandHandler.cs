@@ -20,7 +20,7 @@ namespace PrzedszkolePlus.CommandHandlers
         public async Task<Unit> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
         {
             var caregiver = _userRepository.Get(request.CaregiverId)
-                    ?? throw new UserNotFoundException(request.CaregiverId);
+                ?? throw new UserNotFoundException(request.CaregiverId);
 
             if (caregiver.Role != Role.Admin)
                 throw new UserIsNotCaregiverException(request.CaregiverId);
