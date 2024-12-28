@@ -10,6 +10,7 @@ import { AddChildFormInputs } from "@/features/children/components/AddChildForm/
 import { useSaveChild } from "@/features/children/hooks/useSaveChild";
 import { useGetAllGroups } from "@/features/groups/hooks/useGetAllGroups";
 import { useGetUsersByRole } from "@/features/users/hooks/useGetUsersByRole";
+import { formatISODate } from "@/utils/dateFormat";
 
 type AddChildDialogProps = {
     trigger: ReactNode;
@@ -25,7 +26,7 @@ export const AddChildDialog = ({ trigger, child, parentId, groupId }: AddChildDi
     const { mutateAsync: saveChild, isPending, error } = useSaveChild();
 
     const handleFormSubmit = async (inputs: AddChildFormInputs) => {
-        await saveChild({ ...inputs, dateOfBirth: inputs.dateOfBirth.toISOString() });
+        await saveChild({ ...inputs, dateOfBirth: formatISODate(inputs.dateOfBirth) });
         toast.success("Menu zapisane.");
         setOpen(false);
     };

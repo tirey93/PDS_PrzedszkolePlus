@@ -19,11 +19,12 @@ import { getAttendanceStats } from "@/app/pages/Root/Group/GroupPage";
 
 const BaseChildrenPage = () => {
     const { data: children, isLoading } = useGetOwnChildren();
+
     const groups = useMemo((): Group[] => {
         const items: Group[] = [];
         children?.forEach((child) => {
             if (child.group) {
-                groups.push(child.group);
+                items.push(child.group);
             }
         });
         return items;

@@ -48,7 +48,7 @@ export function TableBody<T>({ table, onRenderSubRow, isLoading }: TableBodyProp
                         </tr>
 
                         {row.getIsExpanded() && onRenderSubRow && (
-                            <tr className={classes.subRow}>
+                            <tr className={classes.subRow} key={row.id}>
                                 <td colSpan={row.getVisibleCells().length} className={classes.cell}>
                                     {onRenderSubRow(row.original)}
                                 </td>
