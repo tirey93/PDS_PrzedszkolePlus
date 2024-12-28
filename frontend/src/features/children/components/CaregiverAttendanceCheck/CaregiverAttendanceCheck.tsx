@@ -12,7 +12,7 @@ type AttendanceCheckProps = {
 };
 
 export const CaregiverAttendanceCheck = ({ state, childId, date }: AttendanceCheckProps) => {
-    const { mutateAsync, isPending } = useReportAttendance();
+    const { mutateAsync } = useReportAttendance();
 
     const onChange = async (newValue: boolean) => {
         try {
@@ -25,7 +25,6 @@ export const CaregiverAttendanceCheck = ({ state, childId, date }: AttendanceChe
     return (
         <Box className={classes.container}>
             <IconButton
-                loading={isPending}
                 size="1"
                 onClick={() => onChange(true)}
                 color={state === "present" ? "jade" : "gray"}
@@ -34,7 +33,6 @@ export const CaregiverAttendanceCheck = ({ state, childId, date }: AttendanceChe
                 <CircleCheck size={20} />
             </IconButton>
             <IconButton
-                loading={isPending}
                 size="1"
                 onClick={() => onChange(false)}
                 color={state === "absent" ? "crimson" : "gray"}

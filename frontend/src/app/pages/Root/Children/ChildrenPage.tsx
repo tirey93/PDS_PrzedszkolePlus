@@ -14,6 +14,8 @@ import { onlyAsParent } from "@/features/auth/hoc/withAuthorization";
 import { useGetAttendanceForOwnChildren } from "@/features/children/hooks/useGetAttendanceForOwnChildren";
 import { useMemo } from "react";
 import { Group } from "@/features/groups/types/Group";
+import { formatISODate } from "@/utils/dateFormat";
+import { getAttendanceStats } from "@/app/pages/Root/Group/GroupPage";
 
 const BaseChildrenPage = () => {
     const { data: children, isLoading } = useGetOwnChildren();
@@ -54,10 +56,26 @@ const BaseChildrenPage = () => {
         to: mealsDateRangeEnd,
     });
 
-    const { data: attendance, isLoading: isAttendanceLoading } = useGetAttendanceForOwnChildren({
+    const { data: dailyAttendance, isLoading: isAttendanceLoading } = useGetAttendanceForOwnChildren({
         from: attendanceDateRangeStart,
         to: attendanceDateRangeStart,
     });
+
+    const now = dayjs();
+
+    const { data: monthlyAttendance } = useGetAttendanceForOwnChildren({
+        from: formatISODate(dayjs(now).subtract(30, "days")),
+        to: formatISODate(now),
+    });
+
+    const monthlyAttendanceStats = monthlyAttendance ? getAttendanceStats(monthlyAttendance) : null;
+
+    const { data: weeklyAttendance } = useGetAttendanceForOwnChildren({
+        from: formatISODate(dayjs(now).subtract(7, "days")),
+        to: formatISODate(now),
+    });
+
+    const weeklyAttendanceStats = weeklyAttendance ? getAttendanceStats(weeklyAttendance) : null;
 
     return (
         <Page.Root>
@@ -69,17 +87,17 @@ const BaseChildrenPage = () => {
                     <Box className={classes.statsContainer}>
                         <Stat
                             name="Frekwencja"
-                            description="Względem średniej z poprzedniego miesiąca"
-                            value={85}
-                            diff={-10}
+                            description="Względem średniej z ostatnich 30 dni"
+                            value={monthlyAttendanceStats?.averageAttendanceToday}
+                            diff={monthlyAttendanceStats?.trend}
                             type="percentage"
                         />
                         <Stat
-                            name="Nieobecności"
-                            description="Względem poprzedniego dnia szkolnego"
-                            value={3}
-                            diff={-25}
-                            type="numerical"
+                            name="Frekwencja"
+                            description="Względem średniej z ostatnich 7 dni"
+                            value={weeklyAttendanceStats?.averageAttendanceToday}
+                            diff={weeklyAttendanceStats?.trend}
+                            type="percentage"
                         />
                     </Box>
                 </Box>
@@ -89,7 +107,7 @@ const BaseChildrenPage = () => {
                     <OwnChildrenTable
                         date={attendanceDateRangeStart}
                         childrenList={children ?? []}
-                        attendance={attendance ?? []}
+                        attendance={dailyAttendance ?? []}
                         isLoading={isLoading || isAttendanceLoading}
                     />
                     <Box className={classes.sectionFooter}>

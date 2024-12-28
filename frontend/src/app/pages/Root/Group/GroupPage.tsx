@@ -16,6 +16,23 @@ import { useGetOwnGroup } from "@/features/groups/hooks/useGetOwnGroup";
 import { useGetMenuByGroup } from "@/features/menu/hooks/useGetMenuByGroup";
 import { AddMenuDialog } from "@/features/menu/components/AddMenuDialog/AddMenuDialog";
 import { useGetAttendanceForGroup } from "@/features/children/hooks/useGetAttendanceForGroup";
+import { formatISODate } from "@/utils/dateFormat";
+import { Attendance } from "@/features/children/types/Attendance";
+
+export const getAttendanceStats = (entries: Attendance[]) => {
+    const now = dayjs();
+
+    const totalAttendanceEntriesToday = entries.filter((att) => att.date === formatISODate(now));
+    const averageAttendanceInPast = calculateAttendance(entries);
+    const averageAttendanceToday = calculateAttendance(totalAttendanceEntriesToday);
+    const trend = averageAttendanceToday - averageAttendanceInPast;
+
+    return { averageAttendanceInPast, averageAttendanceToday, trend };
+};
+
+const calculateAttendance = (entries: Attendance[]) => {
+    return (entries.filter((entry) => entry.state === "present").length / entries.length) * 100;
+};
 
 const BaseGroupPage = () => {
     const { data: group, isLoading: isGroupLoading } = useGetOwnGroup();
@@ -48,11 +65,29 @@ const BaseGroupPage = () => {
         to: mealsDateRangeEnd,
     });
 
-    const { data: attendance, isLoading: isAttendanceLoading } = useGetAttendanceForGroup({
+    const { data: dailyAttendance, isLoading: isAttendanceLoading } = useGetAttendanceForGroup({
         groupId: group?.id,
         from: attendanceDateRangeStart,
         to: attendanceDateRangeStart,
     });
+
+    const now = dayjs();
+
+    const { data: monthlyAttendance } = useGetAttendanceForGroup({
+        groupId: group?.id,
+        from: formatISODate(dayjs(now).subtract(30, "days")),
+        to: formatISODate(now),
+    });
+
+    const monthlyAttendanceStatus = monthlyAttendance ? getAttendanceStats(monthlyAttendance) : null;
+
+    const { data: weeklyAttendance } = useGetAttendanceForGroup({
+        groupId: group?.id,
+        from: formatISODate(dayjs(now).subtract(7, "days")),
+        to: formatISODate(now),
+    });
+
+    const weeklyAttendanceStats = weeklyAttendance ? getAttendanceStats(weeklyAttendance) : null;
 
     return (
         <Page.Root>
@@ -63,25 +98,18 @@ const BaseGroupPage = () => {
                     <Heading as="h2">Statystyki</Heading>
                     <Box className={classes.statsContainer}>
                         <Stat
-                            name="Łączna liczba dzieci"
-                            description="Względem średniej z poprzedniego miesiąca"
-                            value={20}
-                            diff={10}
-                            type="numerical"
-                        />
-                        <Stat
                             name="Frekwencja"
-                            description="Względem średniej z poprzedniego miesiąca"
-                            value={85}
-                            diff={-10}
+                            description="Względem średniej z ostatnich 30 dni"
+                            value={monthlyAttendanceStatus?.averageAttendanceToday}
+                            diff={monthlyAttendanceStatus?.trend}
                             type="percentage"
                         />
                         <Stat
-                            name="Nieobecności"
-                            description="Względem poprzedniego dnia szkolnego"
-                            value={3}
-                            diff={-25}
-                            type="numerical"
+                            name="Frekwencja"
+                            description="Względem średniej z ostatnich 7 dni"
+                            value={weeklyAttendanceStats?.averageAttendanceToday}
+                            diff={weeklyAttendanceStats?.trend}
+                            type="percentage"
                         />
                     </Box>
                 </Box>
@@ -99,7 +127,7 @@ const BaseGroupPage = () => {
                     </Box>
                     <GroupChildrenTable
                         childrenList={children ?? []}
-                        attendance={attendance ?? []}
+                        attendance={dailyAttendance ?? []}
                         isLoading={isLoading || isAttendanceLoading}
                         date={attendanceDateRangeStart}
                     />

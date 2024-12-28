@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import dayjs from "dayjs";
+import { formatISODate } from "@/utils/dateFormat";
 
 type UseDateRangeOptions = {
     start: Date;
@@ -7,8 +8,6 @@ type UseDateRangeOptions = {
 };
 
 export const useDateRange = ({ start, length }: UseDateRangeOptions) => {
-    const formatISODate = (date: Date) => dayjs(date).startOf("day").format("YYYY-MM-DD");
-
     const [date, setDate] = useState(formatISODate(start));
 
     const increment = useCallback(() => {

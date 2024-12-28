@@ -5,8 +5,8 @@ import classNames from "classnames";
 type StatProps = {
     name: string;
     description: string;
-    value: number;
-    diff: number;
+    value?: number;
+    diff?: number;
     type: "numerical" | "percentage";
 };
 
@@ -16,17 +16,16 @@ export const Stat = ({ name, diff, value, description, type }: StatProps) => {
             <Text className={classes.title}>{name}</Text>
             <Box className={classes.values}>
                 <Box className={classes.value}>
-                    {value}
-                    {type === "percentage" && "%"}
+                    {value !== undefined ? `${value}${type === "percentage" ? "%" : ""}` : "N/A"}
                 </Box>
                 <Box
                     className={classNames(
                         classes.difference,
-                        { [classes.positive]: diff > 0 },
-                        { [classes.negative]: diff < 0 }
+                        { [classes.positive]: diff && diff > 0 },
+                        { [classes.negative]: diff && diff < 0 }
                     )}
                 >
-                    {diff}%
+                    {diff ? `${diff}%` : "N/A"}
                 </Box>
             </Box>
             <Text className={classes.description}>{description}</Text>
