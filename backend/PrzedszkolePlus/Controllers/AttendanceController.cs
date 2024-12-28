@@ -47,7 +47,6 @@ namespace PrzedszkolePlus.Controllers
             };
         }
 
-
         [HttpGet("ByGroup/{group_id:int}")]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
