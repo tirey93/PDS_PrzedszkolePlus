@@ -9,7 +9,7 @@ type UseUser = {
 
 const useUserStore = create<UseUser>((set) => ({
     user: null,
-    login: (user) => set(() => ({ user: { ...user, id: user.id.toString() } })),
+    login: (user) => set(() => ({ user })),
     logout: () => set(() => ({ user: null })),
 }));
 

@@ -15,20 +15,16 @@ import { useGetAttendanceForOwnChildren } from "@/features/children/hooks/useGet
 import { useMemo } from "react";
 import { Group } from "@/features/groups/types/Group";
 import { formatISODate } from "@/utils/dateFormat";
-import { getAttendanceStats } from "@/app/pages/Root/Group/GroupPage";
+import { getAttendanceStats } from "@/features/children/utils/getAttendanceStats";
 
 const BaseChildrenPage = () => {
+    const now = dayjs();
     const { data: children, isLoading } = useGetOwnChildren();
 
-    const groups = useMemo((): Group[] => {
-        const items: Group[] = [];
-        children?.forEach((child) => {
-            if (child.group) {
-                items.push(child.group);
-            }
-        });
-        return items;
-    }, [children]);
+    const groups = useMemo(
+        (): Group[] => children?.map((child) => child.group).filter((group) => !!group) ?? [],
+        [children]
+    );
 
     const {
         increment: incrementAttendanceDateRange,
@@ -62,21 +58,12 @@ const BaseChildrenPage = () => {
         to: attendanceDateRangeStart,
     });
 
-    const now = dayjs();
-
     const { data: monthlyAttendance } = useGetAttendanceForOwnChildren({
         from: formatISODate(dayjs(now).subtract(30, "days")),
         to: formatISODate(now),
     });
 
     const monthlyAttendanceStats = monthlyAttendance ? getAttendanceStats(monthlyAttendance) : null;
-
-    const { data: weeklyAttendance } = useGetAttendanceForOwnChildren({
-        from: formatISODate(dayjs(now).subtract(7, "days")),
-        to: formatISODate(now),
-    });
-
-    const weeklyAttendanceStats = weeklyAttendance ? getAttendanceStats(weeklyAttendance) : null;
 
     return (
         <Page.Root>
@@ -87,17 +74,10 @@ const BaseChildrenPage = () => {
                     <Heading as="h2">Statystyki</Heading>
                     <Box className={classes.statsContainer}>
                         <Stat
-                            name="Frekwencja"
+                            name="Dzisiejsza frekwencja"
                             description="Względem średniej z ostatnich 30 dni"
                             value={monthlyAttendanceStats?.averageAttendanceToday}
                             diff={monthlyAttendanceStats?.trend}
-                            type="percentage"
-                        />
-                        <Stat
-                            name="Frekwencja"
-                            description="Względem średniej z ostatnich 7 dni"
-                            value={weeklyAttendanceStats?.averageAttendanceToday}
-                            diff={weeklyAttendanceStats?.trend}
                             type="percentage"
                         />
                     </Box>

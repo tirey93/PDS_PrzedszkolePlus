@@ -17,27 +17,12 @@ import { useGetMenuByGroup } from "@/features/menu/hooks/useGetMenuByGroup";
 import { AddMenuDialog } from "@/features/menu/components/AddMenuDialog/AddMenuDialog";
 import { useGetAttendanceForGroup } from "@/features/children/hooks/useGetAttendanceForGroup";
 import { formatISODate } from "@/utils/dateFormat";
-import { Attendance } from "@/features/children/types/Attendance";
 import { CreateGroupForm } from "@/features/groups/components/CreateGroupForm/CreateGroupForm";
 import { useCreateGroup } from "@/features/groups/hooks/useCreateGroup";
 import { CreateGroupFormInputs } from "@/features/groups/components/CreateGroupForm/hooks/useCreateGroupForm";
 import { useUser } from "@/features/auth/hooks/useUser";
 import { toast } from "sonner";
-
-export const getAttendanceStats = (entries: Attendance[]) => {
-    const now = dayjs();
-
-    const totalAttendanceEntriesToday = entries.filter((att) => att.date === formatISODate(now));
-    const averageAttendanceInPast = calculateAttendance(entries);
-    const averageAttendanceToday = calculateAttendance(totalAttendanceEntriesToday);
-    const trend = averageAttendanceToday - averageAttendanceInPast;
-
-    return { averageAttendanceInPast, averageAttendanceToday, trend };
-};
-
-const calculateAttendance = (entries: Attendance[]) => {
-    return (entries.filter((entry) => entry.state === "present").length / entries.length) * 100;
-};
+import { getAttendanceStats } from "@/features/children/utils/getAttendanceStats";
 
 const BaseGroupPage = () => {
     const { data: group, isLoading: isGroupLoading } = useGetOwnGroup();
@@ -86,14 +71,6 @@ const BaseGroupPage = () => {
 
     const monthlyAttendanceStatus = monthlyAttendance ? getAttendanceStats(monthlyAttendance) : null;
 
-    const { data: weeklyAttendance } = useGetAttendanceForGroup({
-        groupId: group?.id,
-        from: formatISODate(dayjs(now).subtract(7, "days")),
-        to: formatISODate(now),
-    });
-
-    const weeklyAttendanceStats = weeklyAttendance ? getAttendanceStats(weeklyAttendance) : null;
-
     const { mutateAsync, isPending } = useCreateGroup();
     const { user } = useUser();
 
@@ -137,17 +114,10 @@ const BaseGroupPage = () => {
                     <Heading as="h2">Statystyki</Heading>
                     <Box className={classes.statsContainer}>
                         <Stat
-                            name="Frekwencja"
+                            name="Dzisiejsza frekwencja"
                             description="Względem średniej z ostatnich 30 dni"
                             value={monthlyAttendanceStatus?.averageAttendanceToday}
                             diff={monthlyAttendanceStatus?.trend}
-                            type="percentage"
-                        />
-                        <Stat
-                            name="Frekwencja"
-                            description="Względem średniej z ostatnich 7 dni"
-                            value={weeklyAttendanceStats?.averageAttendanceToday}
-                            diff={weeklyAttendanceStats?.trend}
                             type="percentage"
                         />
                     </Box>
