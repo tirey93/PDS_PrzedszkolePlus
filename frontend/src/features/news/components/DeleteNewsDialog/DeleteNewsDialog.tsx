@@ -21,7 +21,7 @@ export const DeleteNewsDialog = ({ news, trigger }: DeleteNewsDialogProps) => {
     const { mutateAsync: deleteNews, isPending, error } = useDeleteNews();
 
     const handleDelete = async () => {
-        await deleteNews({ id: news.id });
+        await deleteNews(news.id);
         toast.success("Ogłoszenie usunięte.");
         setOpen(false);
     };

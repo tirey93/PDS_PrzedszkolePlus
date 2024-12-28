@@ -13,10 +13,11 @@ type AddNewsFormProps = {
     onSubmit: (inputs: AddNewsFormInputs) => void;
     onCancel: () => void;
     isLoading?: boolean;
+    initialValues?: AddNewsFormInputs;
 };
 
-export const AddNewsForm = ({ onSubmit, isLoading, onCancel }: AddNewsFormProps) => {
-    const { register, handleSubmit, formState } = useAddNewsForm();
+export const AddNewsForm = ({ onSubmit, isLoading, onCancel, initialValues }: AddNewsFormProps) => {
+    const { register, handleSubmit, formState } = useAddNewsForm(initialValues);
 
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} onReset={onCancel}>
