@@ -23,6 +23,7 @@ namespace PrzedszkolePlus.QueryHandlers
             _childRepository = childRepository;
             _userRepository = userRepository;
             _groupRepository = groupRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public Task<IEnumerable<ChildResponse>> Handle(GetChildrenByLoggedUserQuery request, CancellationToken cancellationToken)
