@@ -12,9 +12,20 @@ import { useGetOwnChildren } from "@/features/children/hooks/useGetOwnChildren";
 import { useGetMenuByChildren } from "@/features/menu/hooks/useGetMenuByChildren";
 import { onlyAsParent } from "@/features/auth/hoc/withAuthorization";
 import { useGetAttendanceForOwnChildren } from "@/features/children/hooks/useGetAttendanceForOwnChildren";
+import { useMemo } from "react";
+import { Group } from "@/features/groups/types/Group";
 
 const BaseChildrenPage = () => {
     const { data: children, isLoading } = useGetOwnChildren();
+    const groups = useMemo((): Group[] => {
+        const items: Group[] = [];
+        children?.forEach((child) => {
+            if (child.group) {
+                groups.push(child.group);
+            }
+        });
+        return items;
+    }, [children]);
 
     const {
         increment: incrementAttendanceDateRange,
@@ -93,7 +104,7 @@ const BaseChildrenPage = () => {
 
                 <Box className={classes.section}>
                     <Heading as="h2">Posiłki</Heading>
-                    <MenuTable menu={menu ?? []} isLoading={areMealsLoading} />
+                    <MenuTable menu={menu ?? []} groups={groups} isLoading={areMealsLoading || isLoading} />
                     <Box className={classes.sectionFooter}>
                         <DateRange
                             start={mealsDateRangeStart}

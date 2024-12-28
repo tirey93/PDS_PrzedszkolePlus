@@ -18,9 +18,9 @@ const columns = [
         cell: (info) => info.getValue(),
         header: () => <span>Nazwisko</span>,
     }),
-    columnHelper.accessor((row) => row.groupId, {
+    columnHelper.accessor((row) => row.group, {
         id: "group",
-        cell: (info) => info.getValue(),
+        cell: (info) => info.getValue()?.name ?? "-",
         header: () => <span>Grupa</span>,
     }),
     columnHelper.accessor((row) => row.caregiver, {

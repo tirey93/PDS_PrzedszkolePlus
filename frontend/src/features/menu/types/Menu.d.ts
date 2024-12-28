@@ -1,3 +1,5 @@
+import { Group } from "@/features/groups/types/Group";
+
 export type Menu = {
     id: string;
     groupId: string;
@@ -6,3 +8,5 @@ export type Menu = {
     lunch: string;
     dinner: string;
 };
+
+export type MenuWithGroup = Menu & { group?: Group };

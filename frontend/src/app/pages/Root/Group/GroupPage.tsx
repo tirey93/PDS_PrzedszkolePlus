@@ -18,7 +18,7 @@ import { AddMenuDialog } from "@/features/menu/components/AddMenuDialog/AddMenuD
 import { useGetAttendanceForGroup } from "@/features/children/hooks/useGetAttendanceForGroup";
 
 const BaseGroupPage = () => {
-    const { data: group } = useGetOwnGroup();
+    const { data: group, isLoading: isGroupLoading } = useGetOwnGroup();
     const { data: children, isLoading } = useGetChildrenByGroup({ groupId: group?.id });
 
     const {
@@ -125,7 +125,11 @@ const BaseGroupPage = () => {
                             }
                         />
                     </Box>
-                    <MenuTable menu={menu ?? []} isLoading={areMealsLoading} />
+                    <MenuTable
+                        menu={menu ?? []}
+                        groups={group ? [group] : []}
+                        isLoading={areMealsLoading || isGroupLoading}
+                    />
                     <Box className={classes.sectionFooter}>
                         <DateRange
                             start={mealsDateRangeStart}

@@ -18,7 +18,7 @@ export function TableBody<T>({ table, onRenderSubRow, isLoading }: TableBodyProp
                     <LoadingTableRow columnsCount={table.getAllColumns().length} key={index} />
                 ))}
 
-            {!table.getRowModel().rows.length && (
+            {!isLoading && !table.getRowModel().rows.length && (
                 <tr className={classes.row}>
                     <td className={classes.cell} colSpan={table.getAllColumns().length}>
                         Brak danych
