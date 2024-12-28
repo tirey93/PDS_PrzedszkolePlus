@@ -119,35 +119,34 @@ namespace PrzedszkolePlus.Controllers
             };
         }
 
-        [HttpGet("ByGroup/{group_id:int}")]
+        [HttpGet("ByGroup/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public ActionResult<IEnumerable<ChildResponse>> Get(int group_id)
+        public async Task<ActionResult<IEnumerable<ChildResponse>>> GetByGroup(int id)
         {
-            return new List<ChildResponse>
+            try
             {
-                new ChildResponse
+                var query = new GetChildrenByGroupQuery
                 {
-                    Id = 1,
-                    FirstName = "Kamil",
-                    LastName = "Ślimak",
-                    DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1000)),
-                    ParentId = 1,
-                    GroupId = group_id,
-                    CreatedAt = DateTime.Now
-                },
-                new ChildResponse
-                {
-                    Id = 2,
-                    FirstName = "Adam",
-                    LastName = "Kowalski",
-                    DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddDays(-1500)),
-                    ParentId = 2,
-                    GroupId = group_id,
-                    CreatedAt = DateTime.Now.AddDays(-2)
-                }
-            };
+                    GroupId = id
+                };
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (GroupNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpPut("{child_id:int}/parent/{parent_id:int}")]
