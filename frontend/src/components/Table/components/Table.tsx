@@ -54,7 +54,7 @@ export function Table<T>({
     });
 
     return (
-        <Box>
+        <Box className={classes.container}>
             <table className={classes.table}>
                 <TableHeader table={table} withFilters={withFilters} />
                 <TableBody table={table} onRenderSubRow={onRenderSubRow} isLoading={isLoading} />

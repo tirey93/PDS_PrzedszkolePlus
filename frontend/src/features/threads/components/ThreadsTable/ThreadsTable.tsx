@@ -13,28 +13,26 @@ const columns = [
     columnHelper.accessor((row) => row.createdAt, {
         id: "date",
         cell: (info) => (
-            <span className={classNames({ [classes.notSeen]: info.row.original.messages.some((m) => !m.seen) })}>
-                {info.getValue().toLocaleDateString()}
-            </span>
+            <span className={classNames({ [classes.notSeen]: true })}>{info.getValue().toLocaleDateString()}</span>
         ),
         header: () => <span>Data wątku</span>,
     }),
     columnHelper.accessor((row) => row.participant, {
         id: "participant",
-        cell: (info) => (
-            <span className={classNames({ [classes.notSeen]: info.row.original.messages.some((m) => !m.seen) })}>
-                {`${info.getValue().firstName} ${info.getValue().lastName} (${info.getValue().login})`}
-            </span>
-        ),
+        cell: (info) => {
+            const user = info.getValue();
+
+            return (
+                <span className={classNames({ [classes.notSeen]: true })}>
+                    {user ? `${user.firstName} ${user.lastName} (${user.login})` : "-"}
+                </span>
+            );
+        },
         header: () => <span>Uczestnik wątku</span>,
     }),
     columnHelper.accessor((row) => row.subject, {
         id: "subject",
-        cell: (info) => (
-            <span className={classNames({ [classes.notSeen]: info.row.original.messages.some((m) => !m.seen) })}>
-                {info.getValue()}
-            </span>
-        ),
+        cell: (info) => <span className={classNames({ [classes.notSeen]: true })}>{info.getValue()}</span>,
         header: () => <span>Tytuł</span>,
     }),
     columnHelper.display({
