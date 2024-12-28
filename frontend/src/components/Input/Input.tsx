@@ -3,6 +3,7 @@ import { forwardRef, useState } from "react";
 import classes from "./Input.module.scss";
 import { Box, TextArea, Text, TextField } from "@radix-ui/themes";
 import { RequirementsTooltip } from "@/components/RequirementsTooltip/RequirementsTooltip";
+import classNames from "classnames";
 
 interface InputProps {
     label: string;
@@ -19,7 +20,11 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
         const onBlur = () => setIsFocused(false);
 
         return (
-            <label className={classes.input} onFocus={onFocus} onBlur={onBlur}>
+            <label
+                className={classNames(classes.input, { [classes.dateInput]: type === "date" })}
+                onFocus={onFocus}
+                onBlur={onBlur}
+            >
                 <Box className={classes.header}>
                     <Text className={classes.inputLabel}>{label}</Text>
                     {help && <RequirementsTooltip error={error} content={help} forceOpen={!!error && isFocused} />}

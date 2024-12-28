@@ -13,17 +13,8 @@ import dayjs from "dayjs";
 import { useDateRange } from "@/hooks/useDateRange/useDateRange";
 import { useGetChildrenByGroup } from "@/features/children/hooks/useGetChildrenByGroup";
 import { useGetOwnGroup } from "@/features/groups/hooks/useGetOwnGroup";
-
-const mockMenu = [
-    {
-        id: "1",
-        groupId: "1",
-        date: new Date(),
-        breakfast: "Owsianka",
-        dinner: "Gofry",
-        lunch: "Rosół",
-    },
-];
+import { useGetMenuByGroup } from "@/features/menu/hooks/useGetMenuByGroup";
+import { AddMenuDialog } from "@/features/menu/components/AddMenuDialog/AddMenuDialog";
 
 const BaseGroupPage = () => {
     const { data: group } = useGetOwnGroup();
@@ -48,6 +39,12 @@ const BaseGroupPage = () => {
     } = useDateRange({
         start: dayjs(new Date()).startOf("week").toDate(),
         length: 7,
+    });
+
+    const { data: menu, isLoading: areMealsLoading } = useGetMenuByGroup({
+        groupId: group?.id,
+        from: mealsDateRangeStart,
+        to: mealsDateRangeEnd,
     });
 
     return (
@@ -105,8 +102,18 @@ const BaseGroupPage = () => {
                 </Box>
 
                 <Box className={classes.section}>
-                    <Heading as="h2">Posiłki</Heading>
-                    <MenuTable menu={mockMenu} />
+                    <Box className={classes.sectionHeader}>
+                        <Heading as="h2">Posiłki</Heading>
+                        <AddMenuDialog
+                            groupId={group?.id ?? ""}
+                            trigger={
+                                <Button size="1" color="jade" variant="soft" disabled={!group?.id}>
+                                    Dodaj <Plus size={16} />
+                                </Button>
+                            }
+                        />
+                    </Box>
+                    <MenuTable menu={menu ?? []} isLoading={areMealsLoading} />
                     <Box className={classes.sectionFooter}>
                         <DateRange
                             start={mealsDateRangeStart}

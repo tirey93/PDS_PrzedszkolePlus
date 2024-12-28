@@ -9,17 +9,8 @@ import { DateRange } from "@/components/DateRange/DateRange";
 import dayjs from "dayjs";
 import { useDateRange } from "@/hooks/useDateRange/useDateRange";
 import { useGetOwnChildren } from "@/features/children/hooks/useGetOwnChildren";
-
-const mockMenu = [
-    {
-        id: "1",
-        groupId: "1",
-        date: new Date(),
-        breakfast: "Owsianka",
-        dinner: "Gofry",
-        lunch: "Rosół",
-    },
-];
+import { useGetMenuByChildren } from "@/features/menu/hooks/useGetMenuByChildren";
+import { onlyAsParent } from "@/features/auth/hoc/withAuthorization";
 
 const BaseChildrenPage = () => {
     const { data: children, isLoading } = useGetOwnChildren();
@@ -43,6 +34,12 @@ const BaseChildrenPage = () => {
     } = useDateRange({
         start: dayjs(new Date()).startOf("week").toDate(),
         length: 7,
+    });
+
+    const { data: menu, isLoading: areMealsLoading } = useGetMenuByChildren({
+        children,
+        from: mealsDateRangeStart,
+        to: mealsDateRangeEnd,
     });
 
     return (
@@ -85,7 +82,7 @@ const BaseChildrenPage = () => {
 
                 <Box className={classes.section}>
                     <Heading as="h2">Posiłki</Heading>
-                    <MenuTable menu={mockMenu} />
+                    <MenuTable menu={menu ?? []} isLoading={areMealsLoading} />
                     <Box className={classes.sectionFooter}>
                         <DateRange
                             start={mealsDateRangeStart}
@@ -101,5 +98,4 @@ const BaseChildrenPage = () => {
     );
 };
 
-// export const ChildrenPage = onlyAsParent(BaseChildrenPage);
-export const ChildrenPage = BaseChildrenPage;
+export const ChildrenPage = onlyAsParent(BaseChildrenPage);

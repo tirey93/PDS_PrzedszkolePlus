@@ -1,16 +1,17 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Menu } from "@/features/menu/types/Menu";
 
 export type AddMenuFormInputs = {
+    date: string;
     breakfast?: string;
     lunch?: string;
     dinner?: string;
 };
 
-export const useAddMenuForm = (initialValue?: Menu) => {
+export const useAddMenuForm = (initialValue?: AddMenuFormInputs) => {
     const requirements = yup.object({
+        date: yup.string().required(),
         lunch: yup.string(),
         breakfast: yup.string(),
         dinner: yup.string(),

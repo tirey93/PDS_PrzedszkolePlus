@@ -3,8 +3,8 @@ import { ChevronLeft, ChevronRight, TimerReset } from "lucide-react";
 import classes from "./DateRange.module.scss";
 
 type DateRangeProps = {
-    start: Date;
-    end?: Date;
+    start: string;
+    end?: string;
     onNext: () => void;
     onPrevious: () => void;
     onReset: () => void;
@@ -14,8 +14,8 @@ export const DateRange = ({ start, end, onNext, onPrevious, onReset }: DateRange
     return (
         <Box className={classes.container}>
             <Badge color="gray" size="2" variant="surface" highContrast>
-                <Text className={classes.date}>{start.toLocaleDateString()}</Text>
-                {end && <Text className={classes.date}> - {end.toLocaleDateString()}</Text>}
+                <Text className={classes.date}>{start}</Text>
+                {end && <Text className={classes.date}> - {end}</Text>}
             </Badge>
 
             <Box className={classes.buttons}>

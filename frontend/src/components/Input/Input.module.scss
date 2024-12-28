@@ -3,6 +3,10 @@
   font-size: var(--font-size-2);
   width: 100%;
 
+  &.dateInput {
+    width: fit-content;
+  }
+
   .header {
     display: flex;
     align-items: center;

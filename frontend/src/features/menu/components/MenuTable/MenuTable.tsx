@@ -10,7 +10,7 @@ const columnHelper = createColumnHelper<Menu>();
 const columns = [
     columnHelper.accessor((row) => row.date, {
         id: "date",
-        cell: (info) => info.getValue().toLocaleDateString(),
+        cell: (info) => info.getValue(),
         header: () => <span>Data</span>,
     }),
     columnHelper.accessor((row) => row.groupId, {
@@ -42,6 +42,7 @@ const adminOnlyColumns = [
             <AddMenuDialog
                 date={row.original.date}
                 groupId={row.original.groupId}
+                menu={row.original}
                 trigger={
                     <Button variant="soft" size="1" color="blue">
                         Edytuj
