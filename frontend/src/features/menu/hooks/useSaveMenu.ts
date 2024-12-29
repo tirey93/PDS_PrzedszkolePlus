@@ -7,9 +7,9 @@ type SaveMenuOptions = Omit<Menu, "id"> & { id?: string };
 
 const saveMenu = async (menu: SaveMenuOptions): Promise<void> => {
     if (menu.id) {
-        return MenuService.update({ ...menu, id: menu.id, date: menu.date.toISOString() });
+        return MenuService.update(menu, menu.id);
     } else {
-        return MenuService.create({ ...menu, date: menu.date.toISOString() });
+        return MenuService.create(menu);
     }
 };
 

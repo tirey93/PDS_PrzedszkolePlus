@@ -31,8 +31,13 @@ const columns = [
     }),
     columnHelper.display({
         id: "actions",
-        cell: ({ row }) => (
-            <IconButton onClick={row.getToggleExpandedHandler()} variant="soft" size="1" color="blue">
+        cell: ({ row, table }) => (
+            <IconButton
+                onClick={() => table.setExpanded({ [row.id]: !row.getIsExpanded() })}
+                variant="soft"
+                size="1"
+                color="blue"
+            >
                 {row.getIsExpanded() ? <ChevronUp /> : <ChevronDown />}
             </IconButton>
         ),

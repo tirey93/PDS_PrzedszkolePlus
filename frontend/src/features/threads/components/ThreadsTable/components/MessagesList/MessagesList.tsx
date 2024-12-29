@@ -4,12 +4,19 @@ import classes from "./MessagesList.module.scss";
 import { useUser } from "@/features/auth/hooks/useUser";
 import { Input } from "@/components/Input/Input";
 import { Send } from "lucide-react";
+import { useGetThreadMessages } from "@/features/threads/hooks/useGetThreadMessages";
 
 export const MessagesList = (thread: Thread) => {
+    const { data: messages, isLoading } = useGetThreadMessages(thread);
+
+    if (isLoading) {
+        return <Text>Wczytywanie wiadomości...</Text>;
+    }
+
     return (
         <>
             <Box className={classes.messagesList}>
-                {thread.messages.map((message) => (
+                {(messages ?? []).map((message) => (
                     <MessageItem key={message.id} message={message} />
                 ))}
             </Box>
@@ -33,9 +40,9 @@ const MessageItem = ({ message }: MessageItemProps) => {
     return (
         <Box className={classes.messageItem}>
             <Text className={classes.header}>
-                {message.sender.id == user?.id
+                {message.sender?.id == user?.id
                     ? "Ty napisałeś/aś:"
-                    : `${message.createdAt.toLocaleString()}, ${message.sender.firstName} ${message.sender.lastName} napisał/a:`}
+                    : `${message.createdAt.toLocaleString()}, ${message.sender?.firstName ?? ""} ${message.sender?.lastName ?? ""} napisał/a:`}
             </Text>
             <Text className={classes.content}>{message.content}</Text>
         </Box>

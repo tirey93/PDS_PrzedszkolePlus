@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PrzedszkolePlus.Commands;
 using PrzedszkolePlus.Properties;
+using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Requests;
 using PrzedszkolePlus.Response;
 using System.Net;
@@ -79,35 +80,24 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public ActionResult<IEnumerable<GroupResponse>> GetAllGroups()
+        public async Task<ActionResult<IEnumerable<GroupResponse>>> GetAllGroups()
         {
-            return new List<GroupResponse>
+            try
             {
-                 new GroupResponse
-                 {
-                    Id = 1,
-                    Name = "Pszczółki",
-                    CaregiverId = 1,
-                    CreatedAt = DateTime.Now.AddDays(-2)
-                 },
-                 new GroupResponse
-                 {
-                    Id = 2,
-                    Name = "Malinki",
-                    CaregiverId = 2,
-                    CreatedAt = DateTime.Now.AddDays(-4)
-                 },
-                new GroupResponse
-                 {
-                    Id = 3,
-                    Name = "Poziomki",
-                    CaregiverId = 3,
-                    CreatedAt = DateTime.Now.AddDays(-6)
-                 }
-            };
+                var query = new GetAllGroupsQuery();
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpPut("{id}/Name")]

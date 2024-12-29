@@ -1,9 +1,11 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Table } from "@/components/Table/components/Table";
-import { Child } from "@/features/children/types/Child";
+import { Child, ChildWithAttendance } from "@/features/children/types/Child";
 import { ParentAttendanceCheck } from "@/features/children/components/ParentAttendanceCheck/ParentAttendanceCheck";
+import { Attendance } from "@/features/children/types/Attendance";
+import { combineChildrenWithAttendance } from "@/features/children/utils/combineChildrenWithAttendance";
 
-const columnHelper = createColumnHelper<Child>();
+const columnHelper = createColumnHelper<ChildWithAttendance>();
 
 const columns = [
     columnHelper.accessor((row) => row.firstName, {
@@ -16,9 +18,9 @@ const columns = [
         cell: (info) => info.getValue(),
         header: () => <span>Nazwisko</span>,
     }),
-    columnHelper.accessor((row) => row.groupId, {
+    columnHelper.accessor((row) => row.group, {
         id: "group",
-        cell: (info) => info.getValue(),
+        cell: (info) => info.getValue()?.name ?? "-",
         header: () => <span>Grupa</span>,
     }),
     columnHelper.accessor((row) => row.caregiver, {
@@ -28,16 +30,26 @@ const columns = [
     }),
     columnHelper.display({
         id: "attendance",
-        cell: ({ row }) => <ParentAttendanceCheck state="unspecified" childId={row.original.id} />,
+        cell: ({ row }) => (
+            <ParentAttendanceCheck state={row.original.attendance?.state ?? "unspecified"} childId={row.original.id} />
+        ),
         header: () => <span>Obecność</span>,
     }),
 ];
 
 type OwnChildrenTableProps = {
     childrenList: Child[];
+    attendance: Attendance[];
+    date: string;
     isLoading?: boolean;
 };
 
-export const OwnChildrenTable = ({ childrenList, isLoading }: OwnChildrenTableProps) => {
-    return <Table data={childrenList} columns={columns} isLoading={isLoading} />;
+export const OwnChildrenTable = ({ childrenList, isLoading, attendance, date }: OwnChildrenTableProps) => {
+    return (
+        <Table
+            data={combineChildrenWithAttendance(childrenList, attendance, date)}
+            columns={columns}
+            isLoading={isLoading}
+        />
+    );
 };

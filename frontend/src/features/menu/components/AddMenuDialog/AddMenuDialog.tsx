@@ -8,15 +8,21 @@ import { useSaveMenu } from "@/features/menu/hooks/useSaveMenu";
 import { AddMenuFormInputs } from "@/features/menu/components/AddMenuForm/hooks/useAddMenuForm";
 import { Menu } from "@/features/menu/types/Menu";
 import { AddMenuForm } from "@/features/menu/components/AddMenuForm/AddMenuForm";
+import dayjs from "dayjs";
 
 type AddMenuDialogProps = {
     menu?: Menu;
-    date: Date;
+    date?: string;
     groupId: string;
     trigger: ReactNode;
 };
 
-export const AddMenuDialog = ({ trigger, menu, date, groupId }: AddMenuDialogProps) => {
+export const AddMenuDialog = ({
+    trigger,
+    menu,
+    groupId,
+    date = dayjs().startOf("day").format("YYYY-MM-DD"),
+}: AddMenuDialogProps) => {
     const [open, setOpen] = useState(false);
     const { mutateAsync: saveMenu, isPending, error } = useSaveMenu();
 
@@ -40,7 +46,7 @@ export const AddMenuDialog = ({ trigger, menu, date, groupId }: AddMenuDialogPro
                     onSubmit={handleFormSubmit}
                     onCancel={handleFormCancel}
                     isLoading={isPending}
-                    initialValue={menu}
+                    initialValue={{ ...menu, date }}
                 />
                 {error && <Alert className={classes.alert}>{error.message}</Alert>}
             </Dialog.Content>

@@ -28,7 +28,7 @@ namespace PrzedszkolePlus.CommandHandlers
                     ?? throw new UserNotFoundException(request.ParentId);
 
             var group = _groupRepository.Get(request.GroupId)
-                    ?? throw new GroupNotFoundException(request.ParentId);
+                    ?? throw new GroupNotFoundException(request.GroupId);
 
             var child = new Child
             {
