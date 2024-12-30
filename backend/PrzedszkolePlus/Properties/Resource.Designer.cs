@@ -232,6 +232,33 @@ namespace PrzedszkolePlus.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group name must be at least 3 characters long..
+        /// </summary>
+        public static string ValidatorGroupNameLonger {
+            get {
+                return ResourceManager.GetString("ValidatorGroupNameLonger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group name is required..
+        /// </summary>
+        public static string ValidatorGroupNameRequired {
+            get {
+                return ResourceManager.GetString("ValidatorGroupNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group name must not exceed 255 characters..
+        /// </summary>
+        public static string ValidatorGroupNameShorter {
+            get {
+                return ResourceManager.GetString("ValidatorGroupNameShorter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Long description must not exceed 4000 characters..
         /// </summary>
         public static string ValidatorLongDescriptionShorter {

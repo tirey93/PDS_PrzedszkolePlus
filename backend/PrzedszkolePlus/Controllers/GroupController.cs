@@ -1,6 +1,7 @@
 ﻿using Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using PrzedszkolePlus.Commands;
 using PrzedszkolePlus.Properties;
 using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Requests;
@@ -20,12 +21,47 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public IActionResult Post([FromBody] GroupRequest dto)
+        public async Task<ActionResult> Post([FromBody] GroupRequest dto)
         {
-            return NoContent();
+            var request = new CreateGroupCommand
+            {
+                Name = dto.Name,
+                CaregiverId = dto.CaregiverId
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (UserNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (UserIsNotCaregiverException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (GroupAlreadyExistsException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpGet("ByLoggedUser")]
