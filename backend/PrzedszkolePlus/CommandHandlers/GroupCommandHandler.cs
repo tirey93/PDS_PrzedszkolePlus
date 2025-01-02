@@ -6,7 +6,8 @@ using Domain.Repositories;
 
 namespace PrzedszkolePlus.CommandHandlers
 {
-    public class GroupCommandHandler : IRequestHandler<CreateGroupCommand, Unit>
+    public class GroupCommandHandler : IRequestHandler<CreateGroupCommand, Unit>,
+                                       IRequestHandler<UpdateGroupNameCommand, Unit>
     {
         private readonly IUserRepository _userRepository;
         private readonly IGroupRepository _groupRepository;
@@ -37,6 +38,21 @@ namespace PrzedszkolePlus.CommandHandlers
             };
 
             _groupRepository.Add(group);
+            await _groupRepository.SaveChangesAsync();
+
+            return Unit.Value;
+        }
+
+        public async Task<Unit> Handle(UpdateGroupNameCommand request, CancellationToken cancellationToken)
+        {
+            var group = _groupRepository.Get(request.GroupId)
+                ?? throw new GroupNotFoundException(request.GroupId);
+
+            var existingGroup = _groupRepository.GetList(u => u.Name.ToLower() == request.NewName.ToLower());
+            if (existingGroup.Any())
+                throw new GroupAlreadyExistsException(request.NewName);
+
+            group.Name = request.NewName;
             await _groupRepository.SaveChangesAsync();
 
             return Unit.Value;
