@@ -10,5 +10,16 @@ namespace Infrastructure
             : base(appDbContext, appDbContext.Attendances)
         {
         }
+
+        public new List<Attendance> GetList(Func<Attendance, bool> predicate = null)
+        {
+            if (predicate == null)
+                return _appDbContext.Attendances.ToList();
+            return _appDbContext.Attendances
+                .Include(attendance => attendance.Child)
+                .Include(attendance => attendance.Child.Group)
+                .Where(predicate)
+                .ToList();
+        }
     }
 }
