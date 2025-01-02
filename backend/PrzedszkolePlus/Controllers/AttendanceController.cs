@@ -54,6 +54,9 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpGet("ByGroup/{group_id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
