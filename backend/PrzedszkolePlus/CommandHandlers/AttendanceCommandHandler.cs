@@ -40,7 +40,7 @@ namespace PrzedszkolePlus.CommandHandlers
             var child = _childRepository.Get(request.ChildId)
                 ?? throw new ChildNotFoundException(request.ChildId);
 
-            if (child.Parent.Id != loggedUserId)
+            if (user.Role != Role.Admin && child.Parent.Id != loggedUserId)
                 throw new UserIsNotParentOfThisChildException(loggedUserId, child.Id);
 
             var attendance = new Attendance
