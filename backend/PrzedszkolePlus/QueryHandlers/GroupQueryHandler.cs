@@ -2,16 +2,22 @@
 using PrzedszkolePlus.Response;
 using MediatR;
 using Domain.Repositories;
+using PrzedszkolePlus.Constants;
+using PrzedszkolePlus.Exceptions;
+using PrzedszkolePlus.Utils;
 
 namespace PrzedszkolePlus.QueryHandlers
 {
-    public class GroupQueryHandler : IRequestHandler<GetAllGroupsQuery, IEnumerable<GroupResponse>>
+    public class GroupQueryHandler : IRequestHandler<GetAllGroupsQuery, IEnumerable<GroupResponse>>,
+                                     IRequestHandler<GetGroupByLoggedUserQuery, IEnumerable<GroupResponse>>
     {
         private readonly IGroupRepository _groupRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public GroupQueryHandler(IGroupRepository groupRepository)
+        public GroupQueryHandler(IGroupRepository groupRepository, IHttpContextAccessor httpContextAccessor)
         {
             _groupRepository = groupRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public Task<IEnumerable<GroupResponse>> Handle(GetAllGroupsQuery request, CancellationToken cancellationToken)
@@ -24,6 +30,29 @@ namespace PrzedszkolePlus.QueryHandlers
             }
 
             var result = groups.Select(x => new GroupResponse
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CaregiverId = x.Caregiver.Id,
+                CreatedAt = x.CreatedAt
+            });
+
+            return Task.FromResult(result);
+        }
+
+        public Task<IEnumerable<GroupResponse>> Handle(GetGroupByLoggedUserQuery request, CancellationToken cancellationToken)
+        {
+            var loggedUserId = JwtHelper.GetUserIdFromCookies(_httpContextAccessor)
+                ?? throw new InvalidCookieException(Cookies.UserId);
+
+            var group = _groupRepository.GetList(x => x.Caregiver.Id == loggedUserId);
+
+            if (group == null || !group.Any())
+            {
+                return Task.FromResult(Enumerable.Empty<GroupResponse>());
+            }
+
+            var result = group.Select(x => new GroupResponse
             {
                 Id = x.Id,
                 Name = x.Name,
