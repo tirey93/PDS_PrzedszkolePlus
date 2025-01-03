@@ -56,9 +56,6 @@ namespace PrzedszkolePlus.QueryHandlers
             var loggedUserId = JwtHelper.GetUserIdFromCookies(_httpContextAccessor)
                 ?? throw new InvalidCookieException(Cookies.UserId);
 
-            var user = _userRepository.Get(loggedUserId)
-                ?? throw new InvalidCookieException(Cookies.UserId);
-
             var attendances = _attendanceRepository.GetList(x => x.Child.Parent.Id == loggedUserId &&
                                                                  x.Date >= request.DateFrom &&
                                                                  x.Date <= request.DateTo);

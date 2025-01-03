@@ -71,14 +71,14 @@ namespace PrzedszkolePlus.Controllers
             }
         }
 
-        [HttpGet("ChildrenByLoggedUser")]
+        [HttpGet("ByLoggedParent")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByLoggedUser([FromQuery] GetAttendancesByLoggedUserChildrenRequest dto)
+        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByLoggedParent([FromQuery] GetAttendancesByLoggedParentRequest dto)
         {
             try
             {

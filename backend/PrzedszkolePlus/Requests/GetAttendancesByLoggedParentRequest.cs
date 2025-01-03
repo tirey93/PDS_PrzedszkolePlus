@@ -3,15 +3,15 @@ using PrzedszkolePlus.Properties;
 
 namespace PrzedszkolePlus.Requests
 {
-    public class GetAttendancesByLoggedUserChildrenRequest
+    public class GetAttendancesByLoggedParentRequest
     {
         public DateOnly DateFrom { get; set; }
         public DateOnly DateTo { get; set; }
     }
 
-    public class GetAttendancesByLoggedUserChildrenRequestValidator : AbstractValidator<GetAttendancesByLoggedUserChildrenRequest>
+    public class GetAttendancesByLoggedParentRequestValidator : AbstractValidator<GetAttendancesByLoggedParentRequest>
     {
-        public GetAttendancesByLoggedUserChildrenRequestValidator()
+        public GetAttendancesByLoggedParentRequestValidator()
         {
             RuleFor(activityRequest => activityRequest.DateFrom)
                 .LessThanOrEqualTo(activityRequest => activityRequest.DateTo)
