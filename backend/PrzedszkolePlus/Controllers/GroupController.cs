@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PrzedszkolePlus.Commands;
+using PrzedszkolePlus.Exceptions;
 using PrzedszkolePlus.Properties;
 using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Requests;
@@ -65,18 +66,30 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpGet("ByLoggedUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public ActionResult<GroupResponse> Get()
+        public async Task<ActionResult<IEnumerable<GroupResponse>>> ByLoggedUser()
         {
-            return new GroupResponse
+            try
             {
-                Id = 1,
-                Name = "Pszczółki",
-                CaregiverId = 1,
-                CreatedAt = DateTime.Now.AddDays(-2)
-            };
+                var query = new GetGroupByLoggedUserQuery();
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (InvalidCookieException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpGet]
