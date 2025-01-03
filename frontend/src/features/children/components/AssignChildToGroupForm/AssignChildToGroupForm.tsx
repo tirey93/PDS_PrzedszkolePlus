@@ -31,7 +31,6 @@ export const AssignChildToGroupForm = ({
             <Select
                 {...register("groupId")}
                 options={groups.map((group) => ({ value: group.id, label: group.name }))}
-                onChange={(value) => console.log(value)}
                 label="Grupa"
                 error={formState.errors?.groupId?.message}
                 help={CHILD_GROUP_HELP}

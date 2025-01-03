@@ -1,6 +1,6 @@
 import { Page } from "@/components/Page/Page";
 import { Stat } from "@/components/Stat/Stat";
-import { Box, Button, Card, Heading, Text } from "@radix-ui/themes";
+import { Box, Button, Card, Heading, Spinner, Text } from "@radix-ui/themes";
 
 import classes from "./GroupPage.module.scss";
 import { onlyAsCaregiver } from "@/features/auth/hoc/withAuthorization";
@@ -92,14 +92,20 @@ const BaseGroupPage = () => {
             <Page.Root>
                 <Page.Header title="Moja grupa" />
                 <Page.Content>
-                    <Card className={classes.noGroupBanner}>
-                        <Heading as="h2">Utwórz grupę</Heading>
-                        <Text>
-                            Wygląda na to, że nie masz żadnej grupy. Możesz ją teraz utworzyć, wystarczy że podasz jej
-                            nazwę.
-                        </Text>
-                        <CreateGroupForm onSubmit={createGroup} isLoading={isPending} />
-                    </Card>
+                    <div className={classes.noContentWrapper}>
+                        {isGroupLoading ? (
+                            <Spinner />
+                        ) : (
+                            <Card className={classes.noGroupBanner}>
+                                <Heading as="h2">Utwórz grupę</Heading>
+                                <Text>
+                                    Wygląda na to, że nie masz żadnej grupy. Możesz ją teraz utworzyć, wystarczy że
+                                    podasz jej nazwę.
+                                </Text>
+                                <CreateGroupForm onSubmit={createGroup} isLoading={isPending} />
+                            </Card>
+                        )}
+                    </div>
                 </Page.Content>
             </Page.Root>
         );
@@ -107,7 +113,7 @@ const BaseGroupPage = () => {
 
     return (
         <Page.Root>
-            <Page.Header title="Moja grupa" />
+            <Page.Header title={`Moja grupa - "${group.name}"`} />
 
             <Page.Content>
                 <Box className={classes.section}>
