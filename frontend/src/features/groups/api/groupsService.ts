@@ -18,9 +18,9 @@ type CreateGroupRequestBody = {
 };
 
 export class GroupsService {
-    public static async getOwn(): Promise<Group> {
-        const { data } = await requestClient.get<GroupDto>(GET_OWN_GROUP_REQUEST_URL);
-        return GroupsService.mapDtoToGroup(data);
+    public static async getOwn(): Promise<Group[]> {
+        const { data } = await requestClient.get<GroupDto[]>(GET_OWN_GROUP_REQUEST_URL);
+        return data.map(GroupsService.mapDtoToGroup);
     }
 
     public static async getAll(): Promise<Group[]> {

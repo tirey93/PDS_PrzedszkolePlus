@@ -14,5 +14,9 @@ export const getAttendanceStats = (entries: Attendance[]) => {
 };
 
 const calculateAttendance = (entries: Attendance[]) => {
-    return (entries.filter((entry) => entry.state === "present").length / entries.length) * 100;
+    if (!entries.length) {
+        return 0;
+    }
+
+    return Math.round((entries.filter((entry) => entry.state === "present").length / entries.length) * 100);
 };

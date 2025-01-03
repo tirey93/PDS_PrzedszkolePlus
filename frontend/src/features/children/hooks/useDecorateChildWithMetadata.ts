@@ -12,7 +12,7 @@ export const useDecorateChildWithMetadata = () => {
         (child: BaseChild) => {
             const parent = parents?.find((p) => p.id === child.parentId);
             const group = groups?.find((g) => g.id === child.groupId);
-            const caregiver = caregivers?.find((c) => c.id === group?.id);
+            const caregiver = caregivers?.find((c) => c.id === group?.caregiverId);
 
             return { ...child, parent, group, caregiver };
         },

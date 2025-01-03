@@ -15,7 +15,10 @@ type SelectProps = {
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     ({ onChange, options, error, help, label, name, ...rest }, ref) => {
         return (
-            <BaseSelect.Root name={name} onValueChange={(value) => onChange({ target: { name, value } })}>
+            <BaseSelect.Root
+                name={name}
+                onValueChange={(value) => onChange({ target: { name, value: value.toString() } })}
+            >
                 <Box className={classes.header}>
                     <Text className={classes.inputLabel}>{label}</Text>
                     <RequirementsTooltip error={error} content={help} />

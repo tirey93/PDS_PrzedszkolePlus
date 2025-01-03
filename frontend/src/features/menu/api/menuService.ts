@@ -21,14 +21,14 @@ type MenuDto = {
 export class MenuService {
     public static async getByChildren(id: string, from: string, to: string): Promise<Menu[]> {
         const { data } = await requestClient.get<MenuDto[]>(
-            GET_MENU_BY_CHILDREN_ENDPOINT.replace(":id", id).concat(`?from=${from}&to=${to}`)
+            GET_MENU_BY_CHILDREN_ENDPOINT.replace(":id", id).concat(`?DateFrom=${from}&DateTo=${to}`)
         );
         return data.map(MenuService.dtoToMenu);
     }
 
     public static async getByGroup(id: string, from: string, to: string): Promise<Menu[]> {
         const { data } = await requestClient.get<MenuDto[]>(
-            GET_MENU_BY_GROUP_ENDPOINT.replace(":id", id).concat(`?from=${from}&to=${to}`)
+            GET_MENU_BY_GROUP_ENDPOINT.replace(":id", id).concat(`?DateFrom=${from}&DateTo=${to}`)
         );
         return data.map(MenuService.dtoToMenu);
     }
