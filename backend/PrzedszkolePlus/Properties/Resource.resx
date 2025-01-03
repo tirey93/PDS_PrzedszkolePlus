@@ -156,6 +156,9 @@
   <data name="ValidatorCronShorter" xml:space="preserve">
     <value>Cron must not exceed 255 characters.</value>
   </data>
+  <data name="ValidatorDateFromBeforeOrEqualToDateTo" xml:space="preserve">
+    <value>Start date range must be before or equal to end date range.</value>
+  </data>
   <data name="ValidatorDisplayNameLonger" xml:space="preserve">
     <value>Display name must be at least 5 characters long.</value>
   </data>

@@ -178,6 +178,15 @@ namespace PrzedszkolePlus.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start date range must be before or equal to end date range..
+        /// </summary>
+        public static string ValidatorDateFromBeforeOrEqualToDateTo {
+            get {
+                return ResourceManager.GetString("ValidatorDateFromBeforeOrEqualToDateTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display name must be at least 5 characters long..
         /// </summary>
         public static string ValidatorDisplayNameLonger {

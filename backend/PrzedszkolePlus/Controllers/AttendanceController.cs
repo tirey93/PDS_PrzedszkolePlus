@@ -103,15 +103,15 @@ namespace PrzedszkolePlus.Controllers
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByGroup(int group_id, DateOnly from, DateOnly to)
+        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByGroup(int group_id, [FromQuery] GetAttendancedByGroupRequest dto)
         {
             try
             {
                 var query = new GetAttendancesByGroupQuery
                 {
                     GroupId = group_id,
-                    DateFrom = from,
-                    DateTo = to
+                    DateFrom = dto.DateFrom,
+                    DateTo = dto.DateTo
                 };
                 var result = await _mediator.Send(query);
                 return Ok(result);
