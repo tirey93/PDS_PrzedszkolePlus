@@ -1,9 +1,10 @@
 ﻿using Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using PrzedszkolePlus.Properties;
+using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Commands;
 using PrzedszkolePlus.Exceptions;
-using PrzedszkolePlus.Properties;
 using PrzedszkolePlus.Requests;
 using PrzedszkolePlus.Response;
 using System.Net;
@@ -96,28 +97,35 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpGet("ByGroup/{group_id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public ActionResult<IEnumerable<AttendanceResponse>> GetByGroup(int group_id, DateOnly from, DateOnly to)
+        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByGroup(int group_id, [FromQuery] GetAttendancedByGroupRequest dto)
         {
-            return new List<AttendanceResponse>
+            try
             {
-                new AttendanceResponse
+                var query = new GetAttendancesByGroupQuery
                 {
-                    Id = 1,
-                    ChildId = 1,
-                    Date = from,
-                    Status = true
-                },
-                new AttendanceResponse
-                {
-                    Id = 2,
-                    ChildId = 2,
-                    Date = to,
-                    Status = false
-                }
-            };
+                    GroupId = group_id,
+                    DateFrom = dto.DateFrom,
+                    DateTo = dto.DateTo
+                };
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (GroupNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
     }
 }
