@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PrzedszkolePlus.Properties;
 using PrzedszkolePlus.Queries;
+using PrzedszkolePlus.Commands;
+using PrzedszkolePlus.Exceptions;
 using PrzedszkolePlus.Requests;
 using PrzedszkolePlus.Response;
 using System.Net;
@@ -20,12 +22,53 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public IActionResult Post([FromBody] AttendanceRequest dto)
+        public async Task<ActionResult> Post([FromBody] AttendanceRequest dto)
         {
-            return NoContent();
+            var request = new CreateAttendanceCommand
+            {
+                ChildId = dto.ChildId,
+                Date = dto.Date,
+                Status = dto.Status
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (ChildNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (AuthenticationFailureException ex)
+            {
+                return StatusCode((int)HttpStatusCode.Forbidden,
+                    string.Format(Resource.ControllerForbidden, ex.Message));
+            }
+            catch (InvalidCookieException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (UserIsNotParentOfThisChildException ex)
+            {
+                return StatusCode((int)HttpStatusCode.Forbidden,
+                    string.Format(Resource.ControllerForbidden, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpGet("ChildrenByLoggedUser")]
