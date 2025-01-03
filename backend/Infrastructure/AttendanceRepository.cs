@@ -18,6 +18,7 @@ namespace Infrastructure
             return _appDbContext.Attendances
                 .Include(attendance => attendance.Child)
                 .Include(attendance => attendance.Child.Group)
+                .Include(attendance => attendance.Child.Parent)
                 .Where(predicate)
                 .ToList();
         }
