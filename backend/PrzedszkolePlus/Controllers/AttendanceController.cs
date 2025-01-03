@@ -72,28 +72,34 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpGet("ChildrenByLoggedUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public ActionResult<IEnumerable<AttendanceResponse>> GetByLoggedUser(DateOnly from, DateOnly to)
+        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByLoggedUser([FromQuery] GetAttendancesByLoggedUserChildrenRequest dto)
         {
-            return new List<AttendanceResponse>
+            try
             {
-                new AttendanceResponse
+                var query = new GetAttendancesByLoggedUserChildrenQuery
                 {
-                    Id = 1,
-                    ChildId = 1,
-                    Date = from,
-                    Status = true
-                },
-                new AttendanceResponse
-                {
-                    Id = 2,
-                    ChildId = 2,
-                    Date = to,
-                    Status = false
-                }
-            };
+                    DateFrom = dto.DateFrom,
+                    DateTo = dto.DateTo
+                };
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (InvalidCookieException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpGet("ByGroup/{group_id:int}")]
