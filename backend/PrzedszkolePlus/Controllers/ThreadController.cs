@@ -22,21 +22,11 @@ namespace PrzedszkolePlus.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:int}/Read")]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public IActionResult Put(int id, ThreadRequest dto)
-        {
-            return NoContent();
-        }
-
-
-        [HttpDelete("{id:int}")]
-#if !DEBUG
-        [Authorize(Roles = Roles.User)]
-#endif
-        public ActionResult Delete(int id)
+        public IActionResult PutRead(int id)
         {
             return NoContent();
         }
