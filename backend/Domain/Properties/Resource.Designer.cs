@@ -106,6 +106,15 @@ namespace Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thread with ID {0} not found..
+        /// </summary>
+        internal static string ExceptionThreadNotFound {
+            get {
+                return ResourceManager.GetString("ExceptionThreadNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User with name {0} already exists..
         /// </summary>
         internal static string ExceptionUserAlreadyExists {

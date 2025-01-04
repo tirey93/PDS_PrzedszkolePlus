@@ -1,6 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Exceptions;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using PrzedszkolePlus.Commands;
+using PrzedszkolePlus.Exceptions;
+using PrzedszkolePlus.Properties;
+using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Requests;
 using PrzedszkolePlus.Response;
+using System.Net;
 
 namespace PrzedszkolePlus.Controllers
 {
@@ -8,52 +15,103 @@ namespace PrzedszkolePlus.Controllers
     [Route("[controller]")]
     public class ThreadController : ControllerBase
     {
-        public ThreadController()
-        {
+        private readonly IMediator _mediator;
 
+        public ThreadController(IMediator mediator)
+        {
+            _mediator = mediator;
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public IActionResult Post([FromBody] ThreadRequest dto)
+        public async Task<IActionResult> Post([FromBody] ThreadRequest dto)
         {
-            return NoContent();
+            var request = new CreateThreadCommand
+            {
+                CaregiverId = dto.CaregiverId,
+                ParentId = dto.ParentId,
+                Subject = dto.Subject
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (UserNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpPut("{id:int}/Read")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public IActionResult PutRead(int id)
+        public async Task<IActionResult> PutRead(int id)
         {
-            return NoContent();
+
+            var request = new UpdateThreadLastReadCommand
+            {
+                ThreadId = id
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (ThreadNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpGet("ByLoggedUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public ActionResult<IEnumerable<ThreadResponse>> GetByLoggedUser()
+        public async Task<ActionResult<IEnumerable<ThreadResponse>>> GetByLoggedUser()
         {
-            return new List<ThreadResponse>
+            try
             {
-                new ThreadResponse
-                {
-                    Id = 1,
-                    IsRead = true,
-                    ReceiverId = 12,
-                    Subject = "Subject1"
-                },
-                new ThreadResponse
-                {
-                    Id = 2,
-                    IsRead = false,
-                    ReceiverId = 13,
-                    Subject = "Subject2"
-                }
-            };
+                var query = new GetThreadByLoggedUserQuery();
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (InvalidCookieException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
     }
