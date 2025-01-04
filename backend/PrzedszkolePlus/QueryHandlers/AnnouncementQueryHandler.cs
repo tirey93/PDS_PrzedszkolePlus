@@ -16,14 +16,14 @@ namespace PrzedszkolePlus.QueryHandlers
 
         public Task<IEnumerable<AnnouncementResponse>> Handle(GetAllAnnouncementsQuery request, CancellationToken cancellationToken)
         {
-            var users = _announcementRepository.GetList();
+            var announcements = _announcementRepository.GetList();
 
-            if (users == null)
+            if (announcements == null)
             {
                 return Task.FromResult(Enumerable.Empty<AnnouncementResponse>());
             }
 
-            var result = users.Select(x => new AnnouncementResponse
+            var result = announcements.Select(x => new AnnouncementResponse
             {
                 Id = x.Id,
                 Title = x.Title,
