@@ -156,4 +156,7 @@
   <data name="ExceptionThreadNotFound" xml:space="preserve">
     <value>Thread with ID {0} not found.</value>
   </data>
+	<data name="ExceptionUserNotAllowedInThread" xml:space="preserve">
+    <value>Given user now allowed to contribute in thread with ID {0}.</value>
+  </data>
 </root>

@@ -160,6 +160,15 @@ namespace Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Given user now allowed to contribute in thread with ID {0}..
+        /// </summary>
+        internal static string ExceptionUserNotAllowedInThread {
+            get {
+                return ResourceManager.GetString("ExceptionUserNotAllowedInThread", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User with ID {0} not found..
         /// </summary>
         internal static string ExceptionUserNotFound {

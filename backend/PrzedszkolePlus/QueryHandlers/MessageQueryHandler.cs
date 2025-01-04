@@ -2,24 +2,36 @@
 using PrzedszkolePlus.Response;
 using MediatR;
 using Domain.Repositories;
+using Domain.Exceptions;
 
 namespace PrzedszkolePlus.QueryHandlers
 {
     public class MessageQueryHandler : IRequestHandler<GetMessagesByThreadQuery, IEnumerable<MessageResponse>>
     {
-        private readonly IGroupRepository _groupRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IThreadRepository _threadRepository;
 
-        public MessageQueryHandler(IGroupRepository groupRepository, IHttpContextAccessor httpContextAccessor)
+        public MessageQueryHandler(IThreadRepository threadRepository)
         {
-            _groupRepository = groupRepository;
-            _httpContextAccessor = httpContextAccessor;
+            _threadRepository = threadRepository;
         }
 
         public Task<IEnumerable<MessageResponse>> Handle(GetMessagesByThreadQuery request, CancellationToken cancellationToken)
         {
-            //ThreadNotFoundException
-            throw new NotImplementedException();
+            var thread = _threadRepository.Get(request.ThreadId)
+                ?? throw new ThreadNotFoundException(request.ThreadId);
+
+            if (thread?.Messages == null || !thread.Messages.Any())
+                return Task.FromResult(Enumerable.Empty<MessageResponse>());
+
+            var result = thread.Messages.Select(x => new MessageResponse
+            {
+                Id = x.Id,
+                Content = x.Content,
+                CreatedAt = x.CreatedAt,
+                SenderId = x.Sender.Id
+            });
+
+            return Task.FromResult(result);
         }
     }
 }

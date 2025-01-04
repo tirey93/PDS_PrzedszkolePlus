@@ -1,30 +1,55 @@
 ﻿using PrzedszkolePlus.Commands;
 using MediatR;
 using Domain.Repositories;
+using Domain.Exceptions;
+using Infrastructure;
+using PrzedszkolePlus.Constants;
+using PrzedszkolePlus.Exceptions;
+using PrzedszkolePlus.Utils;
+using Domain;
 
 namespace PrzedszkolePlus.CommandHandlers
 {
     public class MessageCommandHandler : 
         IRequestHandler<CreateMessageCommand, Unit>
     {
-        private readonly IAttendanceRepository _attendanceRepository;
-        private readonly IChildRepository _childRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IThreadRepository _threadRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserRepository _userRepository;
 
-        public MessageCommandHandler(IAttendanceRepository attendanceRepository, IChildRepository childRepository,
-                                        IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
+        public MessageCommandHandler(IThreadRepository threadRepository,
+            IHttpContextAccessor httpContextAccessor, IUserRepository userRepository)
         {
-            _attendanceRepository = attendanceRepository;
-            _childRepository = childRepository;
-            _userRepository = userRepository;
+            _threadRepository = threadRepository;
             _httpContextAccessor = httpContextAccessor;
+            _userRepository = userRepository;
         }
 
-        public Task<Unit> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
         {
-            //ThreadNotFoundException
-            throw new NotImplementedException();
+            var thread = _threadRepository.Get(request.ThreadId)
+                    ?? throw new ThreadNotFoundException(request.ThreadId);
+            var loggedUserId = JwtHelper.GetUserIdFromCookies(_httpContextAccessor)
+                ?? throw new InvalidCookieException(Cookies.UserId);
+            var user = _userRepository.Get(loggedUserId)
+                ?? throw new UserNotFoundException(Cookies.UserId);
+
+            if (user.Id != thread.Parent.Id && user.Id != thread.Caregiver.Id)
+                throw new UserNotAllowedInThreadException(thread.Id);
+
+            var message = new Domain.Message
+            {
+                Content = request.Content,
+                Sender = user,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            thread.Messages ??= new List<Message>();
+            thread.Messages.Add(message);
+
+            await _threadRepository.SaveChangesAsync();
+
+            return Unit.Value;
         }
     }
 }

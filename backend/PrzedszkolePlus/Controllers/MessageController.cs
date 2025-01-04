@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PrzedszkolePlus.Commands;
+using PrzedszkolePlus.Exceptions;
 using PrzedszkolePlus.Properties;
 using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Requests;
@@ -23,6 +24,7 @@ namespace PrzedszkolePlus.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
@@ -45,6 +47,21 @@ namespace PrzedszkolePlus.Controllers
             {
                 return StatusCode((int)HttpStatusCode.NotFound,
                     string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (UserNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (InvalidCookieException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
+            catch (UserNotAllowedInThreadException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
             }
             catch (Exception ex)
             {
