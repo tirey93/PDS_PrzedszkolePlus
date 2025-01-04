@@ -2,6 +2,6 @@
 {
     public interface IAttendanceRepository : IRepository<Attendance>
     {
-        Attendance? Get(Func<Attendance, bool> predicate = null);
+        Attendance? FirstOrDefault(Func<Attendance, bool> predicate = null);
     }
 }

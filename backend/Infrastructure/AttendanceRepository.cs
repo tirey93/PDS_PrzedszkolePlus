@@ -11,7 +11,7 @@ namespace Infrastructure
         {
         }
 
-        public Attendance? Get(Func<Attendance, bool> predicate = null)
+        public Attendance? FirstOrDefault(Func<Attendance, bool> predicate = null)
         {
             return _appDbContext.Attendances
                 .Include(attendance => attendance.Child)
