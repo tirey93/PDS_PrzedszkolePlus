@@ -12,7 +12,9 @@ namespace Infrastructure.Extensions
             services.AddScoped<IUserRepository, UserRepository>()
                     .AddScoped<IChildRepository, ChildRepository>()
                     .AddScoped<IGroupRepository, GroupRepository>()
-                    .AddScoped<IAttendanceRepository, AttendanceRepository>();
+                    .AddScoped<IAttendanceRepository, AttendanceRepository>()
+                    .AddScoped<IMessageRepository, MessageRepository>()
+                    .AddScoped<IThreadRepository, ThreadRepository>();
         }
     }
 }
