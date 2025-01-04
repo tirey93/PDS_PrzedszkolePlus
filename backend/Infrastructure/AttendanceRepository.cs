@@ -11,6 +11,15 @@ namespace Infrastructure
         {
         }
 
+        public Attendance? Get(Func<Attendance, bool> predicate = null)
+        {
+            return _appDbContext.Attendances
+                .Include(attendance => attendance.Child)
+                .Include(attendance => attendance.Child.Group)
+                .Include(attendance => attendance.Child.Parent)
+                .FirstOrDefault(predicate);
+        }
+
         public new List<Attendance> GetList(Func<Attendance, bool> predicate = null)
         {
             if (predicate == null)
