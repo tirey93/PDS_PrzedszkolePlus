@@ -14,8 +14,6 @@ import { useGetAllGroups } from "@/features/groups/hooks/useGetAllGroups";
 type AssignChildToGroupDialogProps = {
     trigger: ReactNode;
     child: BaseChild;
-    groupId?: string;
-    parentId?: string;
 };
 
 export const AssignChildToGroupDialog = ({ trigger, child }: AssignChildToGroupDialogProps) => {

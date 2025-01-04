@@ -25,7 +25,7 @@ export const Stat = ({ name, diff, value, description, type }: StatProps) => {
                         { [classes.negative]: diff && diff < 0 }
                     )}
                 >
-                    {diff ? `${diff}%` : "N/A"}
+                    {diff !== undefined ? `${diff}%` : "N/A"}
                 </Box>
             </Box>
             <Text className={classes.description}>{description}</Text>

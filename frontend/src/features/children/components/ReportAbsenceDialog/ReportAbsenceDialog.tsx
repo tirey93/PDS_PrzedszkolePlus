@@ -7,6 +7,7 @@ import { Alert } from "@/components/Alert/Alert";
 import classes from "./ReportAbsenceDialog.module.scss";
 import { toast } from "sonner";
 import { useReportAttendance } from "@/features/children/hooks/useReportAttendance";
+import { formatISODate } from "@/utils/dateFormat";
 
 type ReportAbsenceDialogProps = {
     childId: string;
@@ -19,7 +20,7 @@ export const ReportAbsenceDialog = ({ childId, date, trigger }: ReportAbsenceDia
     const { mutateAsync: reportAbsence, isPending, error } = useReportAttendance();
 
     const handleDelete = async () => {
-        await reportAbsence({ childId, date: date.toISOString(), status: false });
+        await reportAbsence({ childId, date: formatISODate(date), status: false });
         toast.success("Zgłoszono nieobecność dziecka.");
         setOpen(false);
     };

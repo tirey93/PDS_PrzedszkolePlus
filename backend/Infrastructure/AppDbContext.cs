@@ -10,6 +10,8 @@ namespace Infrastructure
         public DbSet<Child> Children { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Domain.Thread> Threads { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
