@@ -18,5 +18,20 @@ namespace Infrastructure
                 .Include(thread => thread.Messages)
                 .FirstOrDefault(group => group.Id == id);
         }
+        public new List<Domain.Thread> GetList(Func<Domain.Thread, bool> predicate = null)
+        {
+            if (predicate == null)
+                return _appDbContext.Threads
+                    .Include(thread => thread.Caregiver)
+                    .Include(thread => thread.Parent)
+                    .Include(thread => thread.Messages)
+                    .ToList();
+            return _appDbContext.Threads
+                .Include(thread => thread.Caregiver)
+                .Include(thread => thread.Parent)
+                .Include(thread => thread.Messages)
+                .Where(predicate)
+                .ToList();
+        }
     }
 }

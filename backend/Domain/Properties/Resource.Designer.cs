@@ -124,6 +124,15 @@ namespace Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User with ID {1} should have role {0}..
+        /// </summary>
+        internal static string ExceptionUserHasWrongRoleInThread {
+            get {
+                return ResourceManager.GetString("ExceptionUserHasWrongRoleInThread", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User with ID {0} is not active..
         /// </summary>
         internal static string ExceptionUserIsNotActive {
@@ -160,7 +169,7 @@ namespace Domain.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Given user now allowed to contribute in thread with ID {0}..
+        ///   Looks up a localized string similar to Given user is not allowed to contribute in thread with ID {0}..
         /// </summary>
         internal static string ExceptionUserNotAllowedInThread {
             get {

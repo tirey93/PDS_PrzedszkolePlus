@@ -32,7 +32,7 @@ namespace PrzedszkolePlus.CommandHandlers
             var loggedUserId = JwtHelper.GetUserIdFromCookies(_httpContextAccessor)
                 ?? throw new InvalidCookieException(Cookies.UserId);
             var user = _userRepository.Get(loggedUserId)
-                ?? throw new UserNotFoundException(Cookies.UserId);
+                ?? throw new UserNotFoundException(loggedUserId);
 
             if (user.Id != thread.Parent.Id && user.Id != thread.Caregiver.Id)
                 throw new UserNotAllowedInThreadException(thread.Id);

@@ -1,6 +1,12 @@
 ﻿using PrzedszkolePlus.Commands;
 using MediatR;
 using Domain.Repositories;
+using Domain.Exceptions;
+using Domain;
+using Infrastructure;
+using PrzedszkolePlus.Constants;
+using PrzedszkolePlus.Exceptions;
+using PrzedszkolePlus.Utils;
 
 namespace PrzedszkolePlus.CommandHandlers
 {
@@ -8,30 +14,61 @@ namespace PrzedszkolePlus.CommandHandlers
         IRequestHandler<CreateThreadCommand, Unit>,
         IRequestHandler<UpdateThreadLastReadCommand, Unit>
     {
-        private readonly IAttendanceRepository _attendanceRepository;
-        private readonly IChildRepository _childRepository;
+        private readonly IThreadRepository _threadRepository;
         private readonly IUserRepository _userRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ThreadCommandHandler(IAttendanceRepository attendanceRepository, IChildRepository childRepository,
-                                        IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
+        public ThreadCommandHandler(IThreadRepository threadRepository, IUserRepository userRepository,
+            IHttpContextAccessor httpContextAccessor)
         {
-            _attendanceRepository = attendanceRepository;
-            _childRepository = childRepository;
+            _threadRepository = threadRepository;
             _userRepository = userRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Task<Unit> Handle(CreateThreadCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateThreadCommand request, CancellationToken cancellationToken)
         {
-            //UserNotFoundException
-            throw new NotImplementedException();
+            var parent = _userRepository.Get(request.ParentId)
+                ?? throw new UserNotFoundException(request.ParentId);
+            var caregiver = _userRepository.Get(request.CaregiverId)
+                ?? throw new UserNotFoundException(request.CaregiverId);
+
+            if(parent.Role != Role.User)
+                throw new UserHasWrongRoleInThreadException("Parent", parent.Id);
+            if(caregiver.Role != Role.Admin)
+                throw new UserHasWrongRoleInThreadException("Caregiver", parent.Id);
+
+            var thread = new Domain.Thread
+            {
+                Parent = parent,
+                Caregiver = caregiver,
+                Subject = request.Subject
+            };
+
+            _threadRepository.Add(thread);
+            await _threadRepository.SaveChangesAsync();
+
+            return Unit.Value;
         }
 
-        public Task<Unit> Handle(UpdateThreadLastReadCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateThreadLastReadCommand request, CancellationToken cancellationToken)
         {
-            //ThreadNotFoundException
-            throw new NotImplementedException();
+            var thread = _threadRepository.Get(request.ThreadId)
+                ?? throw new ThreadNotFoundException(request.ThreadId);
+            var loggedUserId = JwtHelper.GetUserIdFromCookies(_httpContextAccessor)
+                ?? throw new InvalidCookieException(Cookies.UserId);
+            var loggedUser = _userRepository.Get(loggedUserId)
+                ?? throw new UserNotFoundException(loggedUserId);
+
+            if (loggedUser.Id == thread.Parent.Id)
+                thread.ParentLastRead = DateTime.UtcNow;
+            else if (loggedUser.Id == thread.Caregiver.Id)
+                thread.CaregiverLastRead = DateTime.UtcNow;
+            else
+                throw new UserNotAllowedInThreadException(loggedUser.Id);
+
+            await _threadRepository.SaveChangesAsync();
+            return Unit.Value;
         }
     }
 }
