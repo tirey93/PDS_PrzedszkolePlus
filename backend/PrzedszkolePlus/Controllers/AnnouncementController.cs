@@ -6,6 +6,7 @@ using PrzedszkolePlus.Commands;
 using PrzedszkolePlus.Requests;
 using PrzedszkolePlus.Response;
 using System.Net;
+using Domain.Exceptions;
 
 namespace PrzedszkolePlus.Controllers
 {
@@ -77,12 +78,34 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return NoContent();
+            var request = new DeleteAnnouncementCommand
+            {
+                AnnouncementId = id
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (AnnouncementNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
     }
 }

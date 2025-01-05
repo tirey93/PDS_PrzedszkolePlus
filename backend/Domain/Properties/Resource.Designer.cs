@@ -70,6 +70,15 @@ namespace Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Announcement with ID {0} not found..
+        /// </summary>
+        internal static string ExceptionAnnouncementNotFound {
+            get {
+                return ResourceManager.GetString("ExceptionAnnouncementNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Child with ID {0} not found..
         /// </summary>
         internal static string ExceptionChildNotFound {
