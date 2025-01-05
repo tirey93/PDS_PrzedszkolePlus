@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PrzedszkolePlus.Commands;
 using PrzedszkolePlus.Properties;
+using PrzedszkolePlus.Queries;
+using PrzedszkolePlus.Commands;
 using PrzedszkolePlus.Requests;
 using PrzedszkolePlus.Response;
 using System.Net;
@@ -46,30 +47,24 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public ActionResult<IEnumerable<AnnouncementResponse>> Get()
+        public async Task<ActionResult<IEnumerable<AnnouncementResponse>>> Get()
         {
-            return new List<AnnouncementResponse>
+            try
             {
-                new AnnouncementResponse
-                {
-                    Id = 1,
-                    Title = "Tytuł 1",
-                    Content = "Content 1",
-                    FilePath = "https://images6.alphacoders.com/337/337780.jpg",
-                    CreatedAt = DateTime.Now.AddDays(-1),
-                },
-                new AnnouncementResponse
-                {
-                    Id = 2,
-                    Title = "Tytuł 2",
-                    Content = "Content 2",
-                    FilePath = "https://images6.alphacoders.com/337/337780.jpg",
-                    CreatedAt = DateTime.Now,
-                }
-            };
+                var query = new GetAllAnnouncementsQuery();
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpPut("{id:int}")]
