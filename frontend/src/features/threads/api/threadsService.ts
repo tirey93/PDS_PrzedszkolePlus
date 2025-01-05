@@ -23,6 +23,7 @@ type ThreadDto = {
     subject: string;
     receiverId: number;
     isRead: boolean;
+    createdAt: string;
 };
 
 type MessageDto = {
@@ -61,7 +62,7 @@ export class ThreadsService {
             subject: dto.subject,
             participantId: dto.receiverId,
             seen: dto.isRead,
-            createdAt: new Date(),
+            createdAt: new Date(dto.createdAt),
         };
     }
 
