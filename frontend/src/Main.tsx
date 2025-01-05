@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
-import "@fontsource/montserrat";
+import "@fontsource/montserrat/500.css";
 import "./styles/normalize.scss";
 import "@radix-ui/themes/styles.css";
 import "./styles/overrides.scss";
