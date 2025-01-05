@@ -115,11 +115,29 @@ namespace Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thread with ID {0} not found..
+        /// </summary>
+        internal static string ExceptionThreadNotFound {
+            get {
+                return ResourceManager.GetString("ExceptionThreadNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User with name {0} already exists..
         /// </summary>
         internal static string ExceptionUserAlreadyExists {
             get {
                 return ResourceManager.GetString("ExceptionUserAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with ID {1} should have role {0}..
+        /// </summary>
+        internal static string ExceptionUserHasWrongRoleInThread {
+            get {
+                return ResourceManager.GetString("ExceptionUserHasWrongRoleInThread", resourceCulture);
             }
         }
         
@@ -156,6 +174,15 @@ namespace Domain.Properties {
         internal static string ExceptionUserNameNotFound {
             get {
                 return ResourceManager.GetString("ExceptionUserNameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Given user is not allowed to contribute in thread with ID {0}..
+        /// </summary>
+        internal static string ExceptionUserNotAllowedInThread {
+            get {
+                return ResourceManager.GetString("ExceptionUserNotAllowedInThread", resourceCulture);
             }
         }
         
