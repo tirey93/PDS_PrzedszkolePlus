@@ -22,6 +22,11 @@ namespace Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Entity<Attendance>()
+                .HasOne(a => a.Child)
+                .WithMany(c => c.Attendances)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
