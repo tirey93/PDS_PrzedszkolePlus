@@ -52,6 +52,7 @@ type CaregiversTableProps = {
 export const CaregiversTable = ({ caregivers, isLoading }: CaregiversTableProps) => {
     return (
         <Table
+            sortOptions={[{ id: "lastName", desc: false }]}
             data={caregivers}
             columns={columns}
             onRenderSubRow={CaregiversTableActions}

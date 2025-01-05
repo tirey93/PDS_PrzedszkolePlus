@@ -9,7 +9,7 @@ export const useGetAllThreads = (users: User[]) => {
         queryFn: ThreadsService.getAll,
         select: (threads) =>
             threads.map((thread) => {
-                const participant = users.find((user) => user.id === thread.participantId);
+                const participant = users.find((user) => parseInt(user.id) === thread.participantId);
                 return { ...thread, participant };
             }),
     });

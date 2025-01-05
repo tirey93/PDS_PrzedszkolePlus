@@ -52,6 +52,7 @@ type ParentsTableProps = {
 export const ParentsTable = ({ parents, isLoading }: ParentsTableProps) => {
     return (
         <Table
+            sortOptions={[{ id: "lastName", desc: false }]}
             data={parents}
             columns={columns}
             onRenderSubRow={ParentsTableActions}

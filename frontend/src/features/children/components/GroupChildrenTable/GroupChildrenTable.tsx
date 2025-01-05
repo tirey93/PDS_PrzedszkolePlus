@@ -67,6 +67,7 @@ type GroupChildrenTableProps = {
 export const GroupChildrenTable = ({ childrenList, attendance, isLoading, date }: GroupChildrenTableProps) => {
     return (
         <Table
+            sortOptions={[{ id: "lastName", desc: false }]}
             data={combineChildrenWithAttendance(childrenList, attendance, date)}
             columns={columns}
             onRenderSubRow={GroupChildrenTableActions}

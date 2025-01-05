@@ -3,16 +3,15 @@ import { User } from "@/types/User";
 export type Thread = {
     id: string;
     subject: string;
+    participantId: number;
     createdAt: Date;
-    participantId: string;
+    seen: boolean;
     participant?: User;
 };
 
 export type Message = {
     id: string;
-    threadId: string;
     content: string;
-    seen: boolean;
     createdAt: Date;
     senderId: string;
     sender?: User;

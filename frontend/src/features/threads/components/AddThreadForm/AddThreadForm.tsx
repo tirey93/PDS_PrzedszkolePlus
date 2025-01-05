@@ -23,6 +23,13 @@ export const AddThreadForm = ({ onSubmit, onCancel, isLoading, users }: AddThrea
 
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)} onReset={onCancel}>
+            <Input
+                {...register("subject")}
+                label="Temat wątku"
+                error={formState.errors?.subject?.message}
+                help={THREAD_SUBJECT_REQUIREMENT}
+            />
+
             <Select
                 {...register("participantId")}
                 label="Uczestnik wątku"
@@ -34,15 +41,8 @@ export const AddThreadForm = ({ onSubmit, onCancel, isLoading, users }: AddThrea
                 error={formState.errors?.participantId?.message}
             />
 
-            <Input
-                {...register("subject")}
-                label="Temat wątku"
-                error={formState.errors?.subject?.message}
-                help={THREAD_SUBJECT_REQUIREMENT}
-            />
-
             <Box className={classes.actions}>
-                <Button variant="soft" loading={isLoading} type="reset">
+                <Button variant="soft" type="reset">
                     Anuluj
                 </Button>
                 <Button color="jade" loading={isLoading} type="submit">

@@ -18,7 +18,7 @@ export function TablePagination<T>({ table }: PaginationProps<T>) {
         <Box className={classes.container}>
             <Badge color="gray" size="2" variant="surface" highContrast>
                 <Strong>
-                    Strona {table.getState().pagination.pageIndex + 1} z {table.getPageCount().toLocaleString()}
+                    Strona {table.getState().pagination.pageIndex + 1} z {Math.max(table.getPageCount(), 1)}
                 </Strong>
             </Badge>
 
