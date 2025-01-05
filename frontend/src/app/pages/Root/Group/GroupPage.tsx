@@ -133,6 +133,7 @@ const BaseGroupPage = () => {
                     <Box className={classes.sectionHeader}>
                         <Heading as="h2">Dzieci</Heading>
                         <AddChildDialog
+                            groupId={group.id}
                             trigger={
                                 <Button size="1" color="jade" variant="soft">
                                     Dodaj <Plus size={16} />

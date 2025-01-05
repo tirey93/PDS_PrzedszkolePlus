@@ -22,7 +22,7 @@ export const ParentsTableActions = (user: User) => {
                     <EnableUserButton userId={user.id} />
                 )}
             </Box>
-            <ChildrenList parentId={user.id} />
+            <ChildrenList parent={user} />
         </Box>
     );
 };

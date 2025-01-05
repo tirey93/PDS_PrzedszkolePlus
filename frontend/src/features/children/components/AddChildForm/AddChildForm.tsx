@@ -48,9 +48,11 @@ export const AddChildForm = ({ onSubmit, isLoading, onCancel, initialValue, grou
             <Select
                 {...register("parentId")}
                 options={parents.map((parent) => ({
-                    value: parent.id,
+                    value: parent.id.toString(),
                     label: `${parent.firstName} ${parent.lastName}`,
                 }))}
+                value={initialValue?.parentId}
+                disabled={!!initialValue?.parentId}
                 label="Rodzic"
                 error={formState.errors?.parentId?.message}
                 help={CHILD_PARENT_HELP}
@@ -58,7 +60,9 @@ export const AddChildForm = ({ onSubmit, isLoading, onCancel, initialValue, grou
 
             <Select
                 {...register("groupId")}
-                options={groups.map((group) => ({ value: group.id, label: group.name }))}
+                options={groups.map((group) => ({ value: group.id.toString(), label: group.name }))}
+                value={initialValue?.groupId}
+                disabled={!!initialValue?.groupId}
                 label="Grupa"
                 error={formState.errors?.groupId?.message}
                 help={CHILD_GROUP_HELP}

@@ -33,6 +33,7 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
                 {type === "textarea" ? (
                     <TextArea
                         resize="vertical"
+                        rows={6}
                         aria-invalid={!!error}
                         ref={ref as React.Ref<HTMLTextAreaElement>}
                         {...props}
