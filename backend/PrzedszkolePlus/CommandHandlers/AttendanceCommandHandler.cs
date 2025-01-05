@@ -43,6 +43,11 @@ namespace PrzedszkolePlus.CommandHandlers
             if (user.Role != Role.Admin && child.Parent.Id != loggedUserId)
                 throw new UserIsNotParentOfThisChildException(loggedUserId, child.Id);
 
+            var existingAttendance = _attendanceRepository.FirstOrDefault(x => x.Child.Id == request.ChildId &&
+                                                                               x.Date == request.Date);
+            if (existingAttendance != null)
+                _attendanceRepository.Delete(existingAttendance);
+
             var attendance = new Attendance
             {
                 Child = child,
