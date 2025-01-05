@@ -33,7 +33,7 @@ export const ThreadsTable = ({ threads, isLoading }: ThreadsTableProps) => {
                 return;
             }
 
-            const latestThread = threads.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())[0];
+            const latestThread = threads.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
             const row = table.getRowModel().rows.find((row) => row.original.id === latestThread.id);
 
             if (!row || row.getIsExpanded()) {

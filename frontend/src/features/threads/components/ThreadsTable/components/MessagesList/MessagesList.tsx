@@ -58,7 +58,7 @@ const MessageItem = ({ message }: MessageItemProps) => {
         <Box className={classes.messageItem}>
             <Text className={classes.header}>
                 {message.sender?.id == user?.id
-                    ? "Ty napisałeś/aś:"
+                    ? `${message.createdAt.toLocaleString()}, Ty napisałeś/aś:`
                     : `${message.createdAt.toLocaleString()}, ${message.sender?.firstName ?? ""} ${message.sender?.lastName ?? ""} napisał/a:`}
             </Text>
             <Text className={classes.content}>{message.content}</Text>
