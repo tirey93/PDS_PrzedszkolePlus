@@ -29,7 +29,7 @@ namespace PrzedszkolePlus.QueryHandlers
                 Title = x.Title,
                 Content = x.Content,
                 FilePath = x.FilePath,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = x.CreatedAt
             });
 
             return Task.FromResult(result);
