@@ -69,12 +69,36 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public IActionResult Put(int id, AnnouncementRequest dto)
+        public async Task<ActionResult> Put(int id, [FromBody] AnnouncementRequest dto)
         {
-            return NoContent();
+            var request = new UpdateAnnouncementCommand
+            {
+                AnnouncementId = id,
+                Title = dto.Title,
+                Content = dto.Content,
+                FilePath = dto.FilePath
+            };
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (AnnouncementNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpDelete("{id:int}")]
