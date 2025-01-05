@@ -2,10 +2,6 @@
 using MediatR;
 using Domain.Repositories;
 using Domain.Exceptions;
-using Infrastructure;
-using PrzedszkolePlus.Constants;
-using PrzedszkolePlus.Exceptions;
-using PrzedszkolePlus.Utils;
 using Domain;
 
 namespace PrzedszkolePlus.CommandHandlers
