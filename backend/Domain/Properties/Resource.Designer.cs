@@ -97,6 +97,15 @@ namespace Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meal with ID {0} not found..
+        /// </summary>
+        internal static string ExceptionMealNotFound {
+            get {
+                return ResourceManager.GetString("ExceptionMealNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reservation with ID {0} not found..
         /// </summary>
         internal static string ExceptionReservationNotFound {

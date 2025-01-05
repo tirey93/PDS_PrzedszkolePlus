@@ -153,4 +153,7 @@
   <data name="ExceptionUserPasswordNotMatch" xml:space="preserve">
     <value>Password for user name {0} not match.</value>
   </data>
+  <data name="ExceptionMealNotFound" xml:space="preserve">
+    <value>Meal with ID {0} not found.</value>
+  </data>
 </root>

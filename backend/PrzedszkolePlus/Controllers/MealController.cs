@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Exceptions;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using PrzedszkolePlus.Commands;
+using PrzedszkolePlus.Properties;
+using PrzedszkolePlus.Queries;
 using PrzedszkolePlus.Requests;
 using PrzedszkolePlus.Response;
+using System.Net;
 
 namespace PrzedszkolePlus.Controllers
 {
@@ -8,96 +14,180 @@ namespace PrzedszkolePlus.Controllers
     [Route("[controller]")]
     public class MealController : ControllerBase
     {
-        public MealController()
-        {
+        private readonly IMediator _mediator;
 
+        public MealController(IMediator mediator)
+        {
+            _mediator = mediator;
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public IActionResult Post([FromBody] MealRequest dto)
+        public async Task<IActionResult> Post([FromBody] MealRequest dto)
         {
-            return NoContent();
+            var request = new CreateMealCommand
+            {
+                GroupId = dto.GroupId,
+                Date = dto.Date,
+                Breakfast = dto.Breakfast,
+                Lunch = dto.Lunch,
+                Dinner = dto.Dinner
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (GroupNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
 
-        [HttpGet("ByChild/{child_id:int}")]
+        [HttpGet("ByChild/{childId:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public ActionResult<IEnumerable<MealResponse>> GetByChild(int child_id, DateOnly from, DateOnly to)
+        public async Task<ActionResult<IEnumerable<MealResponse>>> GetByChild(int childId, [FromQuery] DateBetweenRequest dto)
         {
-            return new List<MealResponse>
+            try
             {
-                new MealResponse
+                var query = new GetMealByChildQuery
                 {
-                    Id = 1,
-                    GroupId = 1,
-                    Date = from,
-                    Breakfast = "Jajecznica",
-                    Lunch = "Zupa pomidorowa",
-                    Dinner = "Kanapki"
-                },
-                new MealResponse
-                {
-                    Id = 2,
-                    GroupId = 1,
-                    Date = to,
-                    Breakfast = "Omlet",
-                    Lunch = "Rosół",
-                    Dinner = "Jogurt"
-                }
-            };
+                    ChildId = childId,
+                    DateFrom = dto.DateFrom,
+                    DateTo = dto.DateTo,
+                };
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (ChildNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
-        [HttpGet("ByGroup/{group_id:int}")]
+        [HttpGet("ByGroup/{groupId:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public ActionResult<IEnumerable<MealResponse>> GetByGroup(int group_id, DateOnly from, DateOnly to)
+        public async Task<ActionResult<IEnumerable<MealResponse>>> GetByGroup(int groupId, [FromQuery] DateBetweenRequest dto)
         {
-            return new List<MealResponse>
+            try
             {
-                new MealResponse
+                var query = new GetMealByGroupQuery
                 {
-                    Id = 1,
-                    GroupId = group_id,
-                    Date = from,
-                    Breakfast = "Jajecznica",
-                    Lunch = "Zupa pomidorowa",
-                    Dinner = "Kanapki"
-                },
-                new MealResponse
-                {
-                    Id = 2,
-                    GroupId = group_id,
-                    Date = to,
-                    Breakfast = "Omlet",
-                    Lunch = "Rosół",
-                    Dinner = "Jogurt"
-                }
-            };
+                    GroupId = groupId,
+                    DateFrom = dto.DateFrom,
+                    DateTo = dto.DateTo,
+                };
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (ChildNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpPut("{id:int}")]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public IActionResult Put(int id, MealRequest dto)
+        public async Task<IActionResult> Put(int id, MealRequest dto)
         {
-            return NoContent();
+            var request = new UpdateMealCommand
+            {
+                Id = id,
+                GroupId = dto.GroupId,
+                Date = dto.Date,
+                Breakfast = dto.Breakfast,
+                Lunch = dto.Lunch,
+                Dinner = dto.Dinner
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (GroupNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (MealNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
-
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return NoContent();
+            var request = new DeleteMealCommand
+            {
+                MealId = id
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (MealNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
     }
 }

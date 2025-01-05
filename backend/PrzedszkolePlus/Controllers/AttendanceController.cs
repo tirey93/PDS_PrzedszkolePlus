@@ -78,7 +78,7 @@ namespace PrzedszkolePlus.Controllers
 #if !DEBUG
         [Authorize(Roles = Roles.User)]
 #endif
-        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByLoggedParent([FromQuery] GetAttendancesByLoggedParentRequest dto)
+        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByLoggedParent([FromQuery] DateBetweenRequest dto)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace PrzedszkolePlus.Controllers
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByGroup(int group_id, [FromQuery] GetAttendancedByGroupRequest dto)
+        public async Task<ActionResult<IEnumerable<AttendanceResponse>>> GetByGroup(int group_id, [FromQuery] DateBetweenRequest dto)
         {
             try
             {
