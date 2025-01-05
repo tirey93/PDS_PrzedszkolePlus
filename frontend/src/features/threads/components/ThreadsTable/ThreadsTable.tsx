@@ -51,7 +51,7 @@ export const ThreadsTable = ({ threads, isLoading }: ThreadsTableProps) => {
                 id: "date",
                 cell: ({ row, getValue }) => (
                     <span className={classNames({ [classes.notSeen]: !row.original.seen })}>
-                        {getValue().toLocaleDateString()}
+                        {getValue().toLocaleString()}
                     </span>
                 ),
                 header: () => <span>Data wątku</span>,
@@ -90,6 +90,7 @@ export const ThreadsTable = ({ threads, isLoading }: ThreadsTableProps) => {
 
     return (
         <Table
+            sortOptions={[{ id: "date", desc: true }]}
             onRender={expandLatestThread}
             data={threads}
             columns={columns}
