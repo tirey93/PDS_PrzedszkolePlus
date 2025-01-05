@@ -7,9 +7,10 @@ import { ReportAbsenceDialog } from "@/features/children/components/ReportAbsenc
 type ParentAttendanceCheckProps = {
     state: AttendanceState;
     childId: string;
+    date: Date;
 };
 
-export const ParentAttendanceCheck = ({ state, childId }: ParentAttendanceCheckProps) => {
+export const ParentAttendanceCheck = ({ state, childId, date }: ParentAttendanceCheckProps) => {
     if (state === "present") {
         return (
             <Badge size="1" color="jade">
@@ -28,15 +29,13 @@ export const ParentAttendanceCheck = ({ state, childId }: ParentAttendanceCheckP
 
     return (
         <Box className={classes.container}>
-            <Badge size="1">
-                <CircleHelp size={20} />
-            </Badge>
             <ReportAbsenceDialog
-                date={new Date()}
+                date={date}
                 childId={childId}
                 trigger={
-                    <Button variant="soft" size="1">
-                        Zgłoś nieobecność
+                    <Button className={classes.reportAbsenceButton} variant="soft" size="1">
+                        <CircleHelp size={20} />
+                        Zgłoś
                     </Button>
                 }
             />

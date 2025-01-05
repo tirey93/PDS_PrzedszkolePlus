@@ -31,7 +31,11 @@ const columns = [
     columnHelper.display({
         id: "attendance",
         cell: ({ row }) => (
-            <ParentAttendanceCheck state={row.original.attendance?.state ?? "unspecified"} childId={row.original.id} />
+            <ParentAttendanceCheck
+                date={new Date(row.original.attendance.date)}
+                state={row.original.attendance?.state ?? "unspecified"}
+                childId={row.original.id}
+            />
         ),
         header: () => <span>Obecność</span>,
     }),
