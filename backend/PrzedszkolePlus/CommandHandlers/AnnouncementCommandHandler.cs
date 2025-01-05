@@ -49,10 +49,10 @@ namespace PrzedszkolePlus.CommandHandlers
 
         public async Task<Unit> Handle(DeleteAnnouncementCommand request, CancellationToken cancellationToken)
         {
-            var child = _announcementRepository.Get(request.AnnouncementId)
+            var announcement = _announcementRepository.Get(request.AnnouncementId)
                 ?? throw new AnnouncementNotFoundException(request.AnnouncementId);
 
-            _announcementRepository.Delete(child);
+            _announcementRepository.Delete(announcement);
             await _announcementRepository.SaveChangesAsync();
 
             return Unit.Value;
