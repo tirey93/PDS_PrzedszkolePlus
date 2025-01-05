@@ -331,6 +331,15 @@ namespace PrzedszkolePlus.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message is required..
+        /// </summary>
+        public static string ValidatorMessageRequired {
+            get {
+                return ResourceManager.GetString("ValidatorMessageRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name field is required..
         /// </summary>
         public static string ValidatorNameRequired {
@@ -408,6 +417,33 @@ namespace PrzedszkolePlus.Properties {
         public static string ValidatorStartTimeRequired {
             get {
                 return ResourceManager.GetString("ValidatorStartTimeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject must be at least 3 characters long..
+        /// </summary>
+        public static string ValidatorSubjectLonger {
+            get {
+                return ResourceManager.GetString("ValidatorSubjectLonger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject is required..
+        /// </summary>
+        public static string ValidatorSubjectRequired {
+            get {
+                return ResourceManager.GetString("ValidatorSubjectRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject must not exceed 255 characters..
+        /// </summary>
+        public static string ValidatorSubjectShorter {
+            get {
+                return ResourceManager.GetString("ValidatorSubjectShorter", resourceCulture);
             }
         }
         

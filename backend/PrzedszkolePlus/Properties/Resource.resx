@@ -249,4 +249,16 @@
   <data name="ValidatorUsernameShorter" xml:space="preserve">
     <value>Username must not exceed 20 characters.</value>
   </data>
+  <data name="ValidatorSubjectRequired" xml:space="preserve">
+    <value>Subject is required.</value>
+  </data>
+  <data name="ValidatorSubjectLonger" xml:space="preserve">
+    <value>Subject must be at least 3 characters long.</value>
+  </data>
+  <data name="ValidatorSubjectShorter" xml:space="preserve">
+    <value>Subject must not exceed 255 characters.</value>
+  </data>
+  <data name="ValidatorMessageRequired" xml:space="preserve">
+    <value>Message is required.</value>
+  </data>
 </root>
