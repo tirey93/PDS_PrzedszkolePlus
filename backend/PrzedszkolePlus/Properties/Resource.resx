@@ -150,6 +150,24 @@
   <data name="ValidatorActivityIdRequired" xml:space="preserve">
     <value>ActivityId is required.</value>
   </data>
+  <data name="ValidatorAnnouncementContentLonger" xml:space="preserve">
+    <value>Announcement content must be at least 3 characters long.</value>
+  </data>
+  <data name="ValidatorAnnouncementContentRequired" xml:space="preserve">
+    <value>Announcement content is required.</value>
+  </data>
+  <data name="ValidatorAnnouncementContentShorter" xml:space="preserve">
+    <value>Announcement content must not exceed 4000 characters.</value>
+  </data>
+  <data name="ValidatorAnnouncementTitleLonger" xml:space="preserve">
+    <value>Announcement title must be at least 3 characters long.</value>
+  </data>
+  <data name="ValidatorAnnouncementTitleRequired" xml:space="preserve">
+    <value>Announcement title is required.</value>
+  </data>
+  <data name="ValidatorAnnouncementTitleShorter" xml:space="preserve">
+    <value>Announcement title must not exceed 255 characters.</value>
+  </data>
   <data name="ValidatorCronRequired" xml:space="preserve">
     <value>Cron field is required.</value>
   </data>

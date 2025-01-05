@@ -160,6 +160,60 @@ namespace PrzedszkolePlus.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Announcement content must be at least 3 characters long..
+        /// </summary>
+        public static string ValidatorAnnouncementContentLonger {
+            get {
+                return ResourceManager.GetString("ValidatorAnnouncementContentLonger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Announcement content is required..
+        /// </summary>
+        public static string ValidatorAnnouncementContentRequired {
+            get {
+                return ResourceManager.GetString("ValidatorAnnouncementContentRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Announcement content must not exceed 4000 characters..
+        /// </summary>
+        public static string ValidatorAnnouncementContentShorter {
+            get {
+                return ResourceManager.GetString("ValidatorAnnouncementContentShorter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Announcement title must be at least 3 characters long..
+        /// </summary>
+        public static string ValidatorAnnouncementTitleLonger {
+            get {
+                return ResourceManager.GetString("ValidatorAnnouncementTitleLonger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Announcement title is required..
+        /// </summary>
+        public static string ValidatorAnnouncementTitleRequired {
+            get {
+                return ResourceManager.GetString("ValidatorAnnouncementTitleRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Announcement title must not exceed 255 characters..
+        /// </summary>
+        public static string ValidatorAnnouncementTitleShorter {
+            get {
+                return ResourceManager.GetString("ValidatorAnnouncementTitleShorter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cron field is required..
         /// </summary>
         public static string ValidatorCronRequired {
