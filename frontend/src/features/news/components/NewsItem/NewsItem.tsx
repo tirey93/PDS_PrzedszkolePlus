@@ -33,7 +33,9 @@ export const NewsItem = ({ title, createdAt, content, url, id }: NewsProps) => {
 
     return (
         <article className={classes.container}>
-            <img className={classes.image} src={url} alt={title} />
+            <Box className={classes.image}>
+                <img src={url} alt={title} />
+            </Box>
             <Box>
                 <Heading as="h2" className={classes.title}>
                     {title}
