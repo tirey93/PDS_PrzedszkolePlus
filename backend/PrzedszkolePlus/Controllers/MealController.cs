@@ -23,6 +23,7 @@ namespace PrzedszkolePlus.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
@@ -49,6 +50,11 @@ namespace PrzedszkolePlus.Controllers
                 return StatusCode((int)HttpStatusCode.NotFound,
                     string.Format(Resource.ControllerNotFound, ex.Message));
             }
+            catch (MealAlreadyCreatedException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
+            }
             catch (Exception ex)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError,
@@ -59,6 +65,7 @@ namespace PrzedszkolePlus.Controllers
 
         [HttpGet("ByChild/{childId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
@@ -77,10 +84,20 @@ namespace PrzedszkolePlus.Controllers
                 var result = await _mediator.Send(query);
                 return Ok(result);
             }
-            catch (ChildNotFoundException ex)
+            catch (GroupNotFoundException ex)
             {
                 return StatusCode((int)HttpStatusCode.BadRequest,
                     string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (MealNotFoundException ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    string.Format(Resource.ControllerNotFound, ex.Message));
+            }
+            catch (MealAlreadyCreatedException ex)
+            {
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    string.Format(Resource.ControllerBadRequest, ex.Message));
             }
             catch (Exception ex)
             {

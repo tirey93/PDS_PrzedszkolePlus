@@ -165,4 +165,7 @@
   <data name="ExceptionMealNotFound" xml:space="preserve">
     <value>Meal with ID {0} not found.</value>
   </data>
+  <data name="ExceptionMealAlreadyCreated" xml:space="preserve">
+    <value>Meal was already created in date {0} for group {1}.</value>
+  </data>
 </root>
