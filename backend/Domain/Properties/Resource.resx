@@ -156,10 +156,13 @@
   <data name="ExceptionThreadNotFound" xml:space="preserve">
     <value>Thread with ID {0} not found.</value>
   </data>
-	<data name="ExceptionUserNotAllowedInThread" xml:space="preserve">
+  <data name="ExceptionUserNotAllowedInThread" xml:space="preserve">
     <value>Given user is not allowed to contribute in thread with ID {0}.</value>
   </data>
   <data name="ExceptionUserHasWrongRoleInThread" xml:space="preserve">
     <value>User with ID {1} should have role {0}.</value>
+  </data>
+  <data name="ExceptionAnnouncementNotFound" xml:space="preserve">
+    <value>Announcement with ID {0} not found.</value>
   </data>
 </root>
