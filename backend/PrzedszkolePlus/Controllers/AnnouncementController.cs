@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PrzedszkolePlus.Properties;
 using PrzedszkolePlus.Queries;
+using PrzedszkolePlus.Commands;
 using PrzedszkolePlus.Requests;
 using PrzedszkolePlus.Response;
 using System.Net;
@@ -19,12 +20,30 @@ namespace PrzedszkolePlus.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 #if !DEBUG
         [Authorize(Roles = Roles.Admin)]
 #endif
-        public IActionResult Post([FromBody] AnnouncementRequest dto)
+        public async Task<ActionResult> Post([FromBody] AnnouncementRequest dto)
         {
-            return NoContent();
+            var request = new CreateAnnouncementCommand
+            {
+                Title = dto.Title,
+                Content = dto.Content,
+                FilePath = dto.FilePath,
+            };
+
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    string.Format(Resource.ControllerInternalError, ex.Message));
+            }
         }
 
         [HttpGet]
