@@ -42,7 +42,8 @@ namespace PrzedszkolePlus.CommandHandlers
             {
                 Parent = parent,
                 Caregiver = caregiver,
-                Subject = request.Subject
+                Subject = request.Subject,
+                CreatedAt = DateTime.UtcNow
             };
 
             _threadRepository.Add(thread);

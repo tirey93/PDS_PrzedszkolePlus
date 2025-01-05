@@ -44,6 +44,7 @@ namespace PrzedszkolePlus.QueryHandlers
                 IsRead = CheckIsRead(loggedUser.Role, thread),
                 ReceiverId = GetReceiverId(loggedUser.Role, thread),
                 Subject = thread.Subject,
+                CreatedAt = thread.CreatedAt
             });
             return Task.FromResult(result);
         }

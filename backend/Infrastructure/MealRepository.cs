@@ -13,10 +13,10 @@ namespace Infrastructure
         {
             if (predicate == null)
                 return _appDbContext.Meals
-                    .Include(thread => thread.Group)
+                    .Include(meal => meal.Group)
                     .ToList();
             return _appDbContext.Meals
-                .Include(thread => thread.Group)
+                .Include(meal => meal.Group)
                 .Where(predicate)
                 .ToList();
         }
