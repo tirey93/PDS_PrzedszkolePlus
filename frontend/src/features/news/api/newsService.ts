@@ -17,13 +17,13 @@ type NewsDto = {
 type AddNewsRequestBody = {
     title: string;
     content: string;
-    url: string;
+    filePath: string;
 };
 
 type EditNewsRequestBody = {
     title: string;
     content: string;
-    url: string;
+    filePath: string;
 };
 
 export class NewsService {
