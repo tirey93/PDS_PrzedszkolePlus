@@ -29,6 +29,8 @@ type EditNewsRequestBody = {
 export class NewsService {
     public static async getAll(): Promise<News[]> {
         const { data } = await requestClient.get<NewsDto[]>(GET_NEWS_ENDPOINT);
+        console.log(data);
+
         return data.map(NewsService.mapDtoToNews);
     }
 

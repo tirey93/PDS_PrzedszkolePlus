@@ -6,13 +6,14 @@ import { RemoveChildDialog } from "@/features/children/components/RemoveChildDia
 import { AssignChildToGroupDialog } from "@/features/children/components/AssignChildToGroupDialog/AssignChildToGroupDialog";
 import { useGetChildrenByParent } from "@/features/children/hooks/useGetChildrenByParent";
 import Skeleton from "react-loading-skeleton";
+import { User } from "@/types/User";
 
 type ChildrenListProps = {
-    parentId: string;
+    parent: User;
 };
 
-export const ChildrenList = ({ parentId }: ChildrenListProps) => {
-    const { data, isLoading } = useGetChildrenByParent({ parentId });
+export const ChildrenList = ({ parent }: ChildrenListProps) => {
+    const { data, isLoading } = useGetChildrenByParent({ parentId: parent.id });
 
     return (
         <Box className={classes.container}>
@@ -21,6 +22,8 @@ export const ChildrenList = ({ parentId }: ChildrenListProps) => {
                     <Strong>Dzieci</Strong>
                 </Text>
                 <AddChildDialog
+                    lastName={parent.lastName}
+                    parentId={parent.id}
                     trigger={
                         <IconButton size="1" color="jade" variant="ghost">
                             <Plus size={16} />

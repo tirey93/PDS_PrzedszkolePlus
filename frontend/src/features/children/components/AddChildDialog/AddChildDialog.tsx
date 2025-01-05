@@ -17,9 +17,10 @@ type AddChildDialogProps = {
     child?: BaseChild;
     groupId?: string;
     parentId?: string;
+    lastName?: string;
 };
 
-export const AddChildDialog = ({ trigger, child, parentId, groupId }: AddChildDialogProps) => {
+export const AddChildDialog = ({ trigger, child, parentId, groupId, lastName }: AddChildDialogProps) => {
     const [open, setOpen] = useState(false);
     const { data: groups } = useGetAllGroups();
     const { data: parents } = useGetUsersByRole("User");
@@ -51,6 +52,7 @@ export const AddChildDialog = ({ trigger, child, parentId, groupId }: AddChildDi
                         ...child,
                         groupId: child?.groupId ?? groupId,
                         parentId: child?.parentId ?? parentId,
+                        lastName: child?.lastName ?? lastName,
                     }}
                 />
                 {error && <Alert className={classes.alert}>{error.message}</Alert>}

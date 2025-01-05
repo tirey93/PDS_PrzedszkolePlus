@@ -15,8 +15,8 @@ export type AddUserFormInputs = {
     firstName: string;
 };
 
-export const FIRST_NAME_REQUIREMENT = "Minimum 3 znaki, białe znaki są niedozwolone";
-export const LAST_NAME_REQUIREMENT = "Minimum 3 znaki, białe znaki są niedozwolone";
+export const FIRST_NAME_REQUIREMENT = "Minimum 3 znaki";
+export const LAST_NAME_REQUIREMENT = "Minimum 2 znaki";
 export const LOGIN_REQUIREMENT = "Minimum 6 znaków, białe znaki są niedozwolone";
 
 export const useAddUserForm = () => {
@@ -28,16 +28,8 @@ export const useAddUserForm = () => {
             .test("passwords-match", PASSWORD_CONFIRM_REQUIREMENT, function (value) {
                 return this.parent.password === value;
             }),
-        firstName: yup
-            .string()
-            .required(FIRST_NAME_REQUIREMENT)
-            .min(3, FIRST_NAME_REQUIREMENT)
-            .test("whitespace_validation", FIRST_NAME_REQUIREMENT, (value) => !/\s/.test(value)),
-        lastName: yup
-            .string()
-            .required(LAST_NAME_REQUIREMENT)
-            .min(3, LAST_NAME_REQUIREMENT)
-            .test("whitespace_validation", LAST_NAME_REQUIREMENT, (value) => !/\s/.test(value)),
+        firstName: yup.string().required(FIRST_NAME_REQUIREMENT).min(3, FIRST_NAME_REQUIREMENT),
+        lastName: yup.string().required(LAST_NAME_REQUIREMENT).min(3, LAST_NAME_REQUIREMENT),
         login: yup
             .string()
             .required(LOGIN_REQUIREMENT)

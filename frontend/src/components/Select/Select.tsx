@@ -10,12 +10,16 @@ type SelectProps = {
     help?: string;
     label: string;
     name: string;
+    value?: string;
+    disabled?: boolean;
 };
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
-    ({ onChange, options, error, help, label, name, ...rest }, ref) => {
+    ({ value, disabled, onChange, options, error, help, label, name, ...rest }, ref) => {
         return (
             <BaseSelect.Root
+                disabled={disabled}
+                value={value?.toString()}
                 name={name}
                 onValueChange={(value) => onChange({ target: { name, value: value.toString() } })}
             >
@@ -28,7 +32,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 
                 <BaseSelect.Content position="popper">
                     {options.map(({ value, label }) => (
-                        <BaseSelect.Item key={value} value={value}>
+                        <BaseSelect.Item key={value} value={value.toString()}>
                             {label}
                         </BaseSelect.Item>
                     ))}
