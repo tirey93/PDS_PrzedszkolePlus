@@ -26,8 +26,15 @@ export const AddMenuDialog = ({
     const [open, setOpen] = useState(false);
     const { mutateAsync: saveMenu, isPending, error } = useSaveMenu();
 
-    const handleFormSubmit = async ({ breakfast, lunch, dinner }: AddMenuFormInputs) => {
-        await saveMenu({ breakfast: breakfast ?? "", lunch: lunch ?? "", dinner: dinner ?? "", date, groupId });
+    const handleFormSubmit = async ({ breakfast, lunch, dinner, date }: AddMenuFormInputs) => {
+        await saveMenu({
+            breakfast: breakfast ?? "",
+            lunch: lunch ?? "",
+            dinner: dinner ?? "",
+            date,
+            groupId,
+            id: menu?.id,
+        });
         toast.success("Menu zapisane.");
         setOpen(false);
     };

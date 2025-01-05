@@ -5,6 +5,7 @@ import { Input } from "@/components/Input/Input";
 import {
     AddNewsFormInputs,
     CONTENT_REQUIREMENT,
+    IMAGE_REQUIREMENT,
     TITLE_REQUIREMENT,
     useAddNewsForm,
 } from "@/features/news/components/AddNewsForm/hooks/useAddNewsForm";
@@ -40,7 +41,7 @@ export const AddNewsForm = ({ onSubmit, isLoading, onCancel, initialValues }: Ad
                 {...register("url")}
                 label="URL do zdjęcia"
                 error={formState.errors?.url?.message}
-                help={TITLE_REQUIREMENT}
+                help={IMAGE_REQUIREMENT}
             />
 
             <Box className={classes.actions}>

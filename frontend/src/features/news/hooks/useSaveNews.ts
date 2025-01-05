@@ -7,9 +7,9 @@ type SaveNewsOptions = Omit<News, "id" | "createdAt"> & { id?: string };
 
 const saveNews = async (news: SaveNewsOptions): Promise<void> => {
     if (news.id) {
-        return NewsService.update(news, news.id);
+        return NewsService.update({ ...news, filePath: news.url }, news.id);
     } else {
-        return NewsService.create(news);
+        return NewsService.create({ ...news, filePath: news.url });
     }
 };
 
