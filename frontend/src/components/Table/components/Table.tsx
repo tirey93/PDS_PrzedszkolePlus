@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useLayoutEffect, useState } from "react";
 import {
     ColumnDef,
     getCoreRowModel,
@@ -7,6 +7,7 @@ import {
     getSortedRowModel,
     PaginationState,
     useReactTable,
+    Table as TableType,
 } from "@tanstack/react-table";
 import { Box } from "@radix-ui/themes";
 import { TableBody } from "@/components/Table/components/TableBody/TableBody";
@@ -23,6 +24,7 @@ type TableProps<T> = {
     withPagination?: boolean;
     withFilters?: boolean;
     isLoading?: boolean;
+    onRender?: (table: TableType<T>) => void;
 };
 
 export function Table<T>({
@@ -32,6 +34,7 @@ export function Table<T>({
     withPagination,
     withFilters,
     isLoading,
+    onRender,
     pageSize = 20,
 }: TableProps<T>) {
     const [pagination, setPagination] = useState<PaginationState>({
@@ -52,6 +55,10 @@ export function Table<T>({
             pagination: withPagination ? pagination : undefined,
         },
     });
+
+    useLayoutEffect(() => {
+        onRender?.(table);
+    }, [onRender, table]);
 
     return (
         <Box className={classes.container}>
