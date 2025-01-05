@@ -9,5 +9,6 @@ namespace Domain
         public string Subject { get; set; }
         public DateTime ParentLastRead { get; set; }
         public DateTime CaregiverLastRead { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
