@@ -106,6 +106,24 @@ namespace Domain.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meal was already created in date {0} for group {1}..
+        /// </summary>
+        internal static string ExceptionMealAlreadyCreated {
+            get {
+                return ResourceManager.GetString("ExceptionMealAlreadyCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meal with ID {0} not found..
+        /// </summary>
+        internal static string ExceptionMealNotFound {
+            get {
+                return ResourceManager.GetString("ExceptionMealNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reservation with ID {0} not found..
         /// </summary>
         internal static string ExceptionReservationNotFound {
