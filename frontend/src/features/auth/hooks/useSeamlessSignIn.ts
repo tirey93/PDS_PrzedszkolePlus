@@ -17,7 +17,7 @@ export const useSeamlessSignIn = () => {
         const handleSeamlessSignIn = async () => {
             const myself = await AuthService.getMyself();
             login(myself);
-            navigate(AppRoute.NEWS);
+            navigate(AppRoute.FINANCES);
             toast.success(`Witaj ponownie, ${myself.firstName}!`);
         };
 

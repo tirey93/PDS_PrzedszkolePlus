@@ -1,27 +1,35 @@
 import { User, UserDTO } from "@/types/User";
 import { requestClient } from "@/lib/request/requestClient";
 
-const SIGN_IN_ENDPOINT = "/Authentication/Login";
-const LOG_OUT_ENDPOINT = "/Authentication/Logout";
-const GET_MYSELF_ENDPOINT = "/User/LoggedIn";
-
 type SignInRequestBody = {
     username: string;
     password: string;
 };
 
+type SignUpRequestBody = {
+    username: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+};
+
 export class AuthService {
     public static async signIn(body: SignInRequestBody): Promise<User> {
-        const { data } = await requestClient.post<UserDTO>(SIGN_IN_ENDPOINT, body);
+        const { data } = await requestClient.post<UserDTO>("/Authentication/Login", body);
+        return AuthService.mapDtoToUser(data);
+    }
+
+    public static async signUp(body: SignUpRequestBody): Promise<User> {
+        const { data } = await requestClient.post<UserDTO>("Authentication/Register", body);
         return AuthService.mapDtoToUser(data);
     }
 
     public static async logOut(): Promise<void> {
-        await requestClient.post(LOG_OUT_ENDPOINT);
+        await requestClient.post("/Authentication/Logout");
     }
 
     public static async getMyself(): Promise<User> {
-        const { data } = await requestClient.get<UserDTO>(GET_MYSELF_ENDPOINT);
+        const { data } = await requestClient.get<UserDTO>("/User/LoggedIn");
         return AuthService.mapDtoToUser(data);
     }
 

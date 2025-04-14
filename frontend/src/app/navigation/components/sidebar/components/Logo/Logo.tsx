@@ -5,7 +5,7 @@ export const Logo = () => {
     return (
         <Box className={classes.logo}>
             <Text>
-                Przedszkole<Strong className={classes.emphasis}>+</Strong>
+                School<Strong className={classes.emphasis}>Money</Strong>
             </Text>
         </Box>
     );

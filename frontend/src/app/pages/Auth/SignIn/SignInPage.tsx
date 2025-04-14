@@ -4,7 +4,7 @@ import { SignInForm } from "@/features/auth/components/SignInForm/SignInForm";
 import { useSignIn } from "@/features/auth/hooks/useSignIn";
 import { SignInFormInputs } from "@/features/auth/components/SignInForm/hooks/useSignInForm";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AppRoute } from "@/app/router";
 
 export const SignInPage = () => {
@@ -14,7 +14,7 @@ export const SignInPage = () => {
     const login = async ({ password, login }: SignInFormInputs) => {
         try {
             await signIn({ password, username: login });
-            navigate(AppRoute.NEWS);
+            navigate(AppRoute.FINANCES);
             toast.success("Logowanie pomyślne.");
         } catch (e) {
             console.log(e);
@@ -27,9 +27,13 @@ export const SignInPage = () => {
             <Card className={classes.card}>
                 <Heading className={classes.title}>Logowanie</Heading>
                 <Text>
-                    Zaloguj się do aplikacji <Strong>Przedszkole+</Strong>
+                    Zaloguj się do aplikacji <Strong>SchoolMoney</Strong>
                 </Text>
                 <SignInForm onSubmit={login} isLoading={isPending} />
+
+                <Link to={AppRoute.SIGN_UP} className={classes.link}>
+                    Nie masz jeszcze konta? Zarejestruj się.
+                </Link>
             </Card>
         </Box>
     );

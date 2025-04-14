@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AppRoute } from "@/app/router";
 import { User } from "@/types/User";
 
-export const useSignIn = () => {
+export const useSignUp = () => {
     const { login } = useUser();
     const navigate = useNavigate();
 
@@ -14,5 +14,5 @@ export const useSignIn = () => {
         navigate(AppRoute.FINANCES);
     };
 
-    return useMutation({ mutationFn: AuthService.signIn, onSuccess });
+    return useMutation({ mutationFn: AuthService.signUp, onSuccess });
 };

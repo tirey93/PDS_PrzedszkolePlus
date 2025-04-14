@@ -17,7 +17,7 @@ export const CurrentUserInfo = () => {
                 <Text className={classes.name}>
                     {user.firstName} {user.lastName}
                 </Text>
-                <Text className={classes.role}>{user.role === "Admin" ? "Opiekun" : "Rodzic"}</Text>
+                <Text className={classes.role}>{user.role === "Admin" ? "Admin" : "Rodzic"}</Text>
             </Box>
         </Box>
     );
