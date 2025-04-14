@@ -5,7 +5,7 @@ import { RequirementsTooltip } from "@/components/RequirementsTooltip/Requiremen
 
 type SelectProps = {
     onChange: (option: { target: { name: string; value: string } }) => void;
-    options: { value: string; label: string }[];
+    options: { value: string | number; label: string }[];
     error?: string;
     help?: string;
     label: string;

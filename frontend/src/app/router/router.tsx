@@ -17,6 +17,10 @@ const ClassesPage = React.lazy(() =>
     import("@/app/pages/Root/Classes/ClassesPage.tsx").then((module) => ({ default: module.ClassesPage }))
 );
 
+const FundraisersPage = React.lazy(() =>
+    import("@/app/pages/Root/Fundraisers/FundraisersPage.tsx").then((module) => ({ default: module.FundraisersPage }))
+);
+
 const NotFoundPage = React.lazy(() => import("@/app/pages/404").then((module) => ({ default: module.NotFoundPage })));
 
 import { AppRoute } from "@/app/router/AppRoute";
@@ -45,6 +49,10 @@ export const router = createBrowserRouter([
         path: AppRoute.ROOT,
         element: WithSuspense(<RootPage />),
         children: [
+            {
+                path: AppRoute.FUNDRAISERS,
+                element: WithSuspense(<FundraisersPage />),
+            },
             {
                 path: AppRoute.CLASSES,
                 element: WithSuspense(<ClassesPage />),
