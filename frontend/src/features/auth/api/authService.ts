@@ -1,5 +1,13 @@
-import { User, UserDTO } from "@/types/User";
+import { User, UserRole } from "@/types/User";
 import { requestClient } from "@/lib/request/requestClient";
+
+type UserDTO = {
+    id: string;
+    displayName: string;
+    name: string;
+    role: UserRole;
+    isActive: boolean;
+};
 
 type SignInRequestBody = {
     username: string;
