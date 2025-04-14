@@ -10,14 +10,15 @@ import {
 
 type CreateClassFormProps = {
     onSubmit: (inputs: CreateClassFormInputs) => void;
+    onCancel: () => void;
     isLoading?: boolean;
 };
 
-export const CreateClassForm = ({ onSubmit, isLoading }: CreateClassFormProps) => {
+export const CreateClassForm = ({ onSubmit, isLoading, onCancel }: CreateClassFormProps) => {
     const { register, handleSubmit, formState } = useCreateClassForm();
 
     return (
-        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} onReset={onCancel}>
             <Input
                 {...register("name")}
                 label="Nazwa klasy"

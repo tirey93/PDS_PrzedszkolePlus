@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 export enum QueryKey {
     Users,
     Classes,
+    Fundraisers,
 }
 
 export const useInvalidateQuery = () => {

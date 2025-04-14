@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, Ref, useState } from "react";
 
 import classes from "./Input.module.scss";
 import { Box, TextArea, Text, TextField } from "@radix-ui/themes";
@@ -8,7 +8,7 @@ import classNames from "classnames";
 interface InputProps {
     label: string;
     help?: string;
-    type?: "password" | "email" | "textarea" | "text" | "date";
+    type?: "password" | "email" | "textarea" | "text" | "date" | "number";
     error?: string;
 }
 
@@ -35,16 +35,11 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputPro
                         resize="vertical"
                         rows={6}
                         aria-invalid={!!error}
-                        ref={ref as React.Ref<HTMLTextAreaElement>}
+                        ref={ref as Ref<HTMLTextAreaElement>}
                         {...props}
                     />
                 ) : (
-                    <TextField.Root
-                        type={type}
-                        aria-invalid={!!error}
-                        ref={ref as React.Ref<HTMLInputElement>}
-                        {...props}
-                    />
+                    <TextField.Root type={type} aria-invalid={!!error} ref={ref as Ref<HTMLInputElement>} {...props} />
                 )}
             </label>
         );
