@@ -1,4 +1,4 @@
-# Przedszkole+ UI
+# SchoolMoney UI
 
 ### Running the application
 1. Run `npm install`

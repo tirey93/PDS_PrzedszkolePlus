@@ -1,4 +1,4 @@
-import classes from "@/features/news/components/DeleteNewsDialog/DeleteNewsDialog.module.scss";
+import classes from "./DialogBody.module.scss";
 import { Dialog } from "@radix-ui/themes";
 import { PropsWithChildren } from "react";
 

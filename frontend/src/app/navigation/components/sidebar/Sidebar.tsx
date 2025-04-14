@@ -15,19 +15,31 @@ import { useLogout } from "@/features/auth/hooks/useLogout";
 import { toast } from "sonner";
 
 const items = [
-    { title: "Przedszkole", requiredAccess: "authenticated", items: [{ label: "Aktualności", href: AppRoute.NEWS }] },
-    { title: "Kontakt", requiredAccess: "authenticated", items: [{ label: "Wiadomości", href: AppRoute.MESSAGES }] },
     {
-        title: "Użytkownicy",
-        requiredAccess: "Admin",
+        title: "Szkoła",
+        requiredAccess: "authenticated",
         items: [
-            { label: "Rodzice", href: AppRoute.PARENTS },
-            { label: "Opiekunowie", href: AppRoute.CAREGIVERS },
+            { label: "Klasy", href: AppRoute.CLASSES },
+            { label: "Zbiórki", href: AppRoute.FUNDRAISERS },
+            { label: "Moje dzieci", href: AppRoute.CHILDREN },
+            { label: "Kontakt", href: AppRoute.CHAT },
         ],
     },
-    { title: "Panel nauczyciela", requiredAccess: "Admin", items: [{ label: "Moja grupa", href: AppRoute.GROUP }] },
-    { title: "Panel rodzica", requiredAccess: "User", items: [{ label: "Moje dzieci", href: AppRoute.CHILDREN }] },
-    { title: "Personalne", requiredAccess: "authenticated", items: [{ label: "Ustawienia", href: AppRoute.SETTINGS }] },
+
+    {
+        title: "Panel administratora",
+        requiredAccess: "Admin",
+        items: [{ label: "Użytkownicy", href: AppRoute.USERS }],
+    },
+
+    {
+        title: "Osobiste",
+        requiredAccess: "authenticated",
+        items: [
+            { label: "Finanse", href: AppRoute.FINANCES },
+            { label: "Ustawienia", href: AppRoute.SETTINGS },
+        ],
+    },
 ];
 
 export function Sidebar() {
