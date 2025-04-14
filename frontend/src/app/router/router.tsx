@@ -13,6 +13,10 @@ const SignUpPage = React.lazy(() =>
     import("@/app/pages/Auth/SignUp/SignUpPage").then((module) => ({ default: module.SignUpPage }))
 );
 
+const ClassesPage = React.lazy(() =>
+    import("@/app/pages/Root/Classes/ClassesPage.tsx").then((module) => ({ default: module.ClassesPage }))
+);
+
 const NotFoundPage = React.lazy(() => import("@/app/pages/404").then((module) => ({ default: module.NotFoundPage })));
 
 import { AppRoute } from "@/app/router/AppRoute";
@@ -41,6 +45,10 @@ export const router = createBrowserRouter([
         path: AppRoute.ROOT,
         element: WithSuspense(<RootPage />),
         children: [
+            {
+                path: AppRoute.CLASSES,
+                element: WithSuspense(<ClassesPage />),
+            },
             {
                 path: "*",
                 element: WithSuspense(<NotFoundPage />),

@@ -8,11 +8,3 @@ export type User = {
     role: UserRole;
     isActive: boolean;
 };
-
-export type UserDTO = {
-    id: string;
-    displayName: string;
-    name: string;
-    role: UserRole;
-    isActive: boolean;
-};

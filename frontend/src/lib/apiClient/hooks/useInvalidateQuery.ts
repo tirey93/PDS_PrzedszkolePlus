@@ -3,9 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export enum QueryKey {
     Users,
-    Activities,
-    Enrollments,
-    Reservations,
+    Classes,
 }
 
 export const useInvalidateQuery = () => {
